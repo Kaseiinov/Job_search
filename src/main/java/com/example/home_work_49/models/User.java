@@ -1,5 +1,7 @@
 package com.example.home_work_49.models;
 
+import lombok.Getter;
+
 public class User {
     private int id;
     private String name;
@@ -9,5 +11,7 @@ public class User {
     private String password;
     private String phoneNumber;
     private String avatar;
+    @Getter
     private String accountType;
+
 }
