@@ -1,5 +1,6 @@
 package com.example.home_work_49.controller;
 
+import com.example.home_work_49.models.Vacancy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class VacancyController {
 
     @PostMapping
-    public ResponseEntity<?> createJob() {
+    public ResponseEntity<?> createVacancy(@RequestBody Vacancy vacancy) {
         return ResponseEntity.ok().build();
     }
 
