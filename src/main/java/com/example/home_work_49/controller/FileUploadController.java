@@ -16,6 +16,6 @@ public class FileUploadController {
 
     @PostMapping
     public ResponseEntity<String> uploadImage(MultipartFile file) {
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("File uploaded");
     }
 }
