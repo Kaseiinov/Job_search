@@ -1,8 +1,10 @@
 package com.example.home_work_49.models;
 
+import java.time.LocalDateTime;
+
 public class Message {
-    private int id;
-    private int respondedApplicants;
+    private Long id;
+    private Integer respondedApplicants;
     private String content;
-    private String timestamp;
+    private LocalDateTime timestamp;
 }

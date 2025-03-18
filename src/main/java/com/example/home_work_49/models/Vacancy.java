@@ -1,15 +1,17 @@
 package com.example.home_work_49.models;
 
+import java.time.LocalDateTime;
+
 public class Vacancy {
-    private int id;
+    private Long id;
     private String name;
     private String description;
-    private Integer categoryId;
+    private Long categoryId;
     private double salary;
-    private int expFrom;
-    private int expTo;
+    private Integer expFrom;
+    private Integer expTo;
     private boolean isActive;
-    private int authorId;
-    private String createdDate;
-    private String updateTime;
+    private Long authorId;
+    private LocalDateTime createdDate;
+    private LocalDateTime updateTime;
 }

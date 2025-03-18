@@ -1,12 +1,14 @@
 package com.example.home_work_49.models;
 
+import java.time.LocalDateTime;
+
 public class Resume {
-    private int id;
-    private int applicantId;
+    private Long id;
+    private Long applicantId;
     private String name;
-    private Integer categoryId;
+    private Long categoryId;
     private double salary;
     private boolean isActive;
-    private String createdDate;
-    private String updateTime;
+    private LocalDateTime createdDate;
+    private LocalDateTime updateTime;
 }

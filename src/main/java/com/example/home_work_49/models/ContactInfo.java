@@ -1,8 +1,8 @@
 package com.example.home_work_49.models;
 
 public class ContactInfo {
-    private int id;
-    private int typeId;
-    private int resumeId;
+    private Long id;
+    private Long typeId;
+    private Long resumeId;
     private String value;
 }

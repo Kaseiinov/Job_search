@@ -1,11 +1,13 @@
 package com.example.home_work_49.models;
 
+import java.time.LocalDate;
+
 public class EducationInfo {
-    private int id;
-    private int resumeId;
+    private Long id;
+    private Long resumeId;
     private String institution;
     private String program;
-    private String startDate;
-    private String endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String degree;
 }
