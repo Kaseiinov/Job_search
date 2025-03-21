@@ -7,10 +7,31 @@ import com.example.home_work_49.service.ResumeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ResumeServiceImpl implements ResumeService {
     private final ResumeDao resumeDao;
+
+    @Override
+    public List<ResumeDto> getResumeByCategory(String resumeCategory) {
+        List<Resume> resumeList = resumeDao.getResumeByCategory(resumeCategory);
+        return resumeList
+                .stream()
+                .map(e -> ResumeDto
+                        .builder()
+                        .id(e.getId())
+                        .applicantId(e.getApplicantId())
+                        .name(e.getName())
+                        .categoryId(e.getCategoryId())
+                        .salary(e.getSalary())
+                        .isActive(e.isActive())
+                        .createdDate(e.getCreatedDate())
+                        .updateTime(e.getUpdateTime())
+                        .build())
+                .toList();
+    }
 
     @Override
     public void addResume(ResumeDto resumeDto){

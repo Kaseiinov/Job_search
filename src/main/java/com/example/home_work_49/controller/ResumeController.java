@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("resumes")
 @RequiredArgsConstructor
@@ -35,9 +37,9 @@ public class ResumeController {
         return  ResponseEntity.ok().build();
     }
 
-    @GetMapping("category/{category}")
-    public ResponseEntity<?> getVacancyByCategory(@PathVariable("category") String category) {
-        return  ResponseEntity.ok().build();
+    @GetMapping("category/{resumeCategory}")
+    public List<ResumeDto> getVacancyByCategory(@PathVariable("resumeCategory") String resumeCategory) {
+        return resumeService.getResumeByCategory(resumeCategory);
     }
 
 //    @PostMapping("apply/{applyId}")

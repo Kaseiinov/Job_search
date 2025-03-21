@@ -22,7 +22,7 @@ public class UserDao {
     private final KeyHolder keyHolder = new GeneratedKeyHolder();
 
     public Optional<User> getUserByName(String userName) {
-        String sql = "select * from users where name = ?";
+        String sql = "select * from users where lower(name) = lower(?)";
 
         return Optional.ofNullable(
                 DataAccessUtils.singleResult(
@@ -40,7 +40,7 @@ public class UserDao {
     }
 
     public Optional<User> getUserByEmail(String userEmail) {
-        String sql = "select * from users where email = ?";
+        String sql = "select * from users where lower(email) = lower(?)";
 
         return Optional.ofNullable(
                 DataAccessUtils.singleResult(
