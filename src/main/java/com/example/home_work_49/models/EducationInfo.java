@@ -1,7 +1,10 @@
 package com.example.home_work_49.models;
 
+import lombok.Data;
+
 import java.time.LocalDate;
 
+@Data
 public class EducationInfo {
     private Long id;
     private Long resumeId;

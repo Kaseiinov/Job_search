@@ -1,7 +1,9 @@
 package com.example.home_work_49.models;
 
+import lombok.Data;
 import lombok.Getter;
 
+@Data
 public class User {
     private Long id;
     private String name;
