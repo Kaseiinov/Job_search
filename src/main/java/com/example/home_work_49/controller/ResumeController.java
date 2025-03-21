@@ -40,13 +40,13 @@ public class ResumeController {
         return  ResponseEntity.ok().build();
     }
 
-    @PostMapping("apply/{applyId}")
-    public ResponseEntity<?> applyForJob(@PathVariable Long applyid) {
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("employer/{employerId}")
-    public ResponseEntity<?> getEmployer(@PathVariable Long employerId) {
-        return ResponseEntity.ok().build();
-    }
+//    @PostMapping("apply/{applyId}")
+//    public ResponseEntity<?> applyForJob(@PathVariable Long applyid) {
+//        return ResponseEntity.ok().build();
+//    }
+//
+//    @GetMapping("employer/{employerId}")
+//    public ResponseEntity<?> getEmployer(@PathVariable Long employerId) {
+//        return ResponseEntity.ok().build();
+//    }
 }

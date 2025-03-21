@@ -17,6 +17,27 @@ public class UserServiceImpl implements UserService {
     public UserDto getUserByName(String userName) {
         User user = userDao.getUserByName(userName)
                 .orElseThrow(UserNotFoundException::new);
+        return builder(user);
+    }
+
+
+
+    @Override
+    public UserDto getUserByPhone(String userPhone) {
+        User user = userDao.getUserByPhone(userPhone)
+                .orElseThrow(UserNotFoundException::new);
+        return builder(user);
+    }
+
+    @Override
+    public UserDto getUserByEmail(String userEmail) {
+        User user = userDao.getUserByEmail(userEmail)
+                .orElseThrow(UserNotFoundException::new);
+        return builder(user);
+    }
+
+
+    private UserDto builder(User user) {
         return UserDto.builder()
                 .id(user.getId())
                 .name(user.getName())
@@ -24,6 +45,7 @@ public class UserServiceImpl implements UserService {
                 .age(user.getAge())
                 .email(user.getEmail())
                 .password(user.getPassword())
+                .phoneNumber(user.getPhoneNumber())
                 .avatar(user.getAvatar())
                 .accountType(user.getAccountType())
                 .build();

@@ -42,15 +42,15 @@ public class VacancyController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("aplicants/{aplicantId}")
-    public ResponseEntity<?> getAplicants(@PathVariable long aplicantId) {
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("seeker/{seekerId}")
-    public ResponseEntity<?> getSeekers(@PathVariable long seekerId) {
-        return ResponseEntity.ok().build();
-    }
+//    @GetMapping("aplicants/{aplicantId}")
+//    public ResponseEntity<?> getAplicants(@PathVariable long aplicantId) {
+//        return ResponseEntity.ok().build();
+//    }
+//
+//    @GetMapping("seeker/{seekerId}")
+//    public ResponseEntity<?> getSeekers(@PathVariable long seekerId) {
+//        return ResponseEntity.ok().build();
+//    }
 
 
 

@@ -30,6 +30,24 @@ public class UserDao {
                 ));
     }
 
+    public Optional<User> getUserByPhone(String userPhone) {
+        String sql = "select * from users where phone_number = ?";
+
+        return Optional.ofNullable(
+                DataAccessUtils.singleResult(
+                        jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class), userPhone)
+                ));
+    }
+
+    public Optional<User> getUserByEmail(String userEmail) {
+        String sql = "select * from users where email = ?";
+
+        return Optional.ofNullable(
+                DataAccessUtils.singleResult(
+                        jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class), userEmail)
+                ));
+    }
+
     public void addUser(User user) {
         String sql = "insert into users(name, surname, age, email, password, phone_number, avatar, account_type) " +
                 "values(:name, :surname, :age, :email, :password, :phone_number, :avatar, :account_type)";
