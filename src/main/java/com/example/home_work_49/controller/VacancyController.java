@@ -1,7 +1,12 @@
 package com.example.home_work_49.controller;
 
+import com.example.home_work_49.dao.ResumeDao;
+import com.example.home_work_49.dao.VacancyDao;
+import com.example.home_work_49.dto.VacancyDto;
 import com.example.home_work_49.models.Vacancy;
+import com.example.home_work_49.service.VacancyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,10 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("vacancies")
 @RequiredArgsConstructor
 public class VacancyController {
+    private final VacancyService vacancyService;
 
     @PostMapping
-    public ResponseEntity<?> createVacancy(@RequestBody Vacancy vacancy) {
-        return ResponseEntity.ok().build();
+    public HttpStatus createVacancy(@RequestBody VacancyDto vacancyDto) {
+        vacancyService.addVacancy(vacancyDto);
+        return HttpStatus.CREATED;
     }
 
     @PutMapping("{vacancyId}")

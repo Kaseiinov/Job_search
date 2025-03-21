@@ -1,7 +1,10 @@
 package com.example.home_work_49.controller;
 
+import com.example.home_work_49.dto.ResumeDto;
 import com.example.home_work_49.models.Resume;
+import com.example.home_work_49.service.ResumeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,9 +12,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("resumes")
 @RequiredArgsConstructor
 public class ResumeController {
+    private final ResumeService resumeService;
+
     @PostMapping
-    public ResponseEntity<?> createResume(@RequestBody Resume resume) {
-        return ResponseEntity.ok().build();
+    public HttpStatus createResume(@RequestBody ResumeDto resumeDto) {
+        resumeService.addResume(resumeDto);
+        return HttpStatus.CREATED;
     }
 
     @PutMapping("{resumeId}")

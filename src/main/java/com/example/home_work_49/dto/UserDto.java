@@ -1,12 +1,15 @@
-package com.example.home_work_49.models;
+package com.example.home_work_49.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
-@Setter
-@Getter
-public class User {
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserDto {
     private Long id;
     private String name;
     private String surname;
@@ -16,5 +19,4 @@ public class User {
     private String phoneNumber;
     private String avatar;
     private String accountType;
-
 }
