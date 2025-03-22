@@ -38,7 +38,7 @@ public class ResumeController {
     }
 
     @GetMapping("category/{resumeCategory}")
-    public List<ResumeDto> getVacancyByCategory(@PathVariable("resumeCategory") String resumeCategory) {
+    public List<ResumeDto> getResumeByCategory(@PathVariable("resumeCategory") String resumeCategory) {
         return resumeService.getResumeByCategory(resumeCategory);
     }
 
