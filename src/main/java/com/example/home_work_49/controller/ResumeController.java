@@ -42,6 +42,11 @@ public class ResumeController {
         return resumeService.getResumeByCategory(resumeCategory);
     }
 
+    @GetMapping("resumes/{userName}")
+    public List<ResumeDto> getResumeCreatedByUser(@PathVariable String userName) {
+        return resumeService.getResumeByUser(userName);
+    }
+
 //    @PostMapping("apply/{applyId}")
 //    public ResponseEntity<?> applyForJob(@PathVariable Long applyid) {
 //        return ResponseEntity.ok().build();

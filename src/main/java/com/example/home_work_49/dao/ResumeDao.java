@@ -27,6 +27,14 @@ public class ResumeDao {
 
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Resume.class), resumeCategory);
     }
+
+    public List<Resume> getResumeByUser(String userName) {
+        String sql = "select r.*" +
+                " from resumes r join users u on r.applicant_id = u.id where lower(u.name) = lower(?)";
+
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Resume.class), userName);
+    }
+
     public void addResume(Resume resume) {
         String sql = "insert into resumes(applicant_id, name, category_id, salary, is_active, created_date, update_time) " +
                 "values( :applicant_id,:name, :category_id, :salary, :is_active, :created_date, :update_time)";

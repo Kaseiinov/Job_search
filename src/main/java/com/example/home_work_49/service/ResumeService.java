@@ -7,5 +7,7 @@ import java.util.List;
 public interface ResumeService {
     List<ResumeDto> getResumeByCategory(String resumeCategory);
 
+    List<ResumeDto> getResumeByUser(String userName);
+
     void addResume(ResumeDto resumeDto);
 }
