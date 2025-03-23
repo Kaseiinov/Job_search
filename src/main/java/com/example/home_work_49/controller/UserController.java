@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("users")
@@ -17,10 +19,24 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("{userName}")
+    @GetMapping("byName/{userName}")
     public UserDto getUserByName(@PathVariable String userName) {
-        String capUserName = StringUtils.capitalize(userName.toLowerCase());
-        return userService.getUserByName(capUserName);
+        return userService.getUserByName(userName);
+    }
+
+    @GetMapping("byVacancy/{vacancyName})")
+    public List<UserDto> getApplicantsByVacancy(@PathVariable String vacancyName) {
+        return userService.getApplicantsByVacancy(vacancyName);
+    }
+
+    @GetMapping("byPhone/{userPhone}")
+    public UserDto getUserByPhone(@PathVariable String userPhone) {
+        return userService.getUserByPhone(userPhone);
+    }
+
+    @GetMapping("byEmail/{userEmail}")
+    public UserDto getUserByEmail(@PathVariable String userEmail) {
+        return userService.getUserByEmail(userEmail);
     }
 
     @PostMapping
