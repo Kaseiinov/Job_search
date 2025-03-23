@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("users")
@@ -19,8 +21,12 @@ public class UserController {
 
     @GetMapping("byName/{userName}")
     public UserDto getUserByName(@PathVariable String userName) {
-        String capUserName = StringUtils.capitalize(userName.toLowerCase());
-        return userService.getUserByName(capUserName);
+        return userService.getUserByName(userName);
+    }
+
+    @GetMapping("byVacancy/{vacancyName})")
+    public List<UserDto> getApplicantsByVacancy(@PathVariable String vacancyName) {
+        return userService.getApplicantsByVacancy(vacancyName);
     }
 
     @GetMapping("byPhone/{userPhone}")

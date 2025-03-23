@@ -2,12 +2,16 @@ package com.example.home_work_49.service;
 
 import com.example.home_work_49.dto.UserDto;
 
+import java.util.List;
+
 public interface UserService {
     UserDto getUserByName(String userName);
 
     UserDto getUserByPhone(String phoneNumber);
 
     UserDto getUserByEmail(String userEmail);
+
+    List<UserDto> getApplicantsByVacancy(String vacancyName);
 
     void addUser(UserDto userDto);
 }

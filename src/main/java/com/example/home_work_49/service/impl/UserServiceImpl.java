@@ -1,12 +1,15 @@
 package com.example.home_work_49.service.impl;
 
 import com.example.home_work_49.dao.UserDao;
+import com.example.home_work_49.dto.ResumeDto;
 import com.example.home_work_49.dto.UserDto;
 import com.example.home_work_49.exceptions.UserNotFoundException;
 import com.example.home_work_49.models.User;
 import com.example.home_work_49.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +39,24 @@ public class UserServiceImpl implements UserService {
         return builder(user);
     }
 
+    @Override
+    public List<UserDto> getApplicantsByVacancy(String vacancyName) {
+        List<User> userList =  userDao.getApplicantsByVacancy(vacancyName);
+
+        return userList.stream()
+                .map(e -> UserDto
+                        .builder()
+                        .id(e.getId())
+                        .name(e.getName())
+                        .surname(e.getSurname())
+                        .age(e.getAge())
+                        .email(e.getEmail())
+                        .phoneNumber(e.getPhoneNumber())
+                        .avatar(e.getAvatar())
+                        .accountType(e.getAccountType())
+                        .build())
+                .toList();
+    }
 
     private UserDto builder(User user) {
         return UserDto.builder()
