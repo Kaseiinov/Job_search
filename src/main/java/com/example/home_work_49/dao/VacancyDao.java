@@ -1,5 +1,6 @@
 package com.example.home_work_49.dao;
 
+import com.example.home_work_49.dto.VacancyDto;
 import com.example.home_work_49.models.Resume;
 import com.example.home_work_49.models.User;
 import com.example.home_work_49.models.Vacancy;
@@ -21,10 +22,45 @@ public class VacancyDao {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final KeyHolder keyHolder = new GeneratedKeyHolder();
 
+    public void deleteVacancyById(Long id) {
+        String sql = "delete from vacancy where id = ?";
+        jdbcTemplate.update(sql, id);
+    }
+
     public List<Vacancy> getAllVacancies() {
         String sql  = "select * from vacancies";
 
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Vacancy.class));
+    }
+
+    public void updateVacancyById(Long id, Vacancy vacancy){
+        String sql = "UPDATE vacancies SET " +
+                "name = :name, " +
+                "description = :description, " +
+                "category_id = :categoryId, " +
+                "salary = :salary, " +
+                "exp_from = :expFrom, " +
+                "exp_to = :expTo " +
+                "is_active = :isActive " +
+                "author_id = :authorId " +
+                "created_date = :createdDate " +
+                "update_time = :updateTime " +
+                "WHERE id = :id";
+
+        namedParameterJdbcTemplate.update(sql,
+                new MapSqlParameterSource()
+                        .addValue("name", vacancy.getName())
+                        .addValue("description", vacancy.getDescription())
+                        .addValue("categoryId", vacancy.getCategoryId())
+                        .addValue("salary", vacancy.getSalary())
+                        .addValue("expFrom", vacancy.getExpFrom())
+                        .addValue("expTo", vacancy.getExpTo())
+                        .addValue("isActive", vacancy.isActive())
+                        .addValue("authorId", vacancy.getAuthorId())
+                        .addValue("createdDate", vacancy.getCreatedDate())
+                        .addValue("updateTime", vacancy.getUpdateTime())
+                        .addValue("id", id)
+        );
     }
 
     public List<Vacancy> getVacancyByCategory(String vacancyCategory) {

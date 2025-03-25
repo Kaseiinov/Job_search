@@ -37,30 +37,21 @@ public class VacancyController {
     }
 
     @PutMapping("{vacancyId}")
-    public ResponseEntity<?> updateVacancy(@PathVariable("vacancyId") Long vacancyId) {
-        return ResponseEntity.ok().build();
+    public HttpStatus updateVacancy(@PathVariable("vacancyId") Long vacancyId, @RequestBody VacancyDto vacancyDto) {
+        vacancyService.updateVacancyById(vacancyId, vacancyDto);
+        return HttpStatus.OK;
     }
 
-    @DeleteMapping({"vacancyId"})
-    public ResponseEntity<?> deleteVacancy(@PathVariable("vacancyId") Long vacancyId) {
-        return ResponseEntity.noContent().build();
+    @DeleteMapping("{vacancyId}")
+    public HttpStatus deleteVacancyById(@PathVariable("vacancyId") Long vacancyId) {
+        vacancyService.deleteVacancyById(vacancyId);
+        return HttpStatus.OK;
     }
 
     @GetMapping("category/{vacancyCategory}")
     public List<VacancyDto> getVacancyByCategory(@PathVariable("vacancyCategory") String vacancyCategory) {
         return vacancyService.getVacancyByCategory(vacancyCategory);
     }
-
-//    @GetMapping("aplicants/{aplicantId}")
-//    public ResponseEntity<?> getAplicants(@PathVariable long aplicantId) {
-//        return ResponseEntity.ok().build();
-//    }
-//
-//    @GetMapping("seeker/{seekerId}")
-//    public ResponseEntity<?> getSeekers(@PathVariable long seekerId) {
-//        return ResponseEntity.ok().build();
-//    }
-
 
 
 }

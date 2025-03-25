@@ -22,6 +22,12 @@ public class ResumeDao {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final KeyHolder keyHolder = new GeneratedKeyHolder();
 
+    public List<Resume> getAllActiveResumes(){
+        String sql = "select * from resumes" +
+                " where is_active = true";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Resume.class));
+    }
+
     public List<Resume> getResumeByCategory(String resumeCategory) {
         String sql = "select r.*, c.name as category" +
                 " from resumes r join categories c on r.category_id = c.id where lower(c.name) = lower(?)";

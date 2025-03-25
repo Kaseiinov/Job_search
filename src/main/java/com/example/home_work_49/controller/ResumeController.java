@@ -39,9 +39,9 @@ public class ResumeController {
         return HttpStatus.OK;
     }
 
-    @GetMapping
-    public ResponseEntity<?> getAllActiveResumes() {
-        return  ResponseEntity.ok().build();
+    @GetMapping("active")
+    public List<ResumeDto> getAllActiveResumes() {
+        return  resumeService.getAllActiveResumes();
     }
 
     @GetMapping("category/{resumeCategory}")

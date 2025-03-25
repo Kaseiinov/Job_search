@@ -16,6 +16,26 @@ public class ResumeServiceImpl implements ResumeService {
     private final ResumeDao resumeDao;
 
     @Override
+    public List<ResumeDto> getAllActiveResumes(){
+        List<Resume> resumes = resumeDao.getAllActiveResumes();
+
+        return resumes
+                .stream()
+                .map(e -> ResumeDto
+                        .builder()
+                        .id(e.getId())
+                        .applicantId(e.getApplicantId())
+                        .name(e.getName())
+                        .categoryId(e.getCategoryId())
+                        .salary(e.getSalary())
+                        .isActive(e.isActive())
+                        .createdDate(e.getCreatedDate())
+                        .updateTime(e.getUpdateTime())
+                        .build())
+                .toList();
+    }
+
+    @Override
     public void updateResumeById(Long id, ResumeDto resumeDto) {
         Resume resume = new Resume();
         resume.setApplicantId(resumeDto.getApplicantId());
