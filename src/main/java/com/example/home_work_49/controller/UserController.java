@@ -1,5 +1,6 @@
 package com.example.home_work_49.controller;
 
+import com.example.home_work_49.dto.ResumeDto;
 import com.example.home_work_49.dto.UserDto;
 import com.example.home_work_49.models.User;
 import com.example.home_work_49.models.Vacancy;
@@ -43,5 +44,11 @@ public class UserController {
     public HttpStatus registerUser(@RequestBody UserDto userDto) {
         userService.addUser(userDto);
         return HttpStatus.CREATED;
+    }
+
+    @PutMapping("{userName}")
+    public HttpStatus updateUserByName(@PathVariable("userName") String userName, @RequestBody UserDto userDto) {
+        userService.updateUserByName(userName, userDto);
+        return HttpStatus.OK;
     }
 }

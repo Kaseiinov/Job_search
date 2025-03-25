@@ -1,7 +1,6 @@
 package com.example.home_work_49.service.impl;
 
 import com.example.home_work_49.dao.UserDao;
-import com.example.home_work_49.dto.ResumeDto;
 import com.example.home_work_49.dto.UserDto;
 import com.example.home_work_49.exceptions.UserNotFoundException;
 import com.example.home_work_49.models.User;
@@ -15,6 +14,21 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
+
+    @Override
+    public void updateUserByName(String name, UserDto userDto) {
+        User user = new User();
+        user.setName(userDto.getName());
+        user.setSurname(userDto.getSurname());
+        user.setAge(userDto.getAge());
+        user.setEmail(userDto.getEmail());
+        user.setPassword(userDto.getPassword());
+        user.setPhoneNumber(userDto.getPhoneNumber());
+        user.setAvatar(userDto.getAvatar());
+        user.setAccountType(userDto.getAccountType());
+
+        userDao.updateUserByName(name, user);
+    }
 
     @Override
     public UserDto getUserByName(String userName) {

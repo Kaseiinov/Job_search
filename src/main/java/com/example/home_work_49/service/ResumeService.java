@@ -5,6 +5,12 @@ import com.example.home_work_49.dto.ResumeDto;
 import java.util.List;
 
 public interface ResumeService {
+    void updateResumeById(Long id, ResumeDto resumeDto);
+
+    void deleteResumeById(Long id);
+
+    ResumeDto getResumeById(Long id);
+
     List<ResumeDto> getResumeByCategory(String resumeCategory);
 
     List<ResumeDto> getResumeByUser(String userName);

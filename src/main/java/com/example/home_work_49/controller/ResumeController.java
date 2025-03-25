@@ -22,14 +22,21 @@ public class ResumeController {
         return HttpStatus.CREATED;
     }
 
+    @GetMapping("{resumeId}")
+    public ResumeDto getResumeById(@PathVariable("resumeId") Long resumeId) {
+        return resumeService.getResumeById(resumeId);
+    }
+
     @PutMapping("{resumeId}")
-    public ResponseEntity<?> updateResume(@PathVariable("resumeId") Long resumeId) {
-        return ResponseEntity.ok().build();
+    public HttpStatus updateResume(@PathVariable("resumeId") Long resumeId, @RequestBody ResumeDto resumeDto) {
+        resumeService.updateResumeById(resumeId, resumeDto);
+        return HttpStatus.OK;
     }
 
     @DeleteMapping("{resumeId}")
-    public ResponseEntity<?> deleteResume(@PathVariable("resumeId") Long resumeId) {
-        return ResponseEntity.noContent().build();
+    public HttpStatus deleteResume(@PathVariable("resumeId") Long resumeId) {
+        resumeService.deleteResumeById(resumeId);
+        return HttpStatus.OK;
     }
 
     @GetMapping

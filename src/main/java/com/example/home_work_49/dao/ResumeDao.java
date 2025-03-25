@@ -13,6 +13,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -34,6 +35,45 @@ public class ResumeDao {
 
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Resume.class), userName);
     }
+
+    public Optional<Resume> getResumeById(Long id){
+        String sql = "select * from  resumes where id = ?";
+        return Optional.ofNullable(
+                DataAccessUtils.singleResult(
+                        jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Resume.class), id)
+                )
+        );
+    }
+
+    public void deleteResumeById(Long id){
+        String sql = "delete from resumes where id = ?";
+        jdbcTemplate.update(sql, id);
+    }
+
+    public void updateResumeById(Long id, Resume resume){
+        String sql = "UPDATE resumes SET " +
+                "applicant_id = :applicantId, " +
+                "name = :name, " +
+                "category_id = :categoryId, " +
+                "salary = :salary, " +
+                "is_active = :isActive, " +
+                "created_date = :createdDate, " +
+                "update_time = :updateTime " +
+                "WHERE id = :id";
+
+        namedParameterJdbcTemplate.update(sql,
+                new MapSqlParameterSource()
+                        .addValue("applicantId", resume.getApplicantId())
+                        .addValue("name", resume.getName())
+                        .addValue("categoryId", resume.getCategoryId())
+                        .addValue("salary", resume.getSalary())
+                        .addValue("isActive", resume.isActive())
+                        .addValue("createdDate", resume.getCreatedDate())
+                        .addValue("updateTime", resume.getUpdateTime())
+                        .addValue("id", id)
+        );
+    }
+
 
     public void addResume(Resume resume) {
         String sql = "insert into resumes(applicant_id, name, category_id, salary, is_active, created_date, update_time) " +

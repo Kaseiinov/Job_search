@@ -2,6 +2,7 @@ package com.example.home_work_49.service.impl;
 
 import com.example.home_work_49.dao.ResumeDao;
 import com.example.home_work_49.dto.ResumeDto;
+import com.example.home_work_49.exceptions.ResumeNotFoundException;
 import com.example.home_work_49.models.Resume;
 import com.example.home_work_49.service.ResumeService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,40 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ResumeServiceImpl implements ResumeService {
     private final ResumeDao resumeDao;
+
+    @Override
+    public void updateResumeById(Long id, ResumeDto resumeDto) {
+        Resume resume = new Resume();
+        resume.setApplicantId(resumeDto.getApplicantId());
+        resume.setName(resumeDto.getName());
+        resume.setCategoryId(resumeDto.getCategoryId());
+        resume.setSalary(resumeDto.getSalary());
+        resume.setActive(resumeDto.isActive());
+        resume.setCreatedDate(resumeDto.getCreatedDate());
+        resume.setUpdateTime(resumeDto.getUpdateTime());
+
+        resumeDao.updateResumeById(id, resume);
+    }
+
+    @Override
+    public void deleteResumeById(Long id){
+        resumeDao.deleteResumeById(id);
+    }
+
+    @Override
+    public ResumeDto getResumeById(Long id){
+        Resume resume = resumeDao.getResumeById(id).orElseThrow(ResumeNotFoundException::new);
+        return ResumeDto.builder()
+                .id(resume.getId())
+                .applicantId(resume.getApplicantId())
+                .name(resume.getName())
+                .categoryId(resume.getCategoryId())
+                .salary(resume.getSalary())
+                .isActive(resume.isActive())
+                .createdDate(resume.getCreatedDate())
+                .updateTime(resume.getUpdateTime())
+                .build();
+    }
 
     @Override
     public List<ResumeDto> getResumeByCategory(String resumeCategory) {

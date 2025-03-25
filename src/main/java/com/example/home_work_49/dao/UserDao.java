@@ -1,6 +1,7 @@
 package com.example.home_work_49.dao;
 
 import com.example.home_work_49.dto.UserDto;
+import com.example.home_work_49.models.Resume;
 import com.example.home_work_49.models.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.support.DataAccessUtils;
@@ -21,6 +22,32 @@ public class UserDao {
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final KeyHolder keyHolder = new GeneratedKeyHolder();
+
+    public void updateUserByName(String userName, User user){
+        String sql = "UPDATE users SET " +
+                "name = :name, " +
+                "surename = :surename, " +
+                "age = :age, " +
+                "email = :email, " +
+                "password = :password, " +
+                "phone_number = :phoneNumber " +
+                "avatar = :avatar " +
+                "account_type = :accountType " +
+                "WHERE lower(name) = lower(:userName)";
+
+        namedParameterJdbcTemplate.update(sql,
+                new MapSqlParameterSource()
+                        .addValue("name", user.getName())
+                        .addValue("surename", user.getSurname())
+                        .addValue("age", user.getAge())
+                        .addValue("email", user.getEmail())
+                        .addValue("password", user.getPassword())
+                        .addValue("phoneNumber", user.getPhoneNumber())
+                        .addValue("avatar", user.getAvatar())
+                        .addValue("account_type", user.getAccountType())
+                        .addValue("name", userName)
+        );
+    }
 
     public Optional<User> getUserByName(String userName) {
         String sql = "select * from users where lower(name) = lower(?)";
