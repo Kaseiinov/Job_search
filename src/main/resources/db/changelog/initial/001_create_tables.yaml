@@ -67,6 +67,14 @@ databaseChangeLog:
               - column:
                   name: parent_id
                   type: INT
+        - addForeignKeyConstraint:
+            baseTableName: categories
+            baseColumnNames: parent_id
+            constraintName: fk_categories_parent_id
+            referencedTableName: categories
+            referencedColumnNames: id
+            onDelete: SET NULL
+            onUpdate: CASCADE
 
         - createTable:
             tableName: vacancies
@@ -115,6 +123,22 @@ databaseChangeLog:
                   name: update_time
                   type: TIMESTAMP
                   defaultValueComputed: CURRENT_TIMESTAMP
+        - addForeignKeyConstraint:
+            baseTableName: vacancies
+            baseColumnNames: category_id
+            constraintName: fk_vacancies_category_id
+            referencedTableName: categories
+            referencedColumnNames: id
+            onDelete: SET NULL
+            onUpdate: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: vacancies
+            baseColumnNames: author_id
+            constraintName: fk_vacancies_author_id
+            referencedTableName: users
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
 
         - createTable:
             tableName: resumes
@@ -154,6 +178,22 @@ databaseChangeLog:
                   name: update_time
                   type: TIMESTAMP
                   defaultValueComputed: CURRENT_TIMESTAMP
+        - addForeignKeyConstraint:
+            baseTableName: resumes
+            baseColumnNames: applicant_id
+            constraintName: fk_resumes_applicant_id
+            referencedTableName: users
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: resumes
+            baseColumnNames: category_id
+            constraintName: fk_resumes_category_id
+            referencedTableName: categories
+            referencedColumnNames: id
+            onDelete: SET NULL
+            onUpdate: CASCADE
 
         - createTable:
             tableName: responded_applicants
@@ -179,6 +219,22 @@ databaseChangeLog:
                   name: confirmation
                   type: BOOLEAN
                   defaultValueBoolean: false
+        - addForeignKeyConstraint:
+            baseTableName: responded_applicants
+            baseColumnNames: resume_id
+            constraintName: fk_responded_applicants_resume_id
+            referencedTableName: resumes
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: responded_applicants
+            baseColumnNames: vacancy_id
+            constraintName: fk_responded_applicants_vacancy_id
+            referencedTableName: vacancies
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
 
         - createTable:
             tableName: messages
@@ -204,6 +260,14 @@ databaseChangeLog:
                   name: timestamp
                   type: TIMESTAMP
                   defaultValueComputed: CURRENT_TIMESTAMP
+        - addForeignKeyConstraint:
+            baseTableName: messages
+            baseColumnNames: responded_applicant_id
+            constraintName: fk_messages_responded_applicant_id
+            referencedTableName: responded_applicants
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
 
         - createTable:
             tableName: education_info
@@ -243,6 +307,58 @@ databaseChangeLog:
                   type: VARCHAR(255)
                   constraints:
                     nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: education_info
+            baseColumnNames: resume_id
+            constraintName: fk_education_info_resume_id
+            referencedTableName: resumes
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
+
+        - createTable:
+            tableName: work_experience_info
+            columns:
+              - column:
+                  name: id
+                  type: INTEGER
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: resume_id
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: years
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: company_name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: position
+                  type: varchar
+                  constraints:
+                    nullable: false
+              - column:
+                  name: responsibilities
+                  type: varchar
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: work_experience_info
+            baseColumnNames: resume_id
+            constraintName: fk_work_experience_info_resume_id
+            referencedTableName: resumes
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
 
         - createTable:
             tableName: contact_types
@@ -286,3 +402,19 @@ databaseChangeLog:
                   type: VARCHAR(255)
                   constraints:
                     nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: contacts_info
+            baseColumnNames: type_id
+            constraintName: fk_contacts_info_type_id
+            referencedTableName: contact_types
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: contacts_info
+            baseColumnNames: resume_id
+            constraintName: fk_contacts_info_resume_id
+            referencedTableName: resumes
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
