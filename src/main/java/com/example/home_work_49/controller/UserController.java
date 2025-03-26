@@ -24,7 +24,7 @@ public class UserController {
         return userService.getUserByName(userName);
     }
 
-    @GetMapping("byVacancy/{vacancyName})")
+    @GetMapping("byVacancy/{vacancyName}")
     public List<UserDto> getApplicantsByVacancy(@PathVariable String vacancyName) {
         return userService.getApplicantsByVacancy(vacancyName);
     }
