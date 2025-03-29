@@ -2,6 +2,7 @@ package com.example.home_work_49.service.impl;
 
 import com.example.home_work_49.dao.UserDao;
 import com.example.home_work_49.dto.UserDto;
+import com.example.home_work_49.exceptions.SuchEmailAlreadyExistsException;
 import com.example.home_work_49.exceptions.UserNotFoundException;
 import com.example.home_work_49.models.User;
 import com.example.home_work_49.service.UserService;
@@ -16,7 +17,8 @@ public class UserServiceImpl implements UserService {
     private final UserDao userDao;
 
     @Override
-    public void updateUserByName(String name, UserDto userDto) {
+    public void updateUserByName(String name, UserDto userDto) throws SuchEmailAlreadyExistsException {
+        userDao.getUserByName(name).orElseThrow(UserNotFoundException::new);
         User user = new User();
         user.setName(userDto.getName());
         user.setSurname(userDto.getSurname());
@@ -27,7 +29,13 @@ public class UserServiceImpl implements UserService {
         user.setAvatar(userDto.getAvatar());
         user.setAccountType(userDto.getAccountType());
 
-        userDao.updateUserByName(name, user);
+        boolean isExists = userDao.emailExists(user.getEmail());
+        if(isExists){
+            throw new SuchEmailAlreadyExistsException();
+        }else{
+            userDao.updateUserByName(name, user);
+        }
+
     }
 
     @Override
@@ -87,7 +95,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(UserDto userDto){
+    public void addUser(UserDto userDto) throws SuchEmailAlreadyExistsException {
+
         User user = new User();
         user.setName(userDto.getName());
         user.setSurname(userDto.getSurname());
@@ -98,6 +107,11 @@ public class UserServiceImpl implements UserService {
         user.setAvatar(userDto.getAvatar());
         user.setAccountType(userDto.getAccountType());
 
-        userDao.addUser(user);
+        boolean isExists = userDao.emailExists(user.getEmail());
+        if(isExists){
+            throw new SuchEmailAlreadyExistsException();
+        }else{
+            userDao.addUser(user);
+        }
     }
 }

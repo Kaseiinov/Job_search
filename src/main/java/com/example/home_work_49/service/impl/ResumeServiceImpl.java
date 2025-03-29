@@ -37,6 +37,8 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public void updateResumeById(Long id, ResumeDto resumeDto) {
+        boolean exist = resumeDao.resumeIdExists(id);
+
         Resume resume = new Resume();
         resume.setApplicantId(resumeDto.getApplicantId());
         resume.setName(resumeDto.getName());
@@ -46,12 +48,23 @@ public class ResumeServiceImpl implements ResumeService {
         resume.setCreatedDate(resumeDto.getCreatedDate());
         resume.setUpdateTime(resumeDto.getUpdateTime());
 
-        resumeDao.updateResumeById(id, resume);
+        if(exist){
+            resumeDao.updateResumeById(id, resume);
+        }else{
+            throw new ResumeNotFoundException();
+        }
+
     }
 
     @Override
     public void deleteResumeById(Long id){
-        resumeDao.deleteResumeById(id);
+        boolean exist = resumeDao.resumeIdExists(id);
+        if(exist){
+            resumeDao.deleteResumeById(id);
+        }else{
+            throw new ResumeNotFoundException();
+
+        }
     }
 
     @Override

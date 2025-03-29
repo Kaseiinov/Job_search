@@ -22,6 +22,13 @@ public class VacancyDao {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final KeyHolder keyHolder = new GeneratedKeyHolder();
 
+    public boolean vacancyIdExists(Long id) {
+        String isExistsCheck = "SELECT EXISTS(SELECT 1 FROM vacancies WHERE id = ?)";
+        boolean exists = jdbcTemplate.queryForObject(isExistsCheck, Boolean.class, id);
+
+        return exists;
+    }
+
     public void deleteVacancyById(Long id) {
         String sql = "delete from vacancy where id = ?";
         jdbcTemplate.update(sql, id);

@@ -2,6 +2,7 @@ package com.example.home_work_49.service.impl;
 
 import com.example.home_work_49.dao.VacancyDao;
 import com.example.home_work_49.dto.VacancyDto;
+import com.example.home_work_49.exceptions.VacancyNotFoundException;
 import com.example.home_work_49.models.Vacancy;
 import com.example.home_work_49.service.VacancyService;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +19,18 @@ public class VacancyServiceImpl implements VacancyService {
 
     @Override
     public void deleteVacancyById(Long id) {
-        vacancyDao.deleteVacancyById(id);
+        boolean exists = vacancyDao.vacancyIdExists(id);
+        if(exists){
+            vacancyDao.deleteVacancyById(id);
+        }else{
+            throw new VacancyNotFoundException();
+        }
     }
 
     @Override
     public void updateVacancyById(Long id, VacancyDto vacancyDto) {
+        boolean exists = vacancyDao.vacancyIdExists(id);
+
         Vacancy vacancy = new Vacancy();
         vacancy.setName(vacancyDto.getName());
         vacancy.setDescription(vacancyDto.getDescription());
@@ -35,7 +43,11 @@ public class VacancyServiceImpl implements VacancyService {
         vacancy.setCreatedDate(vacancyDto.getCreatedDate());
         vacancy.setUpdateTime(vacancyDto.getUpdateTime());
 
-        vacancyDao.updateVacancyById(id, vacancy);
+        if(exists){
+            vacancyDao.updateVacancyById(id, vacancy);
+        }else{
+            throw new VacancyNotFoundException();
+        }
     }
 
     @Override

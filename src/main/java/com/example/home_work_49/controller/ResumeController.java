@@ -3,6 +3,7 @@ package com.example.home_work_49.controller;
 import com.example.home_work_49.dto.ResumeDto;
 import com.example.home_work_49.models.Resume;
 import com.example.home_work_49.service.ResumeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class ResumeController {
     private final ResumeService resumeService;
 
     @PostMapping
-    public HttpStatus createResume(@RequestBody ResumeDto resumeDto) {
+    public HttpStatus createResume(@RequestBody @Valid ResumeDto resumeDto) {
         resumeService.addResume(resumeDto);
         return HttpStatus.CREATED;
     }
@@ -28,7 +29,7 @@ public class ResumeController {
     }
 
     @PutMapping("{resumeId}")
-    public HttpStatus updateResume(@PathVariable("resumeId") Long resumeId, @RequestBody ResumeDto resumeDto) {
+    public HttpStatus updateResume(@PathVariable("resumeId") @Valid Long resumeId, @RequestBody ResumeDto resumeDto) {
         resumeService.updateResumeById(resumeId, resumeDto);
         return HttpStatus.OK;
     }

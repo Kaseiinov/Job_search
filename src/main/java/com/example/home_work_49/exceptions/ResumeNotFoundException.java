@@ -1,6 +1,8 @@
 package com.example.home_work_49.exceptions;
 
-public class ResumeNotFoundException extends RuntimeException {
+import java.util.NoSuchElementException;
+
+public class ResumeNotFoundException extends NoSuchElementException {
     public ResumeNotFoundException() {
         super("Resume not found");
     }

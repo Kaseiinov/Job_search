@@ -22,6 +22,14 @@ public class ResumeDao {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final KeyHolder keyHolder = new GeneratedKeyHolder();
 
+    public boolean resumeIdExists(Long id) {
+        String isExistsCheck = "SELECT EXISTS(SELECT 1 FROM resumes WHERE id = ?)";
+        boolean exists = jdbcTemplate.queryForObject(isExistsCheck, Boolean.class, id);
+
+        return exists;
+    }
+
+
     public List<Resume> getAllActiveResumes(){
         String sql = "select * from resumes" +
                 " where is_active = true";

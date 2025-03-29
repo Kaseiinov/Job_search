@@ -26,26 +26,26 @@ public class UserDao {
     public void updateUserByName(String userName, User user){
         String sql = "UPDATE users SET " +
                 "name = :name, " +
-                "surename = :surename, " +
+                "surname = :surname, " +
                 "age = :age, " +
                 "email = :email, " +
                 "password = :password, " +
-                "phone_number = :phoneNumber " +
-                "avatar = :avatar " +
+                "phone_number = :phoneNumber, " +
+                "avatar = :avatar, " +
                 "account_type = :accountType " +
                 "WHERE lower(name) = lower(:userName)";
 
         namedParameterJdbcTemplate.update(sql,
                 new MapSqlParameterSource()
+                        .addValue("userName", userName)
                         .addValue("name", user.getName())
-                        .addValue("surename", user.getSurname())
+                        .addValue("surname", user.getSurname())
                         .addValue("age", user.getAge())
                         .addValue("email", user.getEmail())
                         .addValue("password", user.getPassword())
                         .addValue("phoneNumber", user.getPhoneNumber())
                         .addValue("avatar", user.getAvatar())
-                        .addValue("account_type", user.getAccountType())
-                        .addValue("name", userName)
+                        .addValue("accountType", user.getAccountType())
         );
     }
 
@@ -103,20 +103,28 @@ public class UserDao {
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class), vacancyName);
     }
 
+    public boolean emailExists(String email) {
+        String isExistsCheck = "SELECT EXISTS(SELECT 1 FROM users WHERE email = ?)";
+        boolean exists = jdbcTemplate.queryForObject(isExistsCheck, Boolean.class, email);
+
+        return exists;
+    }
+
     public void addUser(User user) {
         String sql = "insert into users(name, surname, age, email, password, phone_number, avatar, account_type) " +
-                "values(:name, :surname, :age, :email, :password, :phone_number, :avatar, :account_type)";
+                    "values(:name, :surname, :age, :email, :password, :phone_number, :avatar, :account_type)";
 
-        namedParameterJdbcTemplate.update(sql,
-                new MapSqlParameterSource()
-                        .addValue("name", user.getName())
-                        .addValue("surname", user.getSurname())
-                        .addValue("age", user.getAge())
-                        .addValue("email", user.getEmail())
-                        .addValue("password", user.getPassword())
-                        .addValue("phone_number", user.getPhoneNumber())
-                        .addValue("avatar", user.getAvatar())
-                        .addValue("account_type", user.getAccountType())
-        );
+            namedParameterJdbcTemplate.update(sql,
+                    new MapSqlParameterSource()
+                            .addValue("name", user.getName())
+                            .addValue("surname", user.getSurname())
+                            .addValue("age", user.getAge())
+                            .addValue("email", user.getEmail())
+                            .addValue("password", user.getPassword())
+                            .addValue("phone_number", user.getPhoneNumber())
+                            .addValue("avatar", user.getAvatar())
+                            .addValue("account_type", user.getAccountType())
+            );
+
     }
 }
