@@ -872,3 +872,10 @@ com.example.home_work_49.exceptions.SuchEmailAlreadyExistsException: Such email 
 2025-03-29T16:13:49.351+06:00  INFO 17380 --- [Home_work_49] [main] liquibase.command                        : Command execution complete
 2025-03-29T16:13:51.108+06:00  INFO 17380 --- [Home_work_49] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
 2025-03-29T16:13:51.128+06:00  INFO 17380 --- [Home_work_49] [main] c.e.home_work_49.HomeWork49Application   : Started HomeWork49Application in 7.827 seconds (process running for 9.319)
+2025-03-29T16:15:50.913+06:00  INFO 17380 --- [Home_work_49] [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-29T16:15:50.916+06:00  INFO 17380 --- [Home_work_49] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-03-29T16:15:50.921+06:00  INFO 17380 --- [Home_work_49] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2025-03-29T16:23:48.509+06:00  INFO 17380 --- [Home_work_49] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-29T16:23:49.081+06:00  INFO 17380 --- [Home_work_49] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-03-29T16:23:49.125+06:00  INFO 17380 --- [Home_work_49] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-03-29T16:23:49.132+06:00  INFO 17380 --- [Home_work_49] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
