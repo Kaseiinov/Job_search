@@ -845,3 +845,30 @@ com.example.home_work_49.exceptions.SuchEmailAlreadyExistsException: Such email 
 2025-03-29T16:13:38.558+06:00  INFO 18180 --- [Home_work_49] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
 2025-03-29T16:13:38.601+06:00  INFO 18180 --- [Home_work_49] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2025-03-29T16:13:38.605+06:00  INFO 18180 --- [Home_work_49] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-03-29T16:13:44.448+06:00  INFO 17380 --- [Home_work_49] [main] c.e.home_work_49.HomeWork49Application   : Starting HomeWork49Application using Java 17.0.11 with PID 17380 (C:\Users\izlax\IdeaProjects\Home_work_49\target\classes started by izlax in C:\Users\izlax\IdeaProjects\Home_work_49)
+2025-03-29T16:13:44.453+06:00  INFO 17380 --- [Home_work_49] [main] c.e.home_work_49.HomeWork49Application   : No active profile set, falling back to 1 default profile: "default"
+2025-03-29T16:13:47.226+06:00  INFO 17380 --- [Home_work_49] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-29T16:13:47.262+06:00  INFO 17380 --- [Home_work_49] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-29T16:13:47.263+06:00  INFO 17380 --- [Home_work_49] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-29T16:13:47.486+06:00  INFO 17380 --- [Home_work_49] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-29T16:13:47.489+06:00  INFO 17380 --- [Home_work_49] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2959 ms
+2025-03-29T16:13:47.718+06:00  INFO 17380 --- [Home_work_49] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-03-29T16:13:48.290+06:00  INFO 17380 --- [Home_work_49] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn1: url=jdbc:h2:./db/JobSearchDB user=ROOT
+2025-03-29T16:13:48.295+06:00  INFO 17380 --- [Home_work_49] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-03-29T16:13:48.394+06:00  INFO 17380 --- [Home_work_49] [main] liquibase.database                       : Set default schema name to PUBLIC
+2025-03-29T16:13:48.693+06:00  INFO 17380 --- [Home_work_49] [main] liquibase.changelog                      : Reading resource: db/changelog/initial/001_create_tables.yaml
+2025-03-29T16:13:49.168+06:00  INFO 17380 --- [Home_work_49] [main] liquibase.changelog                      : Reading from PUBLIC.DATABASECHANGELOG
+2025-03-29T16:13:49.173+06:00  INFO 17380 --- [Home_work_49] [main] liquibase.changelog                      : Reading resource: db/changelog/initial/001_insert_tables.sql
+2025-03-29T16:13:49.213+06:00  INFO 17380 --- [Home_work_49] [main] liquibase.changelog                      : Reading resource: db/changelog/initial/003_insert_resumes.sql
+2025-03-29T16:13:49.332+06:00  INFO 17380 --- [Home_work_49] [main] liquibase.ui                             : Database is up to date, no changesets to execute
+2025-03-29T16:13:49.335+06:00  INFO 17380 --- [Home_work_49] [main] liquibase.changelog                      : Reading from PUBLIC.DATABASECHANGELOG
+2025-03-29T16:13:49.346+06:00  INFO 17380 --- [Home_work_49] [main] liquibase.util                           : UPDATE SUMMARY
+2025-03-29T16:13:49.346+06:00  INFO 17380 --- [Home_work_49] [main] liquibase.util                           : Run:                          0
+2025-03-29T16:13:49.346+06:00  INFO 17380 --- [Home_work_49] [main] liquibase.util                           : Previously run:               3
+2025-03-29T16:13:49.348+06:00  INFO 17380 --- [Home_work_49] [main] liquibase.util                           : Filtered out:                 0
+2025-03-29T16:13:49.348+06:00  INFO 17380 --- [Home_work_49] [main] liquibase.util                           : -------------------------------
+2025-03-29T16:13:49.348+06:00  INFO 17380 --- [Home_work_49] [main] liquibase.util                           : Total change sets:            3
+2025-03-29T16:13:49.350+06:00  INFO 17380 --- [Home_work_49] [main] liquibase.util                           : Update summary generated
+2025-03-29T16:13:49.351+06:00  INFO 17380 --- [Home_work_49] [main] liquibase.command                        : Command execution complete
+2025-03-29T16:13:51.108+06:00  INFO 17380 --- [Home_work_49] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-03-29T16:13:51.128+06:00  INFO 17380 --- [Home_work_49] [main] c.e.home_work_49.HomeWork49Application   : Started HomeWork49Application in 7.827 seconds (process running for 9.319)

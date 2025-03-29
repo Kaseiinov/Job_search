@@ -1,11 +1,12 @@
 package com.example.home_work_49.service;
 
 import com.example.home_work_49.dto.UserDto;
+import com.example.home_work_49.exceptions.SuchEmailAlreadyExistsException;
 
 import java.util.List;
 
 public interface UserService {
-    void updateUserByName(String name, UserDto userDto);
+    void updateUserByName(String name, UserDto userDto) throws SuchEmailAlreadyExistsException;
 
     UserDto getUserByName(String userName);
 
@@ -15,5 +16,5 @@ public interface UserService {
 
     List<UserDto> getApplicantsByVacancy(String vacancyName);
 
-    void addUser(UserDto userDto);
+    void addUser(UserDto userDto) throws SuchEmailAlreadyExistsException;
 }
