@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004 create table authorities
+      author: Islam Kaseiinov
+      changes:
+        - createTable:
+            tableName: AUTHORITIES
+            columns:
+              - column:
+                  name: id
+                  type: long
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: authority
+                  type: varchar(50)

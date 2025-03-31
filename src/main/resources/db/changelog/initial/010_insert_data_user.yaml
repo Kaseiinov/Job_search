@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 010 insert some data into users
+      author: Islam Kaseiinov
+      changes:
+        - sql:
+            comment: Insert few users into users table
+            sql: |
+              insert into users(name, surname, age, email, password, phone_number, avatar, account_type, enabled, role_id)
+               VALUES  
+                  ('Islam', 'Kaseiinov', 18, 'islam.kaseiinov@email.com', '$2a$12$WB2YUbFcCN0tm44SBcKUjua9yiFBsfB3vW02IjuwzY7HGtlQIKzy2', '+1234567890', 'islam_avatar.jpg', 'ADMIN', TRUE, (select id from roles where role = 'ADMIN')),
+                  ('John', 'Doe', 30, 'john.doe@email.com', '$2a$12$WB2YUbFcCN0tm44SBcKUjua9yiFBsfB3vW02IjuwzY7HGtlQIKzy2', '+1234567890', 'john_avatar.jpg', 'EMPLOYER', TRUE, (select id from roles where role = 'EDITOR')),  
+                  ('Alice', 'Smith', 25, 'alice.smith@email.com', '$2a$12$WB2YUbFcCN0tm44SBcKUjua9yiFBsfB3vW02IjuwzY7HGtlQIKzy2', '+1987654321', 'alice_avatar.png', 'APPLICANT', TRUE, (select id from roles where role = 'READER')),  
+                  ('Bob', 'Brown', 40, 'bob.brown@email.com', '$2a$12$WB2YUbFcCN0tm44SBcKUjua9yiFBsfB3vW02IjuwzY7HGtlQIKzy2', '+1777888999', 'bob_avatar.jpg', 'APPLICANT', TRUE, (select id from roles where role = 'READER'))

@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: 009 insert some data into roles
+      author: Islam Kaseiinov
+      changes:
+        - sql:
+            comment: Insert data into roles
+            sql: |
+              insert into roles(role, authority_id)
+              values 
+              ('ADMIN', (select id from authorities where authority = 'FULL')),
+              ('GUEST', (select id from authorities where authority = 'READ_POSTS')),
+              ('MOD', (select id from authorities where authority = 'DELETE_COMMENTS')),
+              ('EDITOR', (select id from authorities where authority = 'WRITE_POSTS')),
+              ('READER', (select id from authorities where authority = 'READ_POSTS'));

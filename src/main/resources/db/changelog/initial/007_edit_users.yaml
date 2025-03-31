@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: 007 edit users table
+      author: Islam Kaseiinov
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: enabled
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role_id
+                  type: long
+                  constraints:
+                    foreignKeyName: fk_roles_id
+                    references: roles(id)
+                    nullable: false
