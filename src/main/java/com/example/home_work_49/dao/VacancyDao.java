@@ -47,10 +47,10 @@ public class VacancyDao {
                 "category_id = :categoryId, " +
                 "salary = :salary, " +
                 "exp_from = :expFrom, " +
-                "exp_to = :expTo " +
-                "is_active = :isActive " +
-                "author_id = :authorId " +
-                "created_date = :createdDate " +
+                "exp_to = :expTo, " +
+                "is_active = :isActive, " +
+                "author_id = :authorId, " +
+                "created_date = :createdDate, " +
                 "update_time = :updateTime " +
                 "WHERE id = :id";
 
