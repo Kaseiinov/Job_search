@@ -8,6 +8,7 @@ import com.example.home_work_49.models.Vacancy;
 import com.example.home_work_49.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@Slf4j
 @RestController
 @RequestMapping("users")
 @RequiredArgsConstructor
@@ -44,12 +45,14 @@ public class UserController {
 
     @PostMapping("createUser")
     public HttpStatus registerUser(@RequestBody @Valid UserDto userDto) throws SuchEmailAlreadyExistsException {
+        log.info("Creating user: {}", userDto.getEmail());
         userService.addUser(userDto);
         return HttpStatus.CREATED;
     }
 
     @PutMapping("update/{userName}")
     public HttpStatus updateUserByName(@PathVariable("userName") @Valid String userName,  @RequestBody UserDto userDto) throws SuchEmailAlreadyExistsException {
+        log.warn("Updating user: {}", userDto.getEmail());
         userService.updateUserByName(userName, userDto);
         return HttpStatus.OK;
     }

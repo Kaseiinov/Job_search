@@ -9,12 +9,14 @@ import com.example.home_work_49.models.Vacancy;
 import com.example.home_work_49.service.VacancyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("vacancies")
 @RequiredArgsConstructor
@@ -28,6 +30,7 @@ public class VacancyController {
 
     @PostMapping("createVacancy")
     public HttpStatus createVacancy(@RequestBody @Valid VacancyDto vacancyDto) {
+        log.info("Creating vacancy: {}", vacancyDto.getName());
         vacancyService.addVacancy(vacancyDto);
         return HttpStatus.CREATED;
     }
@@ -45,6 +48,7 @@ public class VacancyController {
 
     @DeleteMapping("delete/{vacancyId}")
     public HttpStatus deleteVacancyById(@PathVariable("vacancyId") Long vacancyId) {
+        log.warn("Deleting vacancy: {}", vacancyId);
         vacancyService.deleteVacancyById(vacancyId);
         return HttpStatus.OK;
     }

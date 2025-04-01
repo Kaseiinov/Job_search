@@ -60,21 +60,17 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/users/createUser").permitAll()
 
-                        // Закрытые эндпоинты (требуют авторизации)
                         .requestMatchers(HttpMethod.POST, "/vacancies/create/vacancy").fullyAuthenticated()
                         .requestMatchers(HttpMethod.DELETE, "/vacancies/delete/**").fullyAuthenticated()
                         .requestMatchers(HttpMethod.PUT, "/vacancies/update/**").fullyAuthenticated()
                         .requestMatchers(HttpMethod.POST, "/resumes/createResume").fullyAuthenticated()
                         .requestMatchers(HttpMethod.PUT, "/users/update/**").fullyAuthenticated()
 
-                        // Открытые эндпоинты (вакансии и резюме)
                         .requestMatchers("/vacancies/**").permitAll()
                         .requestMatchers("/resumes/**").permitAll()
 
-                        // Все остальные запросы к /users требуют авторизации
                         .requestMatchers("/users/**").fullyAuthenticated()
 
-                        // Блокировка неучтенных эндпоинтов
                         .anyRequest().denyAll()
                 );
 
