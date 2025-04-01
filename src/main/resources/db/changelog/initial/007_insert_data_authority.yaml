@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 008 insert some data into authority
+      id: 007 insert some data into authority
       author: Islam Kaseiinov
       changes:
         - sql:

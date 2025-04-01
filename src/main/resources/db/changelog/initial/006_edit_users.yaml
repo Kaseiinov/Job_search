@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 007 edit users table
+      id: 006 edit users table
       author: Islam Kaseiinov
       changes:
         - addColumn:

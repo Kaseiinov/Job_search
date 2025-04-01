@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 010 insert some data into users
+      id: 009 insert some data into users
       author: Islam Kaseiinov
       changes:
         - sql:
