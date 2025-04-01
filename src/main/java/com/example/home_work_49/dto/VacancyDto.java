@@ -1,6 +1,7 @@
 package com.example.home_work_49.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +23,7 @@ public class VacancyDto {
     private Integer expFrom;
     private Integer expTo;
     private boolean isActive;
-    @NotBlank
+    @NotNull
     private Long authorId;
     private LocalDateTime createdDate;
     private LocalDateTime updateTime;

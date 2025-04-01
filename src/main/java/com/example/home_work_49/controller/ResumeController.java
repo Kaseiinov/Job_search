@@ -17,7 +17,7 @@ import java.util.List;
 public class ResumeController {
     private final ResumeService resumeService;
 
-    @PostMapping
+    @PostMapping("createResume")
     public HttpStatus createResume(@RequestBody @Valid ResumeDto resumeDto) {
         resumeService.addResume(resumeDto);
         return HttpStatus.CREATED;

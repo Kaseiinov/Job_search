@@ -26,7 +26,7 @@ public class VacancyController {
         return vacancyService.getAllVacancies();
     }
 
-    @PostMapping
+    @PostMapping("createVacancy")
     public HttpStatus createVacancy(@RequestBody @Valid VacancyDto vacancyDto) {
         vacancyService.addVacancy(vacancyDto);
         return HttpStatus.CREATED;
@@ -37,13 +37,13 @@ public class VacancyController {
         return vacancyService.getVacancyByApplicant(applicantName);
     }
 
-    @PutMapping("{vacancyId}")
+    @PutMapping("update/{vacancyId}")
     public HttpStatus updateVacancy(@PathVariable("vacancyId") @Valid Long vacancyId, @RequestBody VacancyDto vacancyDto) {
         vacancyService.updateVacancyById(vacancyId, vacancyDto);
         return HttpStatus.OK;
     }
 
-    @DeleteMapping("{vacancyId}")
+    @DeleteMapping("delete/{vacancyId}")
     public HttpStatus deleteVacancyById(@PathVariable("vacancyId") Long vacancyId) {
         vacancyService.deleteVacancyById(vacancyId);
         return HttpStatus.OK;

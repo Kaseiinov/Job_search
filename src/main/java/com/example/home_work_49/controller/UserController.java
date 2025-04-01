@@ -42,13 +42,13 @@ public class UserController {
         return userService.getUserByEmail(userEmail);
     }
 
-    @PostMapping
+    @PostMapping("createUser")
     public HttpStatus registerUser(@RequestBody @Valid UserDto userDto) throws SuchEmailAlreadyExistsException {
         userService.addUser(userDto);
         return HttpStatus.CREATED;
     }
 
-    @PutMapping("{userName}")
+    @PutMapping("update/{userName}")
     public HttpStatus updateUserByName(@PathVariable("userName") @Valid String userName,  @RequestBody UserDto userDto) throws SuchEmailAlreadyExistsException {
         userService.updateUserByName(userName, userDto);
         return HttpStatus.OK;

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -57,7 +58,24 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().permitAll()
+                        .requestMatchers(HttpMethod.POST, "/users/createUser").permitAll()
+
+                        // Закрытые эндпоинты (требуют авторизации)
+                        .requestMatchers(HttpMethod.POST, "/vacancies/create/vacancy").fullyAuthenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/vacancies/delete/**").fullyAuthenticated()
+                        .requestMatchers(HttpMethod.PUT, "/vacancies/update/**").fullyAuthenticated()
+                        .requestMatchers(HttpMethod.POST, "/resumes/createResume").fullyAuthenticated()
+                        .requestMatchers(HttpMethod.PUT, "/users/update/**").fullyAuthenticated()
+
+                        // Открытые эндпоинты (вакансии и резюме)
+                        .requestMatchers("/vacancies/**").permitAll()
+                        .requestMatchers("/resumes/**").permitAll()
+
+                        // Все остальные запросы к /users требуют авторизации
+                        .requestMatchers("/users/**").fullyAuthenticated()
+
+                        // Блокировка неучтенных эндпоинтов
+                        .anyRequest().denyAll()
                 );
 
         return http.build();
