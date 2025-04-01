@@ -30,7 +30,7 @@ public class VacancyDao {
     }
 
     public void deleteVacancyById(Long id) {
-        String sql = "delete from vacancy where id = ?";
+        String sql = "delete from vacancies where id = ?";
         jdbcTemplate.update(sql, id);
     }
 
