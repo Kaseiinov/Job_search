@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: 006 drop values in users
+      author: Islam Kaseiinov
+      changes:
+        - sql:
+            comment: Delete values in users
+            sql: "delete from users"
