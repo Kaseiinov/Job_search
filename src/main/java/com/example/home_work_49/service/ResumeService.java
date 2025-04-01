@@ -1,6 +1,7 @@
 package com.example.home_work_49.service;
 
 import com.example.home_work_49.dto.ResumeDto;
+import com.example.home_work_49.dto.WorkExperienceInfoDto;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ public interface ResumeService {
     List<ResumeDto> getResumeByCategory(String resumeCategory);
 
     List<ResumeDto> getResumeByUser(String userName);
+
+    void addWorkExperienceInfo(WorkExperienceInfoDto workExpDto);
 
     void addResume(ResumeDto resumeDto);
 }

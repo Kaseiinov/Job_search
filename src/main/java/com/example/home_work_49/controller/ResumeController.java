@@ -1,6 +1,7 @@
 package com.example.home_work_49.controller;
 
 import com.example.home_work_49.dto.ResumeDto;
+import com.example.home_work_49.dto.WorkExperienceInfoDto;
 import com.example.home_work_49.models.Resume;
 import com.example.home_work_49.service.ResumeService;
 import jakarta.validation.Valid;
@@ -18,6 +19,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ResumeController {
     private final ResumeService resumeService;
+
+    @PostMapping("createWorkExperienceInfo")
+    public HttpStatus createWorkExperience(@RequestBody @Valid WorkExperienceInfoDto workExperienceInfoDto) {
+        log.info("Creating work experience info");
+        resumeService.addWorkExperienceInfo(workExperienceInfoDto);
+        return HttpStatus.CREATED;
+    }
 
     @PostMapping("createResume")
     public HttpStatus createResume(@RequestBody @Valid ResumeDto resumeDto) {

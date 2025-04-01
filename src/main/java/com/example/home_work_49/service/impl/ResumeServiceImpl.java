@@ -2,8 +2,10 @@ package com.example.home_work_49.service.impl;
 
 import com.example.home_work_49.dao.ResumeDao;
 import com.example.home_work_49.dto.ResumeDto;
+import com.example.home_work_49.dto.WorkExperienceInfoDto;
 import com.example.home_work_49.exceptions.ResumeNotFoundException;
 import com.example.home_work_49.models.Resume;
+import com.example.home_work_49.models.WorkExperienceInfo;
 import com.example.home_work_49.service.ResumeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -118,6 +120,18 @@ public class ResumeServiceImpl implements ResumeService {
                         .updateTime(e.getUpdateTime())
                         .build())
                 .toList();
+    }
+
+    @Override
+    public void addWorkExperienceInfo(WorkExperienceInfoDto workExpDto) {
+        WorkExperienceInfo workExp = new WorkExperienceInfo();
+        workExp.setResumeId(workExpDto.getResumeId());
+        workExp.setYears(workExpDto.getYears());
+        workExp.setCompanyName(workExpDto.getCompanyName());
+        workExp.setPosition(workExpDto.getPosition());
+        workExp.setResponsibilities(workExpDto.getResponsibilities());
+
+        resumeDao.addWorkExperienceInfo(workExp);
     }
 
     @Override
