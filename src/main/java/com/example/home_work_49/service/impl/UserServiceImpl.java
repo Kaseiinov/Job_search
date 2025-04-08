@@ -7,6 +7,7 @@ import com.example.home_work_49.exceptions.UserNotFoundException;
 import com.example.home_work_49.models.User;
 import com.example.home_work_49.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void updateUserByName(String name, UserDto userDto) throws SuchEmailAlreadyExistsException {
@@ -102,10 +104,12 @@ public class UserServiceImpl implements UserService {
         user.setSurname(userDto.getSurname());
         user.setAge(userDto.getAge());
         user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setPhoneNumber(userDto.getPhoneNumber());
         user.setAvatar(userDto.getAvatar());
-        user.setAccountType(userDto.getAccountType());
+        user.setAccountType(userDto.getAccountType().toUpperCase());
+        user.setEnabled(true);
+        user.setRoleId(4L);
 
         boolean isExists = userDao.emailExists(user.getEmail());
         if(isExists){

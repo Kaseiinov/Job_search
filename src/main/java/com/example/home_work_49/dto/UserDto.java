@@ -1,9 +1,6 @@
 package com.example.home_work_49.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,20 +16,23 @@ public class UserDto {
     private String name;
     @NotBlank
     private String surname;
-
+    @PositiveOrZero
     private Integer age;
-
     @Email
     @NotBlank
     private String email;
-
     @NotBlank
     @Size(min = 4, max = 24, message = "Length must be >= 4 and <= 24")
     @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{4,24}$", message = "Should contain at least one uppercase letter and one lowercase letter and at least one number")
     private String password;
+    @NotBlank
     private String phoneNumber;
     private String avatar;
 
     @NotBlank
+    @Pattern(regexp = "(?i)employer|applicant|admin", message = "Role must be 'Employer', 'Applicant' or 'Admin'")
     private String accountType;
+
+    private Boolean enabled;
+    private Long roleId;
 }

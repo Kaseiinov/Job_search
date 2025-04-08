@@ -1,7 +1,5 @@
 package com.example.home_work_49.dao;
 
-import com.example.home_work_49.dto.UserDto;
-import com.example.home_work_49.models.Resume;
 import com.example.home_work_49.models.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.support.DataAccessUtils;
@@ -35,18 +33,7 @@ public class UserDao {
                 "account_type = :accountType " +
                 "WHERE lower(name) = lower(:userName)";
 
-        namedParameterJdbcTemplate.update(sql,
-                new MapSqlParameterSource()
-                        .addValue("userName", userName)
-                        .addValue("name", user.getName())
-                        .addValue("surname", user.getSurname())
-                        .addValue("age", user.getAge())
-                        .addValue("email", user.getEmail())
-                        .addValue("password", user.getPassword())
-                        .addValue("phoneNumber", user.getPhoneNumber())
-                        .addValue("avatar", user.getAvatar())
-                        .addValue("accountType", user.getAccountType())
-        );
+        namedParameterJdbcTemplate.update(sql, mapper(userName, user));
     }
 
     public Optional<User> getUserByName(String userName) {
@@ -111,20 +98,39 @@ public class UserDao {
     }
 
     public void addUser(User user) {
-        String sql = "insert into users(name, surname, age, email, password, phone_number, avatar, account_type) " +
-                    "values(:name, :surname, :age, :email, :password, :phone_number, :avatar, :account_type)";
+        String sql = "insert into users(name, surname, age, email, password, phone_number, avatar, account_type, enabled, role_id) " +
+                    "values(:name, :surname, :age, :email, :password, :phone_number, :avatar, :account_type, :enabled, :role_id)";
 
-            namedParameterJdbcTemplate.update(sql,
-                    new MapSqlParameterSource()
-                            .addValue("name", user.getName())
-                            .addValue("surname", user.getSurname())
-                            .addValue("age", user.getAge())
-                            .addValue("email", user.getEmail())
-                            .addValue("password", user.getPassword())
-                            .addValue("phone_number", user.getPhoneNumber())
-                            .addValue("avatar", user.getAvatar())
-                            .addValue("account_type", user.getAccountType())
-            );
+            namedParameterJdbcTemplate.update(sql, mapper(user));
 
+    }
+
+    public MapSqlParameterSource mapper(User user){
+        return new MapSqlParameterSource()
+                .addValue("name", user.getName())
+                .addValue("surname", user.getSurname())
+                .addValue("age", user.getAge())
+                .addValue("email", user.getEmail())
+                .addValue("password", user.getPassword())
+                .addValue("phone_number", user.getPhoneNumber())
+                .addValue("avatar", user.getAvatar())
+                .addValue("account_type", user.getAccountType())
+                .addValue("enabled", user.getEnabled())
+                .addValue("role_id", user.getRoleId());
+    }
+
+    public MapSqlParameterSource mapper(String userName, User user){
+        return new MapSqlParameterSource()
+                .addValue("userName", userName)
+                .addValue("name", user.getName())
+                .addValue("surname", user.getSurname())
+                .addValue("age", user.getAge())
+                .addValue("email", user.getEmail())
+                .addValue("password", user.getPassword())
+                .addValue("phone_number", user.getPhoneNumber())
+                .addValue("avatar", user.getAvatar())
+                .addValue("account_type", user.getAccountType())
+                .addValue("enabled", user.getEnabled())
+                .addValue("role_id", user.getRoleId());
     }
 }
