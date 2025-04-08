@@ -16,6 +16,7 @@ public class UserDto {
     private String name;
     @NotBlank
     private String surname;
+    @NotNull
     @PositiveOrZero
     private Integer age;
     @Email
