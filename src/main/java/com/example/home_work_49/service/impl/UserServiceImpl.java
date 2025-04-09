@@ -29,7 +29,11 @@ public class UserServiceImpl implements UserService {
         user.setPhoneNumber(userDto.getPhoneNumber());
         user.setAvatar(userDto.getAvatar());
         user.setAccountType(userDto.getAccountType().toUpperCase());
-        user.setRoleId(4L);
+        if(userDto.getAccountType().equalsIgnoreCase("applicant")){
+            user.setRoleId(7L);
+        }else{
+            user.setRoleId(6L);
+        }
 
         boolean isExists = userDao.emailExists(user.getEmail());
         if(isExists){
@@ -109,7 +113,11 @@ public class UserServiceImpl implements UserService {
         user.setAvatar(userDto.getAvatar());
         user.setAccountType(userDto.getAccountType().toUpperCase());
         user.setEnabled(true);
-        user.setRoleId(4L);
+        if(userDto.getAccountType().equalsIgnoreCase("applicant")){
+            user.setRoleId(7L);
+        }else{
+            user.setRoleId(6L);
+        }
 
         boolean isExists = userDao.emailExists(user.getEmail());
         if(isExists){

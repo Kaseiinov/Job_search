@@ -58,19 +58,24 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests(authorize -> authorize
+                        // Public endpoints
                         .requestMatchers(HttpMethod.POST, "/users/createUser").permitAll()
 
-                        .requestMatchers(HttpMethod.POST, "/vacancies/create/vacancy").fullyAuthenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/vacancies/delete/**").fullyAuthenticated()
-                        .requestMatchers(HttpMethod.PUT, "/vacancies/update/**").fullyAuthenticated()
-                        .requestMatchers(HttpMethod.POST, "/resumes/createResume").fullyAuthenticated()
+                        // Vacancy endpoints
+                        .requestMatchers(HttpMethod.POST, "/vacancies/createVacancy").hasAnyAuthority("EMPLOYER", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/vacancies/delete/**").hasAnyAuthority("ADMIN", "EMPLOYER")
+                        .requestMatchers(HttpMethod.PUT, "/vacancies/update/**").hasAnyAuthority("ADMIN", "EMPLOYER")
+                        .requestMatchers(HttpMethod.GET, "/vacancies/**").permitAll()
+
+                        // Resume endpoints
+                        .requestMatchers(HttpMethod.POST, "/resumes/createResume").hasAnyAuthority("ADMIN", "APPLICANT")
+                        .requestMatchers(HttpMethod.GET, "/resumes/**").permitAll()
+
+                        // User endpoints
                         .requestMatchers(HttpMethod.PUT, "/users/update/**").fullyAuthenticated()
+                        .requestMatchers("/users/**").authenticated()
 
-                        .requestMatchers("/vacancies/**").permitAll()
-                        .requestMatchers("/resumes/**").permitAll()
-
-                        .requestMatchers("/users/**").fullyAuthenticated()
-
+                        // Deny all other requests
                         .anyRequest().denyAll()
                 );
 
