@@ -1,7 +1,6 @@
 package com.example.home_work_49.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,8 +19,12 @@ public class ResumeDto {
     @NotBlank
     private String name;
     private Long categoryId;
-    private double salary;
-    private boolean isActive;
+    @PositiveOrZero
+    private Double salary;
+    @NotNull
+    private Boolean isActive;
+    @Past
     private LocalDateTime createdDate;
+    @Future
     private LocalDateTime updateTime;
 }

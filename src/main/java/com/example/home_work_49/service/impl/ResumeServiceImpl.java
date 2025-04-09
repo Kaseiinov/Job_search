@@ -1,40 +1,33 @@
 package com.example.home_work_49.service.impl;
 
 import com.example.home_work_49.dao.ResumeDao;
+import com.example.home_work_49.dao.UserDao;
 import com.example.home_work_49.dto.ResumeDto;
 import com.example.home_work_49.dto.WorkExperienceInfoDto;
+import com.example.home_work_49.exceptions.ApplicantNotFoundException;
 import com.example.home_work_49.exceptions.ResumeNotFoundException;
+import com.example.home_work_49.exceptions.UserNotFoundException;
 import com.example.home_work_49.models.Resume;
+import com.example.home_work_49.models.User;
 import com.example.home_work_49.models.WorkExperienceInfo;
 import com.example.home_work_49.service.ResumeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class ResumeServiceImpl implements ResumeService {
     private final ResumeDao resumeDao;
+    private final UserDao userDao;
 
     @Override
     public List<ResumeDto> getAllActiveResumes(){
         List<Resume> resumes = resumeDao.getAllActiveResumes();
 
-        return resumes
-                .stream()
-                .map(e -> ResumeDto
-                        .builder()
-                        .id(e.getId())
-                        .applicantId(e.getApplicantId())
-                        .name(e.getName())
-                        .categoryId(e.getCategoryId())
-                        .salary(e.getSalary())
-                        .isActive(e.isActive())
-                        .createdDate(e.getCreatedDate())
-                        .updateTime(e.getUpdateTime())
-                        .build())
-                .toList();
+        return resumeBuilder(resumes);
     }
 
     @Override
@@ -46,13 +39,16 @@ public class ResumeServiceImpl implements ResumeService {
         resume.setName(resumeDto.getName());
         resume.setCategoryId(resumeDto.getCategoryId());
         resume.setSalary(resumeDto.getSalary());
-        resume.setActive(resumeDto.isActive());
-        resume.setCreatedDate(resumeDto.getCreatedDate());
-        resume.setUpdateTime(resumeDto.getUpdateTime());
+        resume.setIsActive(resumeDto.getIsActive());
+        resume.setUpdateTime(LocalDateTime.now());
 
-        if(exist){
+        Boolean isApplicant = userDao.isUser(resumeDto.getApplicantId(), "applicant").orElseThrow(UserNotFoundException::new);
+
+        if(exist && isApplicant){
             resumeDao.updateResumeById(id, resume);
-        }else{
+        } else if (!isApplicant) {
+            throw new ApplicantNotFoundException();
+        } else{
             throw new ResumeNotFoundException();
         }
 
@@ -72,54 +68,20 @@ public class ResumeServiceImpl implements ResumeService {
     @Override
     public ResumeDto getResumeById(Long id){
         Resume resume = resumeDao.getResumeById(id).orElseThrow(ResumeNotFoundException::new);
-        return ResumeDto.builder()
-                .id(resume.getId())
-                .applicantId(resume.getApplicantId())
-                .name(resume.getName())
-                .categoryId(resume.getCategoryId())
-                .salary(resume.getSalary())
-                .isActive(resume.isActive())
-                .createdDate(resume.getCreatedDate())
-                .updateTime(resume.getUpdateTime())
-                .build();
+        return resumeBuilder(resume);
     }
 
     @Override
     public List<ResumeDto> getResumeByCategory(String resumeCategory) {
         List<Resume> resumeList = resumeDao.getResumeByCategory(resumeCategory);
-        return resumeList
-                .stream()
-                .map(e -> ResumeDto
-                        .builder()
-                        .id(e.getId())
-                        .applicantId(e.getApplicantId())
-                        .name(e.getName())
-                        .categoryId(e.getCategoryId())
-                        .salary(e.getSalary())
-                        .isActive(e.isActive())
-                        .createdDate(e.getCreatedDate())
-                        .updateTime(e.getUpdateTime())
-                        .build())
-                .toList();
+        return resumeBuilder(resumeList);
     }
 
     @Override
     public List<ResumeDto> getResumeByUser(String userName) {
         List<Resume> resumeList = resumeDao.getResumeByUser(userName);
 
-        return resumeList.stream()
-                .map(e -> ResumeDto
-                        .builder()
-                        .id(e.getId())
-                        .applicantId(e.getApplicantId())
-                        .name(e.getName())
-                        .categoryId(e.getCategoryId())
-                        .salary(e.getSalary())
-                        .isActive(e.isActive())
-                        .createdDate(e.getCreatedDate())
-                        .updateTime(e.getUpdateTime())
-                        .build())
-                .toList();
+        return resumeBuilder(resumeList);
     }
 
     @Override
@@ -136,15 +98,53 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public void addResume(ResumeDto resumeDto){
+
         Resume resume = new Resume();
         resume.setApplicantId(resumeDto.getApplicantId());
         resume.setName(resumeDto.getName());
         resume.setCategoryId(resumeDto.getCategoryId());
         resume.setSalary(resumeDto.getSalary());
-        resume.setActive(resumeDto.isActive());
-        resume.setCreatedDate(resumeDto.getCreatedDate());
-        resume.setUpdateTime(resumeDto.getUpdateTime());
+        resume.setIsActive(resumeDto.getIsActive());
+        resume.setCreatedDate(LocalDateTime.now());
 
-        resumeDao.addResume(resume);
+        Boolean isApplicant = userDao.isUser(resumeDto.getApplicantId(), "applicant").orElseThrow(UserNotFoundException::new);
+
+        if(isApplicant){
+            resumeDao.addResume(resume);
+        }else{
+            throw new ApplicantNotFoundException();
+        }
+
     }
+
+    public List<ResumeDto> resumeBuilder(List<Resume> resumeList){
+        return resumeList
+                .stream()
+                .map(e -> ResumeDto
+                        .builder()
+                        .id(e.getId())
+                        .applicantId(e.getApplicantId())
+                        .name(e.getName())
+                        .categoryId(e.getCategoryId())
+                        .salary(e.getSalary())
+                        .isActive(e.getIsActive())
+                        .createdDate(e.getCreatedDate())
+                        .updateTime(e.getUpdateTime())
+                        .build())
+                .toList();
+    }
+
+    public ResumeDto resumeBuilder(Resume resume){
+        return ResumeDto.builder()
+                .id(resume.getId())
+                .applicantId(resume.getApplicantId())
+                .name(resume.getName())
+                .categoryId(resume.getCategoryId())
+                .salary(resume.getSalary())
+                .isActive(resume.getIsActive())
+                .createdDate(resume.getCreatedDate())
+                .updateTime(resume.getUpdateTime())
+                .build();
+    }
+
 }

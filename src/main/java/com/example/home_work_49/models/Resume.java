@@ -10,8 +10,8 @@ public class Resume {
     private Long applicantId;
     private String name;
     private Long categoryId;
-    private double salary;
-    private boolean isActive;
+    private Double salary;
+    private Boolean isActive;
     private LocalDateTime createdDate;
     private LocalDateTime updateTime;
 }

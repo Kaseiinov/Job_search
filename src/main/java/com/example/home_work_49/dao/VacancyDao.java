@@ -13,6 +13,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -50,7 +51,6 @@ public class VacancyDao {
                 "exp_to = :expTo, " +
                 "is_active = :isActive, " +
                 "author_id = :authorId, " +
-                "created_date = :createdDate, " +
                 "update_time = :updateTime " +
                 "WHERE id = :id";
 
@@ -62,9 +62,8 @@ public class VacancyDao {
                         .addValue("salary", vacancy.getSalary())
                         .addValue("expFrom", vacancy.getExpFrom())
                         .addValue("expTo", vacancy.getExpTo())
-                        .addValue("isActive", vacancy.isActive())
+                        .addValue("isActive", vacancy.getIsActive())
                         .addValue("authorId", vacancy.getAuthorId())
-                        .addValue("createdDate", vacancy.getCreatedDate())
                         .addValue("updateTime", vacancy.getUpdateTime())
                         .addValue("id", id)
         );
@@ -96,9 +95,9 @@ public class VacancyDao {
                         .addValue("salary", vacancy.getSalary())
                         .addValue("expFrom", vacancy.getExpFrom())
                         .addValue("expTo", vacancy.getExpTo())
-                        .addValue("is_active", vacancy.isActive())
+                        .addValue("is_active", vacancy.getIsActive())
                         .addValue("authorId", vacancy.getAuthorId())
-                        .addValue("createdDate", vacancy.getCreatedDate())
+                        .addValue("createdDate", LocalDateTime.now())
                         .addValue("updateTime", vacancy.getUpdateTime())
         );
     }

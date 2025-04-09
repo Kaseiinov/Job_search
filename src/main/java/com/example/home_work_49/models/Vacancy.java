@@ -10,10 +10,10 @@ public class Vacancy {
     private String name;
     private String description;
     private Long categoryId;
-    private double salary;
+    private Double salary;
     private Integer expFrom;
     private Integer expTo;
-    private boolean isActive;
+    private Boolean isActive;
     private Long authorId;
     private LocalDateTime createdDate;
     private LocalDateTime updateTime;

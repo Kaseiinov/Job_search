@@ -83,7 +83,7 @@ public class ResumeDao {
                         .addValue("name", resume.getName())
                         .addValue("categoryId", resume.getCategoryId())
                         .addValue("salary", resume.getSalary())
-                        .addValue("isActive", resume.isActive())
+                        .addValue("isActive", resume.getIsActive())
                         .addValue("createdDate", resume.getCreatedDate())
                         .addValue("updateTime", resume.getUpdateTime())
                         .addValue("id", id)
@@ -114,7 +114,7 @@ public class ResumeDao {
                         .addValue("name", resume.getName())
                         .addValue("category_id", resume.getCategoryId())
                         .addValue("salary", resume.getSalary())
-                        .addValue("is_active", resume.isActive())
+                        .addValue("is_active", resume.getIsActive())
                         .addValue("created_date", resume.getCreatedDate())
                         .addValue("update_time", resume.getUpdateTime())
 

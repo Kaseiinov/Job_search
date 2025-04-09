@@ -36,6 +36,14 @@ public class UserDao {
         namedParameterJdbcTemplate.update(sql, mapper(userName, user));
     }
 
+    public Optional<Boolean> isUser(Long id, String type) {
+        String sql = "SELECT id FROM users WHERE id = ? AND account_type = UPPER(?)";
+
+        List<Long> result = jdbcTemplate.queryForList(sql, Long.class, id, type);
+        boolean exists = !result.isEmpty();
+        return Optional.of(exists);
+    }
+
     public Optional<User> getUserByName(String userName) {
         String sql = "select * from users where lower(name) = lower(?)";
 
