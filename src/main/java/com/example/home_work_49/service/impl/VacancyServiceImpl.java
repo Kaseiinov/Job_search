@@ -1,12 +1,10 @@
 package com.example.home_work_49.service.impl;
 
+import com.example.home_work_49.dao.CategoryDao;
 import com.example.home_work_49.dao.UserDao;
 import com.example.home_work_49.dao.VacancyDao;
 import com.example.home_work_49.dto.VacancyDto;
-import com.example.home_work_49.exceptions.ApplicantNotFoundException;
-import com.example.home_work_49.exceptions.EmployerNotFounException;
-import com.example.home_work_49.exceptions.UserNotFoundException;
-import com.example.home_work_49.exceptions.VacancyNotFoundException;
+import com.example.home_work_49.exceptions.*;
 import com.example.home_work_49.models.Vacancy;
 import com.example.home_work_49.service.VacancyService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +20,7 @@ public class VacancyServiceImpl implements VacancyService {
 
     private final VacancyDao vacancyDao;
     private final UserDao userDao;
+    private final CategoryDao categoryDao;
 
     @Override
     public void deleteVacancyById(Long id) {
@@ -35,7 +34,6 @@ public class VacancyServiceImpl implements VacancyService {
 
     @Override
     public void updateVacancyById(Long id, VacancyDto vacancyDto) {
-        boolean exists = vacancyDao.vacancyIdExists(id);
 
         Vacancy vacancy = new Vacancy();
         vacancy.setName(vacancyDto.getName());
@@ -45,18 +43,17 @@ public class VacancyServiceImpl implements VacancyService {
         vacancy.setExpFrom(vacancyDto.getExpFrom());
         vacancy.setExpTo(vacancyDto.getExpTo());
         vacancy.setIsActive(vacancyDto.getIsActive());
-        vacancy.setAuthorId(vacancyDto.getAuthorId());
         vacancy.setUpdateTime(LocalDateTime.now());
 
-        Boolean isEmployer = userDao.isUser(vacancyDto.getAuthorId(), "employer").orElseThrow(UserNotFoundException::new);
+        boolean exists = vacancyDao.vacancyIdExists(id);
+        boolean isCategoryExists = categoryDao.isCategoryExists(vacancyDto.getCategoryId());
 
-        if(exists && isEmployer){
-            vacancyDao.updateVacancyById(id, vacancy);
-        } else if (!isEmployer) {
-            throw new EmployerNotFounException();
-        } else{
+        if (!exists) {
             throw new VacancyNotFoundException();
+        } else if (!isCategoryExists) {
+            throw new CategoryNotFountException();
         }
+        vacancyDao.updateVacancyById(id, vacancy);
     }
 
     @Override
@@ -90,15 +87,19 @@ public class VacancyServiceImpl implements VacancyService {
         vacancy.setExpTo(vacancyDto.getExpTo());
         vacancy.setIsActive(vacancyDto.getIsActive());
         vacancy.setAuthorId(vacancyDto.getAuthorId());
+        vacancy.setUpdateTime(null);
         vacancy.setCreatedDate(LocalDateTime.now());
 
         Boolean isEmployer = userDao.isUser(vacancyDto.getAuthorId(), "employer").orElseThrow(UserNotFoundException::new);
+        boolean isCategoryExists = categoryDao.isCategoryExists(vacancyDto.getCategoryId());
 
-        if(isEmployer){
-            vacancyDao.addVacancy(vacancy);
-        }else{
+        if(!isEmployer){
             throw new EmployerNotFounException();
+        } else if (!isCategoryExists) {
+            throw new CategoryNotFountException();
         }
+        vacancyDao.addVacancy(vacancy);
+
     }
 
     public List<VacancyDto> vacancyBuilder(List<Vacancy> vacancyList){

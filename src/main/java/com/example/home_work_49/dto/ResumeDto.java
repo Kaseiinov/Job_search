@@ -18,6 +18,7 @@ public class ResumeDto {
     private Long applicantId;
     @NotBlank
     private String name;
+    @NotNull
     private Long categoryId;
     @PositiveOrZero
     private Double salary;

@@ -68,23 +68,19 @@ public class ResumeDao {
 
     public void updateResumeById(Long id, Resume resume){
         String sql = "UPDATE resumes SET " +
-                "applicant_id = :applicantId, " +
                 "name = :name, " +
                 "category_id = :categoryId, " +
                 "salary = :salary, " +
                 "is_active = :isActive, " +
-                "created_date = :createdDate, " +
                 "update_time = :updateTime " +
                 "WHERE id = :id";
 
         namedParameterJdbcTemplate.update(sql,
                 new MapSqlParameterSource()
-                        .addValue("applicantId", resume.getApplicantId())
                         .addValue("name", resume.getName())
                         .addValue("categoryId", resume.getCategoryId())
                         .addValue("salary", resume.getSalary())
                         .addValue("isActive", resume.getIsActive())
-                        .addValue("createdDate", resume.getCreatedDate())
                         .addValue("updateTime", resume.getUpdateTime())
                         .addValue("id", id)
         );

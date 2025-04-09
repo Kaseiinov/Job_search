@@ -50,7 +50,6 @@ public class VacancyDao {
                 "exp_from = :expFrom, " +
                 "exp_to = :expTo, " +
                 "is_active = :isActive, " +
-                "author_id = :authorId, " +
                 "update_time = :updateTime " +
                 "WHERE id = :id";
 
@@ -63,7 +62,6 @@ public class VacancyDao {
                         .addValue("expFrom", vacancy.getExpFrom())
                         .addValue("expTo", vacancy.getExpTo())
                         .addValue("isActive", vacancy.getIsActive())
-                        .addValue("authorId", vacancy.getAuthorId())
                         .addValue("updateTime", vacancy.getUpdateTime())
                         .addValue("id", id)
         );

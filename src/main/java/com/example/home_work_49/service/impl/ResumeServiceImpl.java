@@ -1,10 +1,12 @@
 package com.example.home_work_49.service.impl;
 
+import com.example.home_work_49.dao.CategoryDao;
 import com.example.home_work_49.dao.ResumeDao;
 import com.example.home_work_49.dao.UserDao;
 import com.example.home_work_49.dto.ResumeDto;
 import com.example.home_work_49.dto.WorkExperienceInfoDto;
 import com.example.home_work_49.exceptions.ApplicantNotFoundException;
+import com.example.home_work_49.exceptions.CategoryNotFountException;
 import com.example.home_work_49.exceptions.ResumeNotFoundException;
 import com.example.home_work_49.exceptions.UserNotFoundException;
 import com.example.home_work_49.models.Resume;
@@ -22,6 +24,7 @@ import java.util.List;
 public class ResumeServiceImpl implements ResumeService {
     private final ResumeDao resumeDao;
     private final UserDao userDao;
+    private final CategoryDao categoryDao;
 
     @Override
     public List<ResumeDto> getAllActiveResumes(){
@@ -32,25 +35,24 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public void updateResumeById(Long id, ResumeDto resumeDto) {
-        boolean exist = resumeDao.resumeIdExists(id);
 
         Resume resume = new Resume();
-        resume.setApplicantId(resumeDto.getApplicantId());
         resume.setName(resumeDto.getName());
         resume.setCategoryId(resumeDto.getCategoryId());
         resume.setSalary(resumeDto.getSalary());
         resume.setIsActive(resumeDto.getIsActive());
         resume.setUpdateTime(LocalDateTime.now());
 
-        Boolean isApplicant = userDao.isUser(resumeDto.getApplicantId(), "applicant").orElseThrow(UserNotFoundException::new);
+        boolean exist = resumeDao.resumeIdExists(id);
+        boolean isCategoryExists = categoryDao.isCategoryExists(resumeDto.getCategoryId());
 
-        if(exist && isApplicant){
-            resumeDao.updateResumeById(id, resume);
-        } else if (!isApplicant) {
-            throw new ApplicantNotFoundException();
-        } else{
+        if(!exist ){
             throw new ResumeNotFoundException();
+        } else if (!isCategoryExists) {
+            throw new CategoryNotFountException();
         }
+        resumeDao.updateResumeById(id, resume);
+
 
     }
 
@@ -106,14 +108,18 @@ public class ResumeServiceImpl implements ResumeService {
         resume.setSalary(resumeDto.getSalary());
         resume.setIsActive(resumeDto.getIsActive());
         resume.setCreatedDate(LocalDateTime.now());
+        resume.setUpdateTime(null);
 
         Boolean isApplicant = userDao.isUser(resumeDto.getApplicantId(), "applicant").orElseThrow(UserNotFoundException::new);
+        boolean isCategoryExists = categoryDao.isCategoryExists(resumeDto.getCategoryId());
 
-        if(isApplicant){
-            resumeDao.addResume(resume);
-        }else{
+        if(!isApplicant){
             throw new ApplicantNotFoundException();
+        } else if (!isCategoryExists) {
+            throw new CategoryNotFountException();
         }
+        resumeDao.addResume(resume);
+
 
     }
 
