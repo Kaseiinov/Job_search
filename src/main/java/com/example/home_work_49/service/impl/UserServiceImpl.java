@@ -25,11 +25,11 @@ public class UserServiceImpl implements UserService {
         user.setName(userDto.getName());
         user.setSurname(userDto.getSurname());
         user.setAge(userDto.getAge());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setPhoneNumber(userDto.getPhoneNumber());
         user.setAvatar(userDto.getAvatar());
-        user.setAccountType(userDto.getAccountType());
+        user.setAccountType(userDto.getAccountType().toUpperCase());
+        user.setRoleId(4L);
 
         boolean isExists = userDao.emailExists(user.getEmail());
         if(isExists){

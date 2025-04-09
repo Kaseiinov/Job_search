@@ -26,11 +26,11 @@ public class UserDao {
                 "name = :name, " +
                 "surname = :surname, " +
                 "age = :age, " +
-                "email = :email, " +
                 "password = :password, " +
                 "phone_number = :phoneNumber, " +
                 "avatar = :avatar, " +
-                "account_type = :accountType " +
+                "account_type = :accountType ," +
+                "role_id = :roleId " +
                 "WHERE lower(name) = lower(:userName)";
 
         namedParameterJdbcTemplate.update(sql, mapper(userName, user));
@@ -133,12 +133,11 @@ public class UserDao {
                 .addValue("name", user.getName())
                 .addValue("surname", user.getSurname())
                 .addValue("age", user.getAge())
-                .addValue("email", user.getEmail())
                 .addValue("password", user.getPassword())
-                .addValue("phone_number", user.getPhoneNumber())
+                .addValue("phoneNumber", user.getPhoneNumber())
                 .addValue("avatar", user.getAvatar())
-                .addValue("account_type", user.getAccountType())
+                .addValue("accountType", user.getAccountType())
                 .addValue("enabled", user.getEnabled())
-                .addValue("role_id", user.getRoleId());
+                .addValue("roleId", user.getRoleId());
     }
 }
