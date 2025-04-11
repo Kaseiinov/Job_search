@@ -1,62 +1,32 @@
 package com.example.home_work_49.controller;
 
-import com.example.home_work_49.dao.ResumeDao;
-import com.example.home_work_49.dao.VacancyDao;
-import com.example.home_work_49.dto.ResumeDto;
-import com.example.home_work_49.dto.VacancyDto;
-import com.example.home_work_49.models.Resume;
-import com.example.home_work_49.models.Vacancy;
 import com.example.home_work_49.service.VacancyService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-
-@Slf4j
-@RestController
+@Controller
 @RequestMapping("vacancies")
 @RequiredArgsConstructor
 public class VacancyController {
     private final VacancyService vacancyService;
 
     @GetMapping
-    public List<VacancyDto> getAllVacancies() {
-        return vacancyService.getAllVacancies();
+    public String getResumes(Model model) {
+        model.addAttribute("vacancies", vacancyService.getAllVacancies());
+        return "employer/vacancies";
     }
 
-    @PostMapping("createVacancy")
-    public HttpStatus createVacancy(@RequestBody @Valid VacancyDto vacancyDto) {
-        log.info("Creating vacancy: {}", vacancyDto.getName());
-        vacancyService.addVacancy(vacancyDto);
-        return HttpStatus.CREATED;
+    @GetMapping("create")
+    public String createVacancy(Model model) {
+        return "employer/createVacancy";
     }
-
-    @GetMapping ("vacancies/{applicantName}")
-    public List<VacancyDto> getVacancyByApplicant(@PathVariable String applicantName) {
-        return vacancyService.getVacancyByApplicant(applicantName);
+    @PostMapping("create")
+    public String createVacancy() {
+        return "redirect:/";
     }
-
-    @PutMapping("update/{vacancyId}")
-    public HttpStatus updateVacancy(@PathVariable("vacancyId") @Valid Long vacancyId, @RequestBody VacancyDto vacancyDto) {
-        vacancyService.updateVacancyById(vacancyId, vacancyDto);
-        return HttpStatus.OK;
-    }
-
-    @DeleteMapping("delete/{vacancyId}")
-    public HttpStatus deleteVacancyById(@PathVariable("vacancyId") Long vacancyId) {
-        log.warn("Deleting vacancy: {}", vacancyId);
-        vacancyService.deleteVacancyById(vacancyId);
-        return HttpStatus.OK;
-    }
-
-    @GetMapping("category/{vacancyCategory}")
-    public List<VacancyDto> getVacancyByCategory(@PathVariable("vacancyCategory") String vacancyCategory) {
-        return vacancyService.getVacancyByCategory(vacancyCategory);
-    }
-
-
 }

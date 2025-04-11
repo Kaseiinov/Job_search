@@ -14,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
@@ -50,28 +51,37 @@ public class SecurityConfig {
 
         http
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
 
                 .httpBasic(Customizer.withDefaults())
-                .formLogin(AbstractHttpConfigurer::disable)
-                .logout(AbstractHttpConfigurer::disable)
+                .formLogin(login -> login
+                        .loginPage("/auth/login")
+                        .loginProcessingUrl("/auth/login")
+                        .defaultSuccessUrl("/")
+                        .failureUrl("/auth/login?error=true")
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .permitAll())
                 .csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests(authorize -> authorize
                         // Public endpoints
-                        .requestMatchers(HttpMethod.POST, "/users/createUser").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/users/create").permitAll()
 
                         // Vacancy endpoints
-                        .requestMatchers(HttpMethod.POST, "/vacancies/createVacancy").hasAnyAuthority("EMPLOYER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/vacancies/create").hasAnyAuthority("EMPLOYER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/vacancies/create").hasAnyAuthority("EMPLOYER", "ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/vacancies/delete/**").hasAnyAuthority("ADMIN", "EMPLOYER")
                         .requestMatchers(HttpMethod.PUT, "/vacancies/update/**").hasAnyAuthority("ADMIN", "EMPLOYER")
                         .requestMatchers(HttpMethod.GET, "/vacancies/**").permitAll()
 
                         // Resume endpoints
-                        .requestMatchers(HttpMethod.POST, "/resumes/createResume").hasAnyAuthority("ADMIN", "APPLICANT")
+                        .requestMatchers(HttpMethod.POST, "/resumes/create").hasAnyAuthority("ADMIN", "APPLICANT")
                         .requestMatchers(HttpMethod.GET, "/resumes/**").permitAll()
 
                         // User endpoints
+                        .requestMatchers(HttpMethod.GET, "/users/profile").fullyAuthenticated()
                         .requestMatchers(HttpMethod.PUT, "/users/update/**").fullyAuthenticated()
                         .requestMatchers("/users/**").authenticated()
 

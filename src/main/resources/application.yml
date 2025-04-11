@@ -1,7 +1,10 @@
 spring:
   application:
     name: "Home_work_49"
-
+  mvc:
+    static-path-pattern: /static/**
+  freemarker:
+    expose-session-attributes: true
   datasource:
     url: jdbc:h2:./db/JobSearchDB;AUTO_SERVER=TRUE
     username: root

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @Builder
@@ -31,4 +32,16 @@ public class VacancyDto {
     private LocalDateTime createdDate;
     @Future
     private LocalDateTime updateTime;
+
+    public String getCreatedDateFormatted() {
+        return createdDate != null
+                ? createdDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"))
+                : "";
+    }
+
+    public String getUpdateTimeFormatted() {
+        return updateTime != null
+                ? updateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"))
+                : "";
+    }
 }

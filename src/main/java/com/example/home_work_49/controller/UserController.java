@@ -1,59 +1,40 @@
 package com.example.home_work_49.controller;
 
-import com.example.home_work_49.dto.ResumeDto;
 import com.example.home_work_49.dto.UserDto;
 import com.example.home_work_49.exceptions.SuchEmailAlreadyExistsException;
-import com.example.home_work_49.models.User;
-import com.example.home_work_49.models.Vacancy;
 import com.example.home_work_49.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-
-@Slf4j
-@RestController
+@Controller
 @RequestMapping("users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("byName/{userName}")
-    public UserDto getUserByName(@PathVariable String userName) {
-        return userService.getUserByName(userName);
+    @GetMapping("profile")
+    public String getApplicantProfile(Model model ,Authentication auth){
+        String username = auth.getName();
+        UserDto userDto = userService.getUserByEmail(username);
+        model.addAttribute("user",userDto);
+        return "auth/profile";
     }
 
-    @GetMapping("byVacancy/{vacancyName}")
-    public List<UserDto> getApplicantsByVacancy(@PathVariable String vacancyName) {
-        return userService.getApplicantsByVacancy(vacancyName);
+    @GetMapping("update")
+    public String updateUser(Model model ,Authentication auth){
+        return "auth/edit";
     }
 
-    @GetMapping("byPhone/{userPhone}")
-    public UserDto getUserByPhone(@PathVariable String userPhone) {
-        return userService.getUserByPhone(userPhone);
+    @PostMapping("update")
+    public String updateUser(@Valid UserDto userDto, Authentication auth) throws SuchEmailAlreadyExistsException {
+        userService.updateUserByName(auth.getName(), userDto);
+        return "redirect:/users/profile";
     }
 
-    @GetMapping("byEmail/{userEmail}")
-    public UserDto getUserByEmail(@PathVariable String userEmail) {
-        return userService.getUserByEmail(userEmail);
-    }
-
-    @PostMapping("createUser")
-    public HttpStatus registerUser(@RequestBody @Valid UserDto userDto) throws SuchEmailAlreadyExistsException {
-        log.info("Creating user: {}", userDto.getEmail());
-        userService.addUser(userDto);
-        return HttpStatus.CREATED;
-    }
-
-    @PutMapping("update/{userName}")
-    public HttpStatus updateUserByName(@PathVariable("userName") @Valid String userName,  @RequestBody UserDto userDto) throws SuchEmailAlreadyExistsException {
-        log.warn("Updating user: {}", userDto.getEmail());
-        userService.updateUserByName(userName, userDto);
-        return HttpStatus.OK;
-    }
 }

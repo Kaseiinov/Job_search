@@ -19,8 +19,8 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void updateUserByName(String name, UserDto userDto) throws SuchEmailAlreadyExistsException {
-        userDao.getUserByName(name).orElseThrow(UserNotFoundException::new);
+    public void updateUserByName(String email, UserDto userDto) throws SuchEmailAlreadyExistsException {
+        userDao.getUserByEmail(email).orElseThrow(UserNotFoundException::new);
         User user = new User();
         user.setName(userDto.getName());
         user.setSurname(userDto.getSurname());
@@ -29,17 +29,18 @@ public class UserServiceImpl implements UserService {
         user.setPhoneNumber(userDto.getPhoneNumber());
         user.setAvatar(userDto.getAvatar());
         user.setAccountType(userDto.getAccountType().toUpperCase());
+
         if(userDto.getAccountType().equalsIgnoreCase("applicant")){
             user.setRoleId(7L);
         }else{
             user.setRoleId(6L);
         }
 
-        boolean isExists = userDao.emailExists(user.getEmail());
+        boolean isExists = userDao.emailExists(email);
         if(isExists){
             throw new SuchEmailAlreadyExistsException();
         }else{
-            userDao.updateUserByName(name, user);
+            userDao.updateUserByName(user.getName(), user);
         }
 
     }
