@@ -81,8 +81,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/resumes/**").permitAll()
 
                         // User endpoints
-                        .requestMatchers(HttpMethod.GET, "/users/profile").fullyAuthenticated()
-                        .requestMatchers(HttpMethod.PUT, "/users/update/**").fullyAuthenticated()
+                        .requestMatchers("/users/profile").authenticated()
+                        .requestMatchers( "/users/update").authenticated()
                         .requestMatchers("/users/**").authenticated()
 
                         // Deny all other requests

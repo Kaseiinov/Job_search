@@ -48,7 +48,7 @@ public class UserController {
     @PutMapping("update/{userName}")
     public HttpStatus updateUserByName(@PathVariable("userName") @Valid String userName,  @RequestBody UserDto userDto) throws SuchEmailAlreadyExistsException {
         log.warn("Updating user: {}", userDto.getEmail());
-        userService.updateUserByName(userName, userDto);
+        userService.updateUserByEmail(userName, userDto);
         return HttpStatus.OK;
     }
 }

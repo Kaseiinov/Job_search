@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -32,8 +33,8 @@ public class UserController {
     }
 
     @PostMapping("update")
-    public String updateUser(@Valid UserDto userDto, Authentication auth) throws SuchEmailAlreadyExistsException {
-        userService.updateUserByName(auth.getName(), userDto);
+    public String updateUser( UserDto userDto, Authentication auth) throws SuchEmailAlreadyExistsException {
+        userService.updateUserByEmail(auth.getName(), userDto);
         return "redirect:/users/profile";
     }
 

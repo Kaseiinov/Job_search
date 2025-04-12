@@ -24,7 +24,7 @@
                         <h5>${user.name}</h5>
                         <p>Возраст: ${user.age}</p>
                     </#if>
-                    <a href="/account/edit" class="btn btn-outline-success btn-sm mt-2">Редактировать</a>
+                    <a href="/users/update" class="btn btn-outline-success btn-sm mt-2">Редактировать</a>
                 </div>
             </div>
 

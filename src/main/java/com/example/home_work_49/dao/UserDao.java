@@ -21,7 +21,7 @@ public class UserDao {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final KeyHolder keyHolder = new GeneratedKeyHolder();
 
-    public void updateUserByName(String userName, User user){
+    public void updateUserByEmail(String userEmail, User user){
         String sql = "UPDATE users SET " +
                 "name = :name, " +
                 "surname = :surname, " +
@@ -31,9 +31,9 @@ public class UserDao {
                 "avatar = :avatar, " +
                 "account_type = :accountType ," +
                 "role_id = :roleId " +
-                "WHERE lower(name) = lower(:userName)";
+                "WHERE lower(email) = lower(:userEmail)";
 
-        namedParameterJdbcTemplate.update(sql, mapper(userName, user));
+        namedParameterJdbcTemplate.update(sql, mapper(userEmail, user));
     }
 
     public Optional<Boolean> isUser(Long id, String type) {
@@ -127,9 +127,9 @@ public class UserDao {
                 .addValue("role_id", user.getRoleId());
     }
 
-    public MapSqlParameterSource mapper(String userName, User user){
+    public MapSqlParameterSource mapper(String userEmail, User user){
         return new MapSqlParameterSource()
-                .addValue("userName", userName)
+                .addValue("userEmail", userEmail)
                 .addValue("name", user.getName())
                 .addValue("surname", user.getSurname())
                 .addValue("age", user.getAge())

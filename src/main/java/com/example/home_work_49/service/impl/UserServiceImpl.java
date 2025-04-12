@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void updateUserByName(String email, UserDto userDto) throws SuchEmailAlreadyExistsException {
+    public void updateUserByEmail(String email, UserDto userDto) throws SuchEmailAlreadyExistsException {
         userDao.getUserByEmail(email).orElseThrow(UserNotFoundException::new);
         User user = new User();
         user.setName(userDto.getName());
@@ -36,12 +36,7 @@ public class UserServiceImpl implements UserService {
             user.setRoleId(6L);
         }
 
-        boolean isExists = userDao.emailExists(email);
-        if(isExists){
-            throw new SuchEmailAlreadyExistsException();
-        }else{
-            userDao.updateUserByName(user.getName(), user);
-        }
+        userDao.updateUserByEmail(email, user);
 
     }
 

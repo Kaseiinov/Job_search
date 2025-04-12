@@ -11,7 +11,7 @@
 
     <h2>Иземенение пользователя</h2>
 
-    <form action="/auth/edit" method="post">
+    <form action="/users/update" method="post">
         <div class="mb-3">
             <label class="form-label">Name:</label>
             <input name="name" type="text" class="form-control" placeholder="Введите имя">
