@@ -80,8 +80,8 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     @Override
-    public List<ResumeDto> getResumeByUser(String userName) {
-        List<Resume> resumeList = resumeDao.getResumeByUser(userName);
+    public List<ResumeDto> getResumeByUser(String userEmail) {
+        List<Resume> resumeList = resumeDao.getResumeByUser(userEmail);
 
         return resumeBuilder(resumeList);
     }

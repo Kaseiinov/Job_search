@@ -45,11 +45,11 @@ public class ResumeDao {
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Resume.class), resumeCategory);
     }
 
-    public List<Resume> getResumeByUser(String userName) {
+    public List<Resume> getResumeByUser(String userEmail) {
         String sql = "select r.*" +
-                " from resumes r join users u on r.applicant_id = u.id where lower(u.name) = lower(?)";
+                " from resumes r join users u on r.applicant_id = u.id where lower(u.email) = lower(?)";
 
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Resume.class), userName);
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Resume.class), userEmail);
     }
 
     public Optional<Resume> getResumeById(Long id){

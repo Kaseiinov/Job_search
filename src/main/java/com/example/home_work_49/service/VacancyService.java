@@ -11,6 +11,8 @@ public interface VacancyService {
 
     List<VacancyDto> getAllVacancies();
 
+    List<VacancyDto> getVacanciesByUser(String userEmail);
+
     List<VacancyDto> getVacancyByCategory(String vacancyCategory);
 
     List<VacancyDto> getVacancyByApplicant(String applicantName);

@@ -41,6 +41,13 @@ public class VacancyDao {
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Vacancy.class));
     }
 
+    public List<Vacancy> getVacanciesByUser(String userEmail) {
+        String sql = "select v.*" +
+                " from vacancies v join users u on v.author_id = u.id where lower(u.email) = lower(?)";
+
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Vacancy.class), userEmail);
+    }
+
     public void updateVacancyById(Long id, Vacancy vacancy){
         String sql = "UPDATE vacancies SET " +
                 "name = :name, " +

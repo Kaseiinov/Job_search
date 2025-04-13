@@ -64,6 +64,13 @@ public class VacancyServiceImpl implements VacancyService {
     }
 
     @Override
+    public List<VacancyDto> getVacanciesByUser(String userEmail) {
+        List<Vacancy> vacancyList = vacancyDao.getVacanciesByUser(userEmail);
+
+        return vacancyBuilder(vacancyList);
+    }
+
+    @Override
     public List<VacancyDto> getVacancyByCategory(String vacancyCategory) {
         List<Vacancy> vacancyList = vacancyDao.getVacancyByCategory(vacancyCategory);
         return vacancyBuilder(vacancyList);
