@@ -68,30 +68,37 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         // Public endpoints
                         .requestMatchers("/auth/register").permitAll()
-
-                        // Vacancy endpoints
-                        .requestMatchers(HttpMethod.GET, "/vacancies/create").hasAnyAuthority("EMPLOYER", "ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/vacancies/create").hasAnyAuthority("EMPLOYER", "ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/vacancies/delete/**").hasAnyAuthority("ADMIN", "EMPLOYER")
-                        .requestMatchers(HttpMethod.PUT, "/vacancies/update/**").hasAnyAuthority("ADMIN", "EMPLOYER")
-                        .requestMatchers(HttpMethod.GET, "/vacancies/**").permitAll()
-
-                        // Resume endpoints
-                        .requestMatchers(HttpMethod.POST, "/resumes/create").hasAnyAuthority("ADMIN", "APPLICANT")
-                        .requestMatchers(HttpMethod.GET, "/resumes/**").permitAll()
-
-                        // User endpoints
-                        .requestMatchers("/users/profile").authenticated()
-                        .requestMatchers( "/users/update").authenticated()
-                        .requestMatchers("/users/**").authenticated()
-
                         .requestMatchers("/").permitAll()
 
-                        // Deny all other requests
-                        .anyRequest().denyAll()
+                        // User endpoints
+                        .requestMatchers("/users/**").fullyAuthenticated()
+
+
+                        // Vacancy endpoints
+                        .requestMatchers("/vacancies/**").hasAnyAuthority("EMPLOYER", "ADMIN")
+                        .requestMatchers("/vacancies/").permitAll()
+
+
+                        // Resume endpoints
+                        .requestMatchers("/resumes/**").hasAnyAuthority("APPLICANT", "ADMIN")
+                        .requestMatchers("/resumes/").permitAll()
+
+
+                        // all other requests
+                        .anyRequest().fullyAuthenticated()
                 );
 
         return http.build();
     }
 
 }
+//                        // Vacancy endpoints
+//                        .requestMatchers(HttpMethod.GET, "/vacancies/create").hasAnyAuthority("EMPLOYER", "ADMIN")
+//                        .requestMatchers(HttpMethod.POST, "/vacancies/create").hasAnyAuthority("EMPLOYER", "ADMIN")
+//                        .requestMatchers(HttpMethod.DELETE, "/vacancies/delete/**").hasAnyAuthority("ADMIN", "EMPLOYER")
+//                        .requestMatchers(HttpMethod.PUT, "/vacancies/update/**").hasAnyAuthority("ADMIN", "EMPLOYER")
+//                        .requestMatchers(HttpMethod.GET, "/vacancies/**").permitAll()
+//
+//                        // Resume endpoints
+//                        .requestMatchers(HttpMethod.POST, "/resumes/create").hasAnyAuthority("ADMIN", "APPLICANT")
+//                        .requestMatchers(HttpMethod.GET, "/resumes/**").permitAll()
