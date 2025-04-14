@@ -1,3 +1,4 @@
+<#import "spring.ftl" as spring>
 <#macro layout>
     <!DOCTYPE html>
     <html lang="en">
@@ -35,14 +36,10 @@
                         <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li>
+
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            <a href="/auth/login" class="btn btn-outline-success ">Login</a>
+            <a href="/auth/register" class="btn btn-outline-success ms-4">Register</a>
         </div>
     </div>
 </nav>

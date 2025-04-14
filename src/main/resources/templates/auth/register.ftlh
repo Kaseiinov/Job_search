@@ -1,62 +1,86 @@
 <#import "../layout.ftlh" as main>
-<@main.layout>
- <style>
+<@main.layout ; spring>
+    <style>
 
-            h2 {
-                color: red;
-                text-align: center;
-                margin-bottom: 30px;
-            }
-        </style>
+        .gradient-custom-3 {
+            /* fallback for old browsers */
+            background: #84fab0;
 
-        <h2>Регистрация пользователя</h2>
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5));
 
-        <form action="/auth/register" method="post">
-            <div class="mb-3">
-                <label class="form-label">Name:</label>
-                <input name="name" type="text" class="form-control" placeholder="Введите имя">
-            </div>
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5))
+        }
 
-            <div class="mb-3">
-                <label class="form-label">Surname:</label>
-                <input name="surname" type="text" class="form-control" placeholder="Введите surname">
-            </div>
+        .gradient-custom-4 {
+            /* fallback for old browsers */
+            background: #84fab0;
 
-            <div class="mb-3">
-                <label class="form-label">age:</label>
-                <input name="age" type="number" class="form-control" placeholder="Enter age">
-            </div>
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1));
 
-            <div class="mb-3">
-                <label class="form-label">Email:</label>
-                <input name="email" type="email" class="form-control" placeholder="example@mail.com">
-            </div>
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1))
+        }
+    </style>
+    <section class="vh-100 bg-image"
+             style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
+        <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+            <div class="container h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                        <div class="card" style="border-radius: 15px;">
+                            <div class="card-body p-5">
+                                <h2 class="text-uppercase text-center mb-5">Create an account</h2>
 
-            <div class="mb-3">
-                <label class="form-label">Password:</label>
-                <input name="password" type="password" class="form-control" placeholder="Enter password">
-            </div>
+                                <form action="/auth/register" method="post">
+                                    <!-- CSRF -->
+                                    <#--                                    <#if _csrf??>-->
+                                    <#--                                        <input type="hidden" name="${(_csrf.parameterName)!'csrf-param-name'}"-->
+                                    <#--                                               value="${(_csrf.token)!'csrf-token'}"/>-->
+                                    <#--                                    </#if>-->
 
-            <div class="mb-3">
-                <label class="form-label">Phone number:</label>
-                <input name="phoneNumber" type="tel" class="form-control" placeholder="+996 999 555 555">
-            </div>
+                                    <#--                                    <div data-mdb-input-init class="form-outline mb-4">-->
+                                    <#--                                        <label class="form-label" for="form3Example1cg">Your Name</label>-->
+                                    <#--                                        <input type="text" id="form3Example1cg" class="form-control form-control-lg"-->
+                                    <#--                                               name="username"/>-->
+                                    <#--                                    </div>-->
+                                    <div data-mdb-input-init class="form-outline mb-4">
+                                        <label class="form-label" for="form3Example3cg">Your Email</label>
+                                        <@spring.formInput "userDto.email" 'id="form3Example3cg" class="form-control form-control-lg"' />
+                                        <@spring.showErrors "<br>" "error text-danger" />
+                                    </div>
 
-            <div class="mb-3">
-                <label class="form-label">Account type:</label>
-                <div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="accountType" id="applicant" value="applicant" checked>
-                        <label class="form-check-label" for="applicant">Applicant</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="accountType" id="employer" value="employer">
-                        <label class="form-check-label" for="employer">Employer</label>
+                                    <div data-mdb-input-init class="form-outline mb-4">
+                                        <label class="form-label" for="form3Example4cg">Password</label>
+                                        <@spring.formInput "userDto.password" 'id="form3Example4cg" class="form-control form-control-lg"' />
+                                        <@spring.showErrors "<br>" "error text-danger" />
+                                    </div>
+
+                                    <div>
+                                        <@spring.formRadioButtons "userDto.accountType",
+                                        {"applicant":"Applicant", "employer":"Employer"},
+                                        "",
+                                        'class="form-check-input" inline="true"' />
+                                        <@spring.showErrors "<br>" "error text-danger" />
+                                    </div>
+
+                                    <div class="d-flex justify-content-center">
+                                        <button type="submit"
+                                                data-mdb-button-init
+                                                data-mdb-ripple-init
+                                                class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">
+                                            Register
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-
-            <button type="submit" class="btn btn-success w-100">Зарегистрироваться</button>
-        </form>
 </@main.layout>

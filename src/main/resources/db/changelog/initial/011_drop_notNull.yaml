@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: 011
+      author: Islam Kaseiinov
+      changes:
+        - dropNotNullConstraint:
+            tableName: users
+            columnName: name
+            columnDataType: varchar
+        - dropNotNullConstraint:
+            tableName: users
+            columnName: surname
+            columnDataType: varchar
+        - dropNotNullConstraint:
+            tableName: users
+            columnName: age
+            columnDataType: int

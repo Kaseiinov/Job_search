@@ -67,7 +67,7 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(authorize -> authorize
                         // Public endpoints
-                        .requestMatchers(HttpMethod.POST, "/users/create").permitAll()
+                        .requestMatchers("/auth/register").permitAll()
 
                         // Vacancy endpoints
                         .requestMatchers(HttpMethod.GET, "/vacancies/create").hasAnyAuthority("EMPLOYER", "ADMIN")
@@ -84,6 +84,8 @@ public class SecurityConfig {
                         .requestMatchers("/users/profile").authenticated()
                         .requestMatchers( "/users/update").authenticated()
                         .requestMatchers("/users/**").authenticated()
+
+                        .requestMatchers("/").permitAll()
 
                         // Deny all other requests
                         .anyRequest().denyAll()
