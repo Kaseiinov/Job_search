@@ -1,5 +1,8 @@
 package com.example.home_work_49.dto;
 
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +18,9 @@ public class EducationInfoDto {
     private Long resumeId;
     private String institution;
     private String program;
-    private String period;
+    @Past
+    private LocalDate startDate;
+    @Future
+    private LocalDate endDate;
     private String degree;
 }

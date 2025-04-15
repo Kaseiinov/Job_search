@@ -69,8 +69,14 @@
                 </div>
 
                 <div class="mb-2">
-                    <label for="eduPeriod" class="form-label">Срок обучения:</label>
-                    <@spring.formInput "resumeDto.education.period" 'id="eduPeriod" class="form-control" placeholder="2020-2024"' />
+                    <label for="startDate" class="form-label">Начал обучение:</label>
+                    <@spring.formInput "resumeDto.education.startDate" 'id="startDate" class="form-control" placeholder="2020-05-25"' />
+                    <@spring.showErrors "<br>" "error text-danger" />
+                </div>
+
+                <div class="mb-2">
+                    <label for="endDate" class="form-label">Завершил обучение:</label>
+                    <@spring.formInput "resumeDto.education.endDate" 'id="endDate" class="form-control" placeholder="2020-05-25"' />
                     <@spring.showErrors "<br>" "error text-danger" />
                 </div>
 
@@ -81,19 +87,28 @@
             <label class="form-label">Ссылки на соц. сети:</label>
             <div class="d-flex align-items-center mb-2">
                 <img src="https://img.icons8.com/ios-glyphs/30/new-post.png" class="me-2" alt="email">
-                <input type="email" class="form-control" placeholder="example@mail.com">
+                <input type="hidden" name="contacts[0].typeId" value="1">
+                <input type="email" name="contacts[0].value" class="form-control" placeholder="example@mail.com">
             </div>
             <div class="d-flex align-items-center mb-2">
                 <img src="https://img.icons8.com/ios-glyphs/30/phone.png" class="me-2" alt="phone">
-                <input type="tel" class="form-control" placeholder="+996 999 555 555">
+                <input type="hidden" name="contacts[1].typeId" value="2">
+                <input type="tel" name="contacts[1].value" class="form-control" placeholder="+996 999 555 555">
             </div>
             <div class="d-flex align-items-center mb-2">
                 <img src="https://img.icons8.com/ios-filled/30/facebook.png" class="me-2" alt="fb">
-                <input type="text" class="form-control">
+                <input type="hidden" name="contacts[2].typeId" value="4">
+                <input type="text" name="contacts[2].value" class="form-control">
             </div>
             <div class="d-flex align-items-center mb-2">
                 <img src="https://img.icons8.com/ios-filled/30/linkedin.png" class="me-2" alt="linkedin">
-                <input type="text" class="form-control">
+                <input type="hidden" name="contacts[3].typeId" value="5">
+                <input type="text" name="contacts[3].value" class="form-control">
+            </div>
+            <div class="d-flex align-items-center mb-2">
+                <img src="https://img.icons8.com/ios-filled/30/telegram-app.png" class="me-2" alt="telegram">
+                <input type="hidden" name="contacts[4].typeId" value="3">
+                <input type="text" name="contacts[4].value" class="form-control">
             </div>
         </div>
 

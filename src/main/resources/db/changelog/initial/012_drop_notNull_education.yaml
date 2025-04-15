@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: 012
+      author: Islam Kaseiinov
+      changes:
+        - dropNotNullConstraint:
+            tableName: education_info
+            columnName: institution
+            columnDataType: varchar
+        - dropNotNullConstraint:
+            tableName: education_info
+            columnName: program
+            columnDataType: varchar
+        - dropNotNullConstraint:
+            tableName: education_info
+            columnName: start_date
+            columnDataType: date
+        - dropNotNullConstraint:
+            tableName: education_info
+            columnName: end_date
+            columnDataType: date
+        - dropNotNullConstraint:
+            tableName: education_info
+            columnName: degree
+            columnDataType: varchar

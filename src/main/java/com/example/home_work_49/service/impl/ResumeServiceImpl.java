@@ -1,22 +1,20 @@
 package com.example.home_work_49.service.impl;
 
-import com.example.home_work_49.dao.CategoryDao;
-import com.example.home_work_49.dao.ResumeDao;
-import com.example.home_work_49.dao.UserDao;
+import com.example.home_work_49.dao.*;
+import com.example.home_work_49.dto.ContactsInfoDto;
+import com.example.home_work_49.dto.EducationInfoDto;
 import com.example.home_work_49.dto.ResumeDto;
 import com.example.home_work_49.dto.WorkExperienceInfoDto;
-import com.example.home_work_49.exceptions.ApplicantNotFoundException;
 import com.example.home_work_49.exceptions.CategoryNotFountException;
 import com.example.home_work_49.exceptions.ResumeNotFoundException;
 import com.example.home_work_49.exceptions.UserNotFoundException;
-import com.example.home_work_49.models.Resume;
-import com.example.home_work_49.models.User;
-import com.example.home_work_49.models.WorkExperienceInfo;
+import com.example.home_work_49.models.*;
 import com.example.home_work_49.service.ResumeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,6 +24,9 @@ public class ResumeServiceImpl implements ResumeService {
     private final ResumeDao resumeDao;
     private final UserDao userDao;
     private final CategoryDao categoryDao;
+    private final WorkExperienceInfoDao experienceDao;
+    private final EducationInfoDao educationDao;
+    private final ContactDao contactDao;
 
     @Override
     public List<ResumeDto> getAllActiveResumes(){
@@ -96,7 +97,30 @@ public class ResumeServiceImpl implements ResumeService {
         workExp.setPosition(workExpDto.getPosition());
         workExp.setResponsibilities(workExpDto.getResponsibilities());
 
-        resumeDao.addWorkExperienceInfo(workExp);
+        experienceDao.addWorkExperience(workExp);
+    }
+
+    @Override
+    public void addEducationInfo(EducationInfoDto educationDto) {
+        EducationInfo education = new EducationInfo();
+        education.setResumeId(educationDto.getResumeId());
+        education.setInstitution(educationDto.getInstitution());
+        education.setProgram(educationDto.getProgram());
+        education.setStartDate(educationDto.getStartDate());
+        education.setEndDate(educationDto.getEndDate());
+        education.setDegree(educationDto.getDegree());
+
+        educationDao.addEducation(education);
+    }
+
+    @Override
+    public void addContactInfo(ContactsInfoDto contactDto) {
+        ContactInfo contact = new ContactInfo();
+        contact.setResumeId(contactDto.getResumeId());
+        contact.setTypeId(contactDto.getTypeId());
+        contact.setValue(contactDto.getValue());
+
+        contactDao.addContact(contact);
     }
 
     @Override
@@ -111,16 +135,40 @@ public class ResumeServiceImpl implements ResumeService {
         resume.setIsActive(resumeDto.getIsActive());
         resume.setCreatedDate(LocalDateTime.now());
         resume.setUpdateTime(null);
-
-        Boolean isApplicant = userDao.isUser(resume.getApplicantId(), "applicant").orElseThrow(UserNotFoundException::new);
-        boolean isCategoryExists = categoryDao.isCategoryExists(resume.getCategoryId());
-
-        if(!isApplicant){
-            throw new ApplicantNotFoundException();
-        } else if (!isCategoryExists) {
-            throw new CategoryNotFountException();
-        }
         resumeDao.addResume(resume);
+
+        Resume savedResume = resumeDao.getResumeByName(resumeDto.getName()).orElseThrow(ResumeNotFoundException::new);
+
+        WorkExperienceInfoDto experienceInfo = resumeDto.getWorkExperience();
+        experienceInfo.setResumeId(savedResume.getId());
+
+        addWorkExperienceInfo(experienceInfo);
+
+        EducationInfoDto education = resumeDto.getEducation();
+        education.setResumeId(savedResume.getId());
+
+        addEducationInfo(education);
+
+        List<ContactsInfoDto> contactsDto = resumeDto.getContacts();
+        contactsDto.forEach(contact -> {
+            contact.setResumeId(savedResume.getId());
+            addContactInfo(contact);
+        });
+
+
+
+
+
+
+
+//        Boolean isApplicant = userDao.isUser(resume.getApplicantId(), "applicant").orElseThrow(UserNotFoundException::new);
+//        boolean isCategoryExists = categoryDao.isCategoryExists(resume.getCategoryId());
+//
+//        if(!isApplicant){
+//            throw new ApplicantNotFoundException();
+//        } else if (!isCategoryExists) {
+//            throw new CategoryNotFountException();
+//        }
 
 
     }

@@ -61,6 +61,16 @@ public class ResumeDao {
         );
     }
 
+    public Optional<Resume> getResumeByName(String name){
+        String sql = "SELECT * FROM resumes WHERE lower(name) = lower(?) " +
+                "ORDER BY created_date DESC LIMIT 1";
+        return Optional.ofNullable(
+                DataAccessUtils.singleResult(
+                        jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Resume.class), name)
+                )
+        );
+    }
+
     public void deleteResumeById(Long id){
         String sql = "delete from resumes where id = ?";
         jdbcTemplate.update(sql, id);
@@ -83,20 +93,6 @@ public class ResumeDao {
                         .addValue("isActive", resume.getIsActive())
                         .addValue("updateTime", resume.getUpdateTime())
                         .addValue("id", id)
-        );
-    }
-
-    public void addWorkExperienceInfo(WorkExperienceInfo workExperienceInfo) {
-        String sql = "insert into work_experience_info(resume_id, years, company_name, position, responsibilities)" +
-                " values(:resumeId, :years, :companyName, :position, :responsibilities)";
-
-        namedParameterJdbcTemplate.update(sql,
-                new MapSqlParameterSource()
-                        .addValue("resumeId", workExperienceInfo.getResumeId())
-                        .addValue("years", workExperienceInfo.getYears())
-                        .addValue("companyName", workExperienceInfo.getCompanyName())
-                        .addValue("position", workExperienceInfo.getPosition())
-                        .addValue("responsibilities", workExperienceInfo.getResponsibilities())
         );
     }
 

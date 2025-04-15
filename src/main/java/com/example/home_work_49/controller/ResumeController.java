@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -35,7 +36,7 @@ public class ResumeController {
         ResumeDto resumeDto = new ResumeDto();
         resumeDto.setWorkExperience(new WorkExperienceInfoDto());
         resumeDto.setEducation(new EducationInfoDto());
-        resumeDto.setContact(new ContactsInfoDto());
+        resumeDto.setContacts(new ArrayList<>());
         model.addAttribute("resumeDto", new ResumeDto());
         model.addAttribute("categories", categories);
         return "applicant/createResume";

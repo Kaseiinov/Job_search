@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Data
 @Builder
@@ -30,7 +31,7 @@ public class ResumeDto {
     private LocalDateTime updateTime;
     private WorkExperienceInfoDto workExperience;
     private EducationInfoDto education;
-    private ContactsInfoDto contact;
+    private List<ContactsInfoDto> contacts;
 
     public String getCreatedDateFormatted() {
         return createdDate != null
