@@ -15,7 +15,6 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 public class ResumeDto {
     private Long id;
-    @NotNull
     private Long applicantId;
     @NotBlank
     private String name;
@@ -29,6 +28,9 @@ public class ResumeDto {
     private LocalDateTime createdDate;
     @Future
     private LocalDateTime updateTime;
+    private WorkExperienceInfoDto workExperience;
+    private EducationInfoDto education;
+    private ContactsInfoDto contact;
 
     public String getCreatedDateFormatted() {
         return createdDate != null

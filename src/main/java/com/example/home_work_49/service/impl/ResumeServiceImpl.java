@@ -14,6 +14,7 @@ import com.example.home_work_49.models.User;
 import com.example.home_work_49.models.WorkExperienceInfo;
 import com.example.home_work_49.service.ResumeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -99,10 +100,11 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     @Override
-    public void addResume(ResumeDto resumeDto){
+    public void addResume(ResumeDto resumeDto, Authentication auth){
+        User user = userDao.getUserByEmail(auth.getName()).orElseThrow(UserNotFoundException::new);
 
         Resume resume = new Resume();
-        resume.setApplicantId(resumeDto.getApplicantId());
+        resume.setApplicantId(user.getId());
         resume.setName(resumeDto.getName());
         resume.setCategoryId(resumeDto.getCategoryId());
         resume.setSalary(resumeDto.getSalary());
@@ -110,8 +112,8 @@ public class ResumeServiceImpl implements ResumeService {
         resume.setCreatedDate(LocalDateTime.now());
         resume.setUpdateTime(null);
 
-        Boolean isApplicant = userDao.isUser(resumeDto.getApplicantId(), "applicant").orElseThrow(UserNotFoundException::new);
-        boolean isCategoryExists = categoryDao.isCategoryExists(resumeDto.getCategoryId());
+        Boolean isApplicant = userDao.isUser(resume.getApplicantId(), "applicant").orElseThrow(UserNotFoundException::new);
+        boolean isCategoryExists = categoryDao.isCategoryExists(resume.getCategoryId());
 
         if(!isApplicant){
             throw new ApplicantNotFoundException();

@@ -28,7 +28,7 @@ public class ResumeController {
     @PostMapping("createResume")
     public HttpStatus createResume(@RequestBody @Valid ResumeDto resumeDto) {
         log.info("Creating Resume: {}", resumeDto.getName());
-        resumeService.addResume(resumeDto);
+//        resumeService.addResume(resumeDto. "d");
         return HttpStatus.CREATED;
     }
 

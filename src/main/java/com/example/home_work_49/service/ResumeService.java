@@ -2,6 +2,7 @@ package com.example.home_work_49.service;
 
 import com.example.home_work_49.dto.ResumeDto;
 import com.example.home_work_49.dto.WorkExperienceInfoDto;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
@@ -20,5 +21,6 @@ public interface ResumeService {
 
     void addWorkExperienceInfo(WorkExperienceInfoDto workExpDto);
 
-    void addResume(ResumeDto resumeDto);
+
+    void addResume(ResumeDto resumeDto, Authentication auth);
 }

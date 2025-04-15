@@ -13,14 +13,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class WorkExperienceInfoDto {
     private Long id;
-    @NotNull
     private Long resumeId;
-    @NotNull
     private Integer years;
-    @NotBlank
     private String companyName;
-    @NotBlank
     private String position;
-    @NotNull
     private String responsibilities;
 }
