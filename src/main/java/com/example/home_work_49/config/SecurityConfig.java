@@ -75,13 +75,13 @@ public class SecurityConfig {
 
 
                         // Vacancy endpoints
+                        .requestMatchers("/vacancies").permitAll()
                         .requestMatchers("/vacancies/**").hasAnyAuthority("EMPLOYER", "ADMIN")
-                        .requestMatchers("/vacancies/").permitAll()
 
 
                         // Resume endpoints
+                        .requestMatchers("/resumes").permitAll()
                         .requestMatchers("/resumes/**").hasAnyAuthority("APPLICANT", "ADMIN")
-                        .requestMatchers("/resumes/").permitAll()
 
 
                         // all other requests

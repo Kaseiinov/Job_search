@@ -124,7 +124,7 @@
 
             <label class="form-check-label" for="isActiveCheckbox">Активно</label>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Опубликовать</button>
     </form>
 
 </@main.layout>

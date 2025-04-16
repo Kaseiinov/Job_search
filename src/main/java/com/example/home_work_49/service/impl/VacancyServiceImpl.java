@@ -5,9 +5,11 @@ import com.example.home_work_49.dao.UserDao;
 import com.example.home_work_49.dao.VacancyDao;
 import com.example.home_work_49.dto.VacancyDto;
 import com.example.home_work_49.exceptions.*;
+import com.example.home_work_49.models.User;
 import com.example.home_work_49.models.Vacancy;
 import com.example.home_work_49.service.VacancyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -84,7 +86,8 @@ public class VacancyServiceImpl implements VacancyService {
     }
 
     @Override
-    public void addVacancy(VacancyDto vacancyDto) {
+    public void addVacancy(VacancyDto vacancyDto, Authentication auth) {
+        User user = userDao.getUserByEmail(auth.getName()).orElseThrow(UserNotFoundException::new);
         Vacancy vacancy = new Vacancy();
         vacancy.setName(vacancyDto.getName());
         vacancy.setDescription(vacancyDto.getDescription());
@@ -93,19 +96,21 @@ public class VacancyServiceImpl implements VacancyService {
         vacancy.setExpFrom(vacancyDto.getExpFrom());
         vacancy.setExpTo(vacancyDto.getExpTo());
         vacancy.setIsActive(vacancyDto.getIsActive());
-        vacancy.setAuthorId(vacancyDto.getAuthorId());
+        vacancy.setAuthorId(user.getId());
         vacancy.setUpdateTime(null);
         vacancy.setCreatedDate(LocalDateTime.now());
 
-        Boolean isEmployer = userDao.isUser(vacancyDto.getAuthorId(), "employer").orElseThrow(UserNotFoundException::new);
-        boolean isCategoryExists = categoryDao.isCategoryExists(vacancyDto.getCategoryId());
-
-        if(!isEmployer){
-            throw new EmployerNotFounException();
-        } else if (!isCategoryExists) {
-            throw new CategoryNotFountException();
-        }
         vacancyDao.addVacancy(vacancy);
+
+
+//        Boolean isEmployer = userDao.isUser(vacancyDto.getAuthorId(), "employer").orElseThrow(UserNotFoundException::new);
+//        boolean isCategoryExists = categoryDao.isCategoryExists(vacancyDto.getCategoryId());
+//
+//        if(!isEmployer){
+//            throw new EmployerNotFounException();
+//        } else if (!isCategoryExists) {
+//            throw new CategoryNotFountException();
+//        }
 
     }
 

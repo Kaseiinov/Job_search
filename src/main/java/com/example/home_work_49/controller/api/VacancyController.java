@@ -25,7 +25,7 @@ public class VacancyController {
     @PostMapping("createVacancy")
     public HttpStatus createVacancy(@RequestBody @Valid VacancyDto vacancyDto) {
         log.info("Creating vacancy: {}", vacancyDto.getName());
-        vacancyService.addVacancy(vacancyDto);
+//        vacancyService.addVacancy(vacancyDto);
         return HttpStatus.CREATED;
     }
 

@@ -1,6 +1,7 @@
 package com.example.home_work_49.service;
 
 import com.example.home_work_49.dto.VacancyDto;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
@@ -17,5 +18,5 @@ public interface VacancyService {
 
     List<VacancyDto> getVacancyByApplicant(String applicantName);
 
-    void addVacancy(VacancyDto vacancyDto);
+    void addVacancy(VacancyDto vacancyDto, Authentication auth);
 }
