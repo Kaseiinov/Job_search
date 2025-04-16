@@ -86,6 +86,12 @@ public class VacancyServiceImpl implements VacancyService {
     }
 
     @Override
+    public VacancyDto getVacancyById(Long id){
+        Vacancy vacancy = vacancyDao.getVacancyById(id).orElseThrow(VacancyNotFoundException::new);
+        return vacancyBuilder(vacancy);
+    }
+
+    @Override
     public void addVacancy(VacancyDto vacancyDto, Authentication auth) {
         User user = userDao.getUserByEmail(auth.getName()).orElseThrow(UserNotFoundException::new);
         Vacancy vacancy = new Vacancy();

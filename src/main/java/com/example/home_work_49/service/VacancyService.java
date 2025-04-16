@@ -18,5 +18,7 @@ public interface VacancyService {
 
     List<VacancyDto> getVacancyByApplicant(String applicantName);
 
+    VacancyDto getVacancyById(Long id);
+
     void addVacancy(VacancyDto vacancyDto, Authentication auth);
 }

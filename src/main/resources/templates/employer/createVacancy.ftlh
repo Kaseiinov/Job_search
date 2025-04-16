@@ -75,7 +75,7 @@
             <label class="form-check-label" for="isActiveCheckbox">Активно</label>
         </div>
 
-        <button type="submit" class="btn btn-success w-100 btn-publish">Опубликовать</button>
+        <button type="submit" class="btn btn-success w-100 ">Опубликовать</button>
     </form>
 
 

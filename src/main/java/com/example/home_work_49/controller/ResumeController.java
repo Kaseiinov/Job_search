@@ -64,7 +64,7 @@ public class ResumeController {
     public String editResume(@Valid ResumeDto resumeDto, BindingResult bindingResult, Model model, Authentication auth) {
         if (!bindingResult.hasErrors()) {
             resumeService.updateResumeById(resumeDto.getId(), resumeDto);
-            return "redirect:/resumes";
+            return "redirect:/users/profile";
         }
         model.addAttribute("resumeDto", resumeDto);
         model.addAttribute("categories", categoryService.getCategories());
