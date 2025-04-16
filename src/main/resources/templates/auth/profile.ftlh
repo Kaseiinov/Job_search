@@ -16,7 +16,7 @@
 
         <div class="d-flex align-items-center justify-content-between mb-4">
             <div class="d-flex align-items-center">
-                <img src="#" width="80" height="80" alt="avatar" class="me-3">
+                <img src="/images/${user.id}" width="80" height="80" alt="avatar" class="me-3">
                 <div>
                     <#if user.accountType == "EMPLOYER">
                         <h5>${user.name!}</h5>

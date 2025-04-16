@@ -97,17 +97,17 @@
             </div>
             <div class="d-flex align-items-center mb-2">
                 <img src="https://img.icons8.com/ios-filled/30/facebook.png" class="me-2" alt="fb">
-                <input type="hidden" name="contacts[2].typeId" value="4">
+                <input type="hidden" name="contacts[2].typeId" value="3">
                 <input type="text" name="contacts[2].value" class="form-control">
             </div>
             <div class="d-flex align-items-center mb-2">
                 <img src="https://img.icons8.com/ios-filled/30/linkedin.png" class="me-2" alt="linkedin">
-                <input type="hidden" name="contacts[3].typeId" value="5">
+                <input type="hidden" name="contacts[3].typeId" value="4">
                 <input type="text" name="contacts[3].value" class="form-control">
             </div>
             <div class="d-flex align-items-center mb-2">
                 <img src="https://img.icons8.com/ios-filled/30/telegram-app.png" class="me-2" alt="telegram">
-                <input type="hidden" name="contacts[4].typeId" value="3">
+                <input type="hidden" name="contacts[4].typeId" value="5">
                 <input type="text" name="contacts[4].value" class="form-control">
             </div>
         </div>

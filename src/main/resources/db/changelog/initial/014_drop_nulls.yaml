@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: 014
+      author: Islam Kaseiinov
+      changes:
+        - dropNotNullConstraint:
+            tableName: work_experience_info
+            columnName: years
+            columnDataType: int
+        - dropNotNullConstraint:
+            tableName: work_experience_info
+            columnName: company_name
+            columnDataType: varchar
+        - dropNotNullConstraint:
+            tableName: work_experience_info
+            columnName: position
+            columnDataType: varchar
+        - dropNotNullConstraint:
+            tableName: work_experience_info
+            columnName: responsibilities
+            columnDataType: varchar
+        - dropNotNullConstraint:
+            tableName: contacts_info
+            columnName: contact_value
+            columnDataType: varchar
