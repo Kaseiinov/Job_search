@@ -12,10 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,15 +40,20 @@ public class UserController {
         return "auth/profile";
     }
 
-    @GetMapping("update")
-    public String updateUser(Model model ,Authentication auth){
+    @GetMapping("edit/{userEmail}")
+    public String updateUser(Model model, @PathVariable String userEmail){
+        model.addAttribute("userDto", userService.getUserByEmail(userEmail));
         return "auth/edit";
     }
 
-    @PostMapping("update")
-    public String updateUser( UserDto userDto, Authentication auth) throws SuchEmailAlreadyExistsException {
-        userService.updateUserByEmail(auth.getName(), userDto);
-        return "redirect:/users/profile";
+    @PostMapping("edit")
+    public String updateUser(@Valid UserDto userDto, BindingResult bindingResult, Model model) throws SuchEmailAlreadyExistsException {
+        if(!bindingResult.hasErrors()){
+            userService.updateUserByEmail(userDto.getEmail(), userDto);
+            return "redirect:/users/profile";
+        }
+        model.addAttribute("userDto", userDto);
+        return "auth/edit";
     }
 
 }
