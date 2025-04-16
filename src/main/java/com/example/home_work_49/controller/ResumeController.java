@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -50,5 +51,23 @@ public class ResumeController {
         model.addAttribute("resumeDto", resumeDto);
         model.addAttribute("categories", categoryService.getCategories());
         return "applicant/createResume";
+    }
+
+    @GetMapping("edit/{resumeId}")
+    public String editResume(@PathVariable Long resumeId, Model model) {
+        model.addAttribute("resumeDto", resumeService.getResumeById(resumeId));
+        model.addAttribute("categories", categoryService.getCategories());
+        return "applicant/edit_resume";
+    }
+
+    @PostMapping("edit")
+    public String editResume(@Valid ResumeDto resumeDto, BindingResult bindingResult, Model model, Authentication auth) {
+        if (!bindingResult.hasErrors()) {
+            resumeService.updateResumeById(resumeDto.getId(), resumeDto);
+            return "redirect:/resumes";
+        }
+        model.addAttribute("resumeDto", resumeDto);
+        model.addAttribute("categories", categoryService.getCategories());
+        return "applicant/edit_resume";
     }
 }
