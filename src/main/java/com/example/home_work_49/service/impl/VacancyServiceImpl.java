@@ -86,6 +86,12 @@ public class VacancyServiceImpl implements VacancyService {
     }
 
     @Override
+    public List<VacancyDto> getAllActiveVacancy(){
+        List<Vacancy> vacancyList = vacancyDao.getAllActiveVacancies();
+        return vacancyBuilder(vacancyList);
+    }
+
+    @Override
     public VacancyDto getVacancyById(Long id){
         Vacancy vacancy = vacancyDao.getVacancyById(id).orElseThrow(VacancyNotFoundException::new);
         return vacancyBuilder(vacancy);

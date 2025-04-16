@@ -27,7 +27,7 @@ public class VacancyController {
 
     @GetMapping
     public String getVacancies(Model model) {
-        model.addAttribute("vacancies", vacancyService.getAllVacancies());
+        model.addAttribute("vacancies", vacancyService.getAllActiveVacancy());
         return "employer/vacancies";
     }
 

@@ -37,6 +37,12 @@ public class VacancyDao {
         jdbcTemplate.update(sql, id);
     }
 
+    public List<Vacancy> getAllActiveVacancies() {
+        String sql  = "select * from vacancies where is_active = true";
+
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Vacancy.class));
+    }
+
     public List<Vacancy> getAllVacancies() {
         String sql  = "select * from vacancies";
 
