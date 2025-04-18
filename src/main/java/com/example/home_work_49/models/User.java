@@ -1,10 +1,8 @@
 package com.example.home_work_49.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.List;
 

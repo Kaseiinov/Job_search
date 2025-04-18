@@ -5,6 +5,7 @@ import com.example.home_work_49.dto.UserDto;
 import com.example.home_work_49.exceptions.SuchEmailAlreadyExistsException;
 import com.example.home_work_49.exceptions.UserNotFoundException;
 import com.example.home_work_49.models.User;
+import com.example.home_work_49.repository.RoleRepository;
 import com.example.home_work_49.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,10 +18,12 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
     private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
     @Override
     public void updateUserByEmail(String email, UserDto userDto) throws SuchEmailAlreadyExistsException {
         userDao.getUserByEmail(email).orElseThrow(UserNotFoundException::new);
+
         User user = new User();
         user.setName(userDto.getName());
         user.setSurname(userDto.getSurname());
@@ -31,9 +34,9 @@ public class UserServiceImpl implements UserService {
         user.setAccountType(userDto.getAccountType().toUpperCase());
 
         if(userDto.getAccountType().equalsIgnoreCase("applicant")){
-            user.getRole().setId(7L);
+            user.setRole(roleRepository.findById(7L).orElseThrow(UserNotFoundException::new));
         }else{
-            user.getRole().setId(6L);
+            user.setRole(roleRepository.findById(6L).orElseThrow(UserNotFoundException::new));
         }
 
         userDao.updateUserByEmail(email, user);
@@ -110,9 +113,9 @@ public class UserServiceImpl implements UserService {
         user.setAccountType(userDto.getAccountType().toUpperCase());
         user.setEnabled(true);
         if(userDto.getAccountType().equalsIgnoreCase("applicant")){
-            user.getRole().setId(7L);
+            user.setRole(roleRepository.findById(7L).orElseThrow(UserNotFoundException::new));
         }else{
-            user.getRole().setId(6L);
+            user.setRole(roleRepository.findById(6L).orElseThrow(UserNotFoundException::new));
         }
 
         boolean isExists = userDao.emailExists(user.getEmail());

@@ -29,7 +29,7 @@ public class AuthController {
     public String register(@Valid UserDto userDto, BindingResult bindingResult, Model model) throws SuchEmailAlreadyExistsException {
         if(!bindingResult.hasErrors()){
             userService.addUser(userDto);
-            return "redirect:/";
+            return "redirect:/auth/login";
         }
         model.addAttribute("userDto", userDto);
         return "auth/register";

@@ -6,15 +6,19 @@ import com.example.home_work_49.dto.EducationInfoDto;
 import com.example.home_work_49.dto.ResumeDto;
 import com.example.home_work_49.dto.WorkExperienceInfoDto;
 import com.example.home_work_49.exceptions.CategoryNotFountException;
+import com.example.home_work_49.exceptions.ContactNotFoundException;
 import com.example.home_work_49.exceptions.ResumeNotFoundException;
 import com.example.home_work_49.exceptions.UserNotFoundException;
 import com.example.home_work_49.models.*;
+import com.example.home_work_49.repository.CategoryRepository;
+import com.example.home_work_49.repository.ContactTypeRepository;
+import com.example.home_work_49.repository.ResumeRepository;
+import com.example.home_work_49.repository.UserRepository;
 import com.example.home_work_49.service.ResumeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -27,10 +31,14 @@ public class ResumeServiceImpl implements ResumeService {
     private final WorkExperienceInfoDao experienceDao;
     private final EducationInfoDao educationDao;
     private final ContactDao contactDao;
+    private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
+    private final ResumeRepository resumeRepository;
+    private final ContactTypeRepository contactTypeRepository;
 
     @Override
     public List<ResumeDto> getAllActiveResumes(){
-        List<Resume> resumes = resumeDao.getAllActiveResumes();
+        List<Resume> resumes = resumeRepository.findAllByIsActive(true);
 
         return resumeBuilder(resumes);
     }
@@ -40,7 +48,7 @@ public class ResumeServiceImpl implements ResumeService {
 
         Resume resume = new Resume();
         resume.setName(resumeDto.getName());
-        resume.getCategory().setId(resumeDto.getCategoryId());
+        resume.setCategory(categoryRepository.findById(resumeDto.getCategoryId()).orElseThrow(CategoryNotFountException::new));
         resume.setSalary(resumeDto.getSalary());
         resume.setIsActive(resumeDto.getIsActive());
         resume.setUpdateTime(LocalDateTime.now());
@@ -71,19 +79,19 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public ResumeDto getResumeById(Long id){
-        Resume resume = resumeDao.getResumeById(id).orElseThrow(ResumeNotFoundException::new);
+        Resume resume = resumeRepository.findById(id).orElseThrow(ResumeNotFoundException::new);
         return resumeBuilder(resume);
     }
 
     @Override
     public List<ResumeDto> getResumeByCategory(String resumeCategory) {
-        List<Resume> resumeList = resumeDao.getResumeByCategory(resumeCategory);
+        List<Resume> resumeList = resumeRepository.findAllByCategory_Name(resumeCategory);
         return resumeBuilder(resumeList);
     }
 
     @Override
     public List<ResumeDto> getResumeByUser(String userEmail) {
-        List<Resume> resumeList = resumeDao.getResumeByUser(userEmail);
+        List<Resume> resumeList = resumeRepository.findAllByApplicant_Email(userEmail);
 
         return resumeBuilder(resumeList);
     }
@@ -91,7 +99,7 @@ public class ResumeServiceImpl implements ResumeService {
     @Override
     public void addWorkExperienceInfo(WorkExperienceInfoDto workExpDto) {
         WorkExperienceInfo workExp = new WorkExperienceInfo();
-        workExp.getResume().setId(workExpDto.getResumeId());
+        workExp.setResume(resumeRepository.findById(workExpDto.getResumeId()).orElseThrow(ResumeNotFoundException::new));
         workExp.setYears(workExpDto.getYears());
         workExp.setCompanyName(workExpDto.getCompanyName());
         workExp.setPosition(workExpDto.getPosition());
@@ -103,7 +111,7 @@ public class ResumeServiceImpl implements ResumeService {
     @Override
     public void addEducationInfo(EducationInfoDto educationDto) {
         EducationInfo education = new EducationInfo();
-        education.getResume().setId(educationDto.getResumeId());
+        education.setResume(resumeRepository.findById(educationDto.getResumeId()).orElseThrow(ResumeNotFoundException::new));
         education.setInstitution(educationDto.getInstitution());
         education.setProgram(educationDto.getProgram());
         education.setStartDate(educationDto.getStartDate());
@@ -116,8 +124,8 @@ public class ResumeServiceImpl implements ResumeService {
     @Override
     public void addContactInfo(ContactsInfoDto contactDto) {
         ContactInfo contact = new ContactInfo();
-        contact.getResume().setId(contactDto.getResumeId());
-        contact.getType().setId(contactDto.getTypeId());
+        contact.setResume(resumeRepository.findById(contactDto.getResumeId()).orElseThrow(ResumeNotFoundException::new));
+        contact.setType(contactTypeRepository.findById(contactDto.getTypeId()).orElseThrow(ContactNotFoundException::new));
         contact.setValue(contactDto.getValue());
 
         contactDao.addContact(contact);
@@ -128,9 +136,9 @@ public class ResumeServiceImpl implements ResumeService {
         User user = userDao.getUserByEmail(auth.getName()).orElseThrow(UserNotFoundException::new);
 
         Resume resume = new Resume();
-        resume.getApplicant().setId(user.getId());
+        resume.setApplicant(userRepository.findById(user.getId()).orElseThrow(UserNotFoundException::new));
         resume.setName(resumeDto.getName());
-        resume.getCategory().setId(resumeDto.getCategoryId());
+        resume.setCategory(categoryRepository.findById(resumeDto.getCategoryId()).orElseThrow(CategoryNotFountException::new));
         resume.setSalary(resumeDto.getSalary());
         resume.setIsActive(resumeDto.getIsActive());
         resume.setCreatedDate(LocalDateTime.now());
