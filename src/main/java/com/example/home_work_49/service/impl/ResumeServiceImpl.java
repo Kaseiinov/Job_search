@@ -40,7 +40,7 @@ public class ResumeServiceImpl implements ResumeService {
 
         Resume resume = new Resume();
         resume.setName(resumeDto.getName());
-        resume.setCategoryId(resumeDto.getCategoryId());
+        resume.getCategory().setId(resumeDto.getCategoryId());
         resume.setSalary(resumeDto.getSalary());
         resume.setIsActive(resumeDto.getIsActive());
         resume.setUpdateTime(LocalDateTime.now());
@@ -91,7 +91,7 @@ public class ResumeServiceImpl implements ResumeService {
     @Override
     public void addWorkExperienceInfo(WorkExperienceInfoDto workExpDto) {
         WorkExperienceInfo workExp = new WorkExperienceInfo();
-        workExp.setResumeId(workExpDto.getResumeId());
+        workExp.getResume().setId(workExpDto.getResumeId());
         workExp.setYears(workExpDto.getYears());
         workExp.setCompanyName(workExpDto.getCompanyName());
         workExp.setPosition(workExpDto.getPosition());
@@ -103,7 +103,7 @@ public class ResumeServiceImpl implements ResumeService {
     @Override
     public void addEducationInfo(EducationInfoDto educationDto) {
         EducationInfo education = new EducationInfo();
-        education.setResumeId(educationDto.getResumeId());
+        education.getResume().setId(educationDto.getResumeId());
         education.setInstitution(educationDto.getInstitution());
         education.setProgram(educationDto.getProgram());
         education.setStartDate(educationDto.getStartDate());
@@ -116,8 +116,8 @@ public class ResumeServiceImpl implements ResumeService {
     @Override
     public void addContactInfo(ContactsInfoDto contactDto) {
         ContactInfo contact = new ContactInfo();
-        contact.setResumeId(contactDto.getResumeId());
-        contact.setTypeId(contactDto.getTypeId());
+        contact.getResume().setId(contactDto.getResumeId());
+        contact.getType().setId(contactDto.getTypeId());
         contact.setValue(contactDto.getValue());
 
         contactDao.addContact(contact);
@@ -128,9 +128,9 @@ public class ResumeServiceImpl implements ResumeService {
         User user = userDao.getUserByEmail(auth.getName()).orElseThrow(UserNotFoundException::new);
 
         Resume resume = new Resume();
-        resume.setApplicantId(user.getId());
+        resume.getApplicant().setId(user.getId());
         resume.setName(resumeDto.getName());
-        resume.setCategoryId(resumeDto.getCategoryId());
+        resume.getCategory().setId(resumeDto.getCategoryId());
         resume.setSalary(resumeDto.getSalary());
         resume.setIsActive(resumeDto.getIsActive());
         resume.setCreatedDate(LocalDateTime.now());
@@ -179,9 +179,9 @@ public class ResumeServiceImpl implements ResumeService {
                 .map(e -> ResumeDto
                         .builder()
                         .id(e.getId())
-                        .applicantId(e.getApplicantId())
+                        .applicantId(e.getApplicant().getId())
                         .name(e.getName())
-                        .categoryId(e.getCategoryId())
+                        .categoryId(e.getCategory().getId())
                         .salary(e.getSalary())
                         .isActive(e.getIsActive())
                         .createdDate(e.getCreatedDate())
@@ -193,9 +193,9 @@ public class ResumeServiceImpl implements ResumeService {
     public ResumeDto resumeBuilder(Resume resume){
         return ResumeDto.builder()
                 .id(resume.getId())
-                .applicantId(resume.getApplicantId())
+                .applicantId(resume.getApplicant().getId())
                 .name(resume.getName())
-                .categoryId(resume.getCategoryId())
+                .categoryId(resume.getCategory().getId())
                 .salary(resume.getSalary())
                 .isActive(resume.getIsActive())
                 .createdDate(resume.getCreatedDate())

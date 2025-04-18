@@ -1,7 +1,6 @@
 package com.example.home_work_49.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,13 +9,13 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "contact_types")
-public class ContactType {
+@Table(name = "authorities")
+public class Authority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String type;
+    private String authority;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "authority")
+    List<Role> roles;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "type")
-    private List<ContactInfo> contacts;
 }

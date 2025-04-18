@@ -19,7 +19,7 @@ public class EducationInfoDao {
                 "values(:resumeId, :institution, :program, :startDate, :endDate, :degree)";
         namedParameterJdbcTemplate.update(sql,
                 new MapSqlParameterSource()
-                        .addValue("resumeId", education.getResumeId())
+                        .addValue("resumeId", education.getResume().getId())
                         .addValue("institution", education.getInstitution())
                         .addValue("program", education.getProgram())
                         .addValue("startDate", education.getStartDate())

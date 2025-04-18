@@ -19,7 +19,7 @@ public class WorkExperienceInfoDao {
                 "values(:resumeId, :years, :companyName, :position, :responsibilities)";
         namedParameterJdbcTemplate.update(sql,
                 new MapSqlParameterSource()
-                        .addValue("resumeId", experience.getResumeId())
+                        .addValue("resumeId", experience.getResume().getId())
                         .addValue("years", experience.getYears())
                         .addValue("companyName", experience.getCompanyName())
                         .addValue("position", experience.getPosition())

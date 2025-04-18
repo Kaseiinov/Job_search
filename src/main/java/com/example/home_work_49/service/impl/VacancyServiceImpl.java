@@ -40,7 +40,7 @@ public class VacancyServiceImpl implements VacancyService {
         Vacancy vacancy = new Vacancy();
         vacancy.setName(vacancyDto.getName());
         vacancy.setDescription(vacancyDto.getDescription());
-        vacancy.setCategoryId(vacancyDto.getCategoryId());
+        vacancy.getCategory().setId(vacancyDto.getCategoryId());
         vacancy.setSalary(vacancyDto.getSalary());
         vacancy.setExpFrom(vacancyDto.getExpFrom());
         vacancy.setExpTo(vacancyDto.getExpTo());
@@ -103,12 +103,12 @@ public class VacancyServiceImpl implements VacancyService {
         Vacancy vacancy = new Vacancy();
         vacancy.setName(vacancyDto.getName());
         vacancy.setDescription(vacancyDto.getDescription());
-        vacancy.setCategoryId(vacancyDto.getCategoryId());
+        vacancy.getCategory().setId(vacancyDto.getCategoryId());
         vacancy.setSalary(vacancyDto.getSalary());
         vacancy.setExpFrom(vacancyDto.getExpFrom());
         vacancy.setExpTo(vacancyDto.getExpTo());
         vacancy.setIsActive(vacancyDto.getIsActive());
-        vacancy.setAuthorId(user.getId());
+        vacancy.getAuthor().setId(user.getId());
         vacancy.setUpdateTime(null);
         vacancy.setCreatedDate(LocalDateTime.now());
 
@@ -133,12 +133,12 @@ public class VacancyServiceImpl implements VacancyService {
                         .id(e.getId())
                         .name(e.getName())
                         .description(e.getDescription())
-                        .categoryId(e.getCategoryId())
+                        .categoryId(e.getCategory().getId())
                         .salary(e.getSalary())
                         .expFrom(e.getExpFrom())
                         .expTo(e.getExpTo())
                         .isActive(e.getIsActive())
-                        .authorId(e.getAuthorId())
+                        .authorId(e.getAuthor().getId())
                         .createdDate(e.getCreatedDate())
                         .updateTime(e.getUpdateTime())
                         .build())
@@ -151,12 +151,12 @@ public class VacancyServiceImpl implements VacancyService {
                 .id(vacancy.getId())
                 .name(vacancy.getName())
                 .description(vacancy.getDescription())
-                .categoryId(vacancy.getCategoryId())
+                .categoryId(vacancy.getCategory().getId())
                 .salary(vacancy.getSalary())
                 .expFrom(vacancy.getExpFrom())
                 .expTo(vacancy.getExpTo())
                 .isActive(vacancy.getIsActive())
-                .authorId(vacancy.getAuthorId())
+                .authorId(vacancy.getAuthor().getId())
                 .createdDate(vacancy.getCreatedDate())
                 .updateTime(vacancy.getUpdateTime())
                 .build();

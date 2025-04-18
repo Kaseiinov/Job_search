@@ -124,7 +124,7 @@ public class UserDao {
                 .addValue("avatar", user.getAvatar())
                 .addValue("account_type", user.getAccountType())
                 .addValue("enabled", user.getEnabled())
-                .addValue("role_id", user.getRoleId());
+                .addValue("role_id", user.getRole().getId());
     }
 
     public MapSqlParameterSource mapper(String userEmail, User user){
@@ -138,6 +138,6 @@ public class UserDao {
                 .addValue("avatar", user.getAvatar())
                 .addValue("accountType", user.getAccountType())
                 .addValue("enabled", user.getEnabled())
-                .addValue("roleId", user.getRoleId());
+                .addValue("roleId", user.getRole().getId());
     }
 }

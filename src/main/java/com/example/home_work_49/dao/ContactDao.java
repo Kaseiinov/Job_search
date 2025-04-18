@@ -19,8 +19,8 @@ public class ContactDao {
                 "values(:typeId, :resumeId, :contactValue)";
         namedParameterJdbcTemplate.update(sql,
                 new MapSqlParameterSource()
-                        .addValue("typeId", contact.getTypeId())
-                        .addValue("resumeId", contact.getResumeId())
+                        .addValue("typeId", contact.getType().getId())
+                        .addValue("resumeId", contact.getResume().getId())
                         .addValue("contactValue", contact.getValue())
         );
     }

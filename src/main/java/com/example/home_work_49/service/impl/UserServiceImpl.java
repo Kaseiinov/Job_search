@@ -31,9 +31,9 @@ public class UserServiceImpl implements UserService {
         user.setAccountType(userDto.getAccountType().toUpperCase());
 
         if(userDto.getAccountType().equalsIgnoreCase("applicant")){
-            user.setRoleId(7L);
+            user.getRole().setId(7L);
         }else{
-            user.setRoleId(6L);
+            user.getRole().setId(6L);
         }
 
         userDao.updateUserByEmail(email, user);
@@ -110,9 +110,9 @@ public class UserServiceImpl implements UserService {
         user.setAccountType(userDto.getAccountType().toUpperCase());
         user.setEnabled(true);
         if(userDto.getAccountType().equalsIgnoreCase("applicant")){
-            user.setRoleId(7L);
+            user.getRole().setId(7L);
         }else{
-            user.setRoleId(6L);
+            user.getRole().setId(6L);
         }
 
         boolean isExists = userDao.emailExists(user.getEmail());
