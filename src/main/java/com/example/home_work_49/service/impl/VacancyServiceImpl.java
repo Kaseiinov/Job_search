@@ -7,6 +7,9 @@ import com.example.home_work_49.dto.VacancyDto;
 import com.example.home_work_49.exceptions.*;
 import com.example.home_work_49.models.User;
 import com.example.home_work_49.models.Vacancy;
+import com.example.home_work_49.repository.CategoryRepository;
+import com.example.home_work_49.repository.UserRepository;
+import com.example.home_work_49.repository.VacancyRepository;
 import com.example.home_work_49.service.VacancyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -23,6 +26,9 @@ public class VacancyServiceImpl implements VacancyService {
     private final VacancyDao vacancyDao;
     private final UserDao userDao;
     private final CategoryDao categoryDao;
+    private final VacancyRepository vacancyRepository;
+    private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
 
     @Override
     public void deleteVacancyById(Long id) {
@@ -40,7 +46,7 @@ public class VacancyServiceImpl implements VacancyService {
         Vacancy vacancy = new Vacancy();
         vacancy.setName(vacancyDto.getName());
         vacancy.setDescription(vacancyDto.getDescription());
-        vacancy.getCategory().setId(vacancyDto.getCategoryId());
+        vacancy.setCategory(categoryRepository.findById(vacancyDto.getCategoryId()).orElseThrow(CategoryNotFountException::new));
         vacancy.setSalary(vacancyDto.getSalary());
         vacancy.setExpFrom(vacancyDto.getExpFrom());
         vacancy.setExpTo(vacancyDto.getExpTo());
@@ -60,14 +66,14 @@ public class VacancyServiceImpl implements VacancyService {
 
     @Override
     public List<VacancyDto> getAllVacancies() {
-        List<Vacancy> vacancyList = vacancyDao.getAllVacancies();
+        List<Vacancy> vacancyList = vacancyRepository.findAll();
 
         return vacancyBuilder(vacancyList);
     }
 
     @Override
     public List<VacancyDto> getVacanciesByUser(String userEmail) {
-        List<Vacancy> vacancyList = vacancyDao.getVacanciesByUser(userEmail);
+        List<Vacancy> vacancyList = vacancyRepository.findAllVacanciesByAuthor_Email(userEmail);
 
         return vacancyBuilder(vacancyList);
     }
@@ -87,32 +93,32 @@ public class VacancyServiceImpl implements VacancyService {
 
     @Override
     public List<VacancyDto> getAllActiveVacancy(){
-        List<Vacancy> vacancyList = vacancyDao.getAllActiveVacancies();
+        List<Vacancy> vacancyList = vacancyRepository.findAllByIsActive(true);
         return vacancyBuilder(vacancyList);
     }
 
     @Override
     public VacancyDto getVacancyById(Long id){
-        Vacancy vacancy = vacancyDao.getVacancyById(id).orElseThrow(VacancyNotFoundException::new);
+        Vacancy vacancy = vacancyRepository.findById(id).orElseThrow(VacancyNotFoundException::new);
         return vacancyBuilder(vacancy);
     }
 
     @Override
     public void addVacancy(VacancyDto vacancyDto, Authentication auth) {
-        User user = userDao.getUserByEmail(auth.getName()).orElseThrow(UserNotFoundException::new);
+        User user = userRepository.findByEmail(auth.getName()).orElseThrow(UserNotFoundException::new);
         Vacancy vacancy = new Vacancy();
         vacancy.setName(vacancyDto.getName());
         vacancy.setDescription(vacancyDto.getDescription());
-        vacancy.getCategory().setId(vacancyDto.getCategoryId());
+        vacancy.setCategory(categoryRepository.findById(vacancyDto.getCategoryId()).orElseThrow(CategoryNotFountException::new));
         vacancy.setSalary(vacancyDto.getSalary());
         vacancy.setExpFrom(vacancyDto.getExpFrom());
         vacancy.setExpTo(vacancyDto.getExpTo());
         vacancy.setIsActive(vacancyDto.getIsActive());
-        vacancy.getAuthor().setId(user.getId());
+        vacancy.setAuthor(user);
         vacancy.setUpdateTime(null);
         vacancy.setCreatedDate(LocalDateTime.now());
 
-        vacancyDao.addVacancy(vacancy);
+        vacancyRepository.save(vacancy);
 
 
 //        Boolean isEmployer = userDao.isUser(vacancyDto.getAuthorId(), "employer").orElseThrow(UserNotFoundException::new);
