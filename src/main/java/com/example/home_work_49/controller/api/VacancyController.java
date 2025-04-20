@@ -29,10 +29,10 @@ public class VacancyController {
         return HttpStatus.CREATED;
     }
 
-    @GetMapping ("vacancies/{applicantName}")
-    public List<VacancyDto> getVacancyByApplicant(@PathVariable String applicantName) {
-        return vacancyService.getVacancyByApplicant(applicantName);
-    }
+//    @GetMapping ("vacancies/{applicantName}")
+//    public List<VacancyDto> getVacancyByApplicant(@PathVariable String applicantName) {
+//        return vacancyService.getVacancyByApplicant(applicantName);
+//    }
 
     @PutMapping("update/{vacancyId}")
     public HttpStatus updateVacancy(@PathVariable("vacancyId") @Valid Long vacancyId, @RequestBody VacancyDto vacancyDto) {

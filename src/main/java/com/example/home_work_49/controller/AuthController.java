@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.management.relation.RoleNotFoundException;
+
 @Controller
 @RequestMapping("auth")
 @RequiredArgsConstructor
@@ -26,7 +28,7 @@ public class AuthController {
     }
 
     @PostMapping("register")
-    public String register(@Valid UserDto userDto, BindingResult bindingResult, Model model) throws SuchEmailAlreadyExistsException {
+    public String register(@Valid UserDto userDto, BindingResult bindingResult, Model model) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
         if(!bindingResult.hasErrors()){
             userService.addUser(userDto);
             return "redirect:/auth/login";

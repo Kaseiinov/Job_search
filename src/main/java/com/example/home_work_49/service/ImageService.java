@@ -11,5 +11,5 @@ public interface ImageService {
 
     ResponseEntity<?> findById(long imageId);
 
-    ResponseEntity<?> findByUserId(long movieId);
+    ResponseEntity<?> findByUserId(long userId);
 }

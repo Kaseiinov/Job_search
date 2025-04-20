@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.relation.RoleNotFoundException;
 import java.util.List;
 
 @Controller
@@ -47,7 +48,7 @@ public class UserController {
     }
 
     @PostMapping("edit")
-    public String updateUser(@Valid UserDto userDto, BindingResult bindingResult, Model model) throws SuchEmailAlreadyExistsException {
+    public String updateUser(@Valid UserDto userDto, BindingResult bindingResult, Model model) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
         if(!bindingResult.hasErrors()){
             userService.updateUserByEmail(userDto.getEmail(), userDto);
             return "redirect:/users/profile";
