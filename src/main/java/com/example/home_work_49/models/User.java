@@ -25,9 +25,9 @@ public class User {
     @Column(name = "account_type")
     private String accountType;
     private Boolean enabled;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id")
-    private Role role;
+
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Role> roles;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "applicant")
     private List<Resume> resumes;

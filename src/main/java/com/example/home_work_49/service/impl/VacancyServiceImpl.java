@@ -1,8 +1,5 @@
 package com.example.home_work_49.service.impl;
 
-import com.example.home_work_49.dao.CategoryDao;
-import com.example.home_work_49.dao.UserDao;
-import com.example.home_work_49.dao.VacancyDao;
 import com.example.home_work_49.dto.VacancyDto;
 import com.example.home_work_49.exceptions.*;
 import com.example.home_work_49.models.User;
@@ -23,18 +20,15 @@ import java.util.List;
 
 public class VacancyServiceImpl implements VacancyService {
 
-    private final VacancyDao vacancyDao;
-    private final UserDao userDao;
-    private final CategoryDao categoryDao;
     private final VacancyRepository vacancyRepository;
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
 
     @Override
     public void deleteVacancyById(Long id) {
-        boolean exists = vacancyDao.vacancyIdExists(id);
+        boolean exists = vacancyRepository.existsById(id);
         if(exists){
-            vacancyDao.deleteVacancyById(id);
+            vacancyRepository.deleteById(id);
         }else{
             throw new VacancyNotFoundException();
         }
@@ -53,15 +47,15 @@ public class VacancyServiceImpl implements VacancyService {
         vacancy.setIsActive(vacancyDto.getIsActive());
         vacancy.setUpdateTime(LocalDateTime.now());
 
-        boolean exists = vacancyDao.vacancyIdExists(id);
-        boolean isCategoryExists = categoryDao.isCategoryExists(vacancyDto.getCategoryId());
+        boolean exists = vacancyRepository.existsById(id);
+        boolean isCategoryExists = categoryRepository.existsById(vacancyDto.getCategoryId());
 
         if (!exists) {
             throw new VacancyNotFoundException();
         } else if (!isCategoryExists) {
             throw new CategoryNotFountException();
         }
-        vacancyDao.updateVacancyById(id, vacancy);
+        vacancyRepository.save(vacancy);
     }
 
     @Override
@@ -80,16 +74,16 @@ public class VacancyServiceImpl implements VacancyService {
 
     @Override
     public List<VacancyDto> getVacancyByCategory(String vacancyCategory) {
-        List<Vacancy> vacancyList = vacancyDao.getVacancyByCategory(vacancyCategory);
+        List<Vacancy> vacancyList = vacancyRepository.findAllByCategory_Name(vacancyCategory);
         return vacancyBuilder(vacancyList);
     }
 
-    @Override
-    public List<VacancyDto> getVacancyByApplicant(String applicantName) {
-        List<Vacancy> vacancyList =  vacancyDao.getVacancyByApplicant(applicantName);
-
-        return vacancyBuilder(vacancyList);
-    }
+//    @Override
+//    public List<VacancyDto> getVacancyByApplicant(String applicantName) {
+//        List<Vacancy> vacancyList =  vacancyDao.getVacancyByApplicant(applicantName);
+//
+//        return vacancyBuilder(vacancyList);
+//    }
 
     @Override
     public List<VacancyDto> getAllActiveVacancy(){

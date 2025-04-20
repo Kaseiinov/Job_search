@@ -15,9 +15,14 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String role;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "authority_id")
-    private Authority authority;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "roles", cascade = CascadeType.ALL)
+    private List<Authority> authorities;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "usr_roles",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "usr_id")
+    )
     private List<User> users;
 }

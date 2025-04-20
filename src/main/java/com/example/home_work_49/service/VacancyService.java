@@ -16,7 +16,6 @@ public interface VacancyService {
 
     List<VacancyDto> getVacancyByCategory(String vacancyCategory);
 
-    List<VacancyDto> getVacancyByApplicant(String applicantName);
 
     List<VacancyDto> getAllActiveVacancy();
 

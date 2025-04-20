@@ -3,13 +3,12 @@ package com.example.home_work_49.service;
 import com.example.home_work_49.dto.UserDto;
 import com.example.home_work_49.exceptions.SuchEmailAlreadyExistsException;
 
+import javax.management.relation.RoleNotFoundException;
 import java.util.List;
 
 public interface UserService {
 
-    void updateUserByEmail(String email, UserDto userDto) throws SuchEmailAlreadyExistsException;
-
-    UserDto getUserByName(String userName);
+    void updateUserByEmail(String email, UserDto userDto) throws SuchEmailAlreadyExistsException, RoleNotFoundException;
 
     UserDto getUserByPhone(String phoneNumber);
 
@@ -17,5 +16,5 @@ public interface UserService {
 
     List<UserDto> getApplicantsByVacancy(String vacancyName);
 
-    void addUser(UserDto userDto) throws SuchEmailAlreadyExistsException;
+    void addUser(UserDto userDto) throws SuchEmailAlreadyExistsException, RoleNotFoundException;
 }

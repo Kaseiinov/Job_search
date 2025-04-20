@@ -1,28 +1,34 @@
 package com.example.home_work_49.service.impl;
 
-import com.example.home_work_49.dao.UserDao;
 import com.example.home_work_49.dto.UserDto;
 import com.example.home_work_49.exceptions.SuchEmailAlreadyExistsException;
 import com.example.home_work_49.exceptions.UserNotFoundException;
+import com.example.home_work_49.models.Role;
 import com.example.home_work_49.models.User;
 import com.example.home_work_49.repository.RoleRepository;
+import com.example.home_work_49.repository.UserRepository;
 import com.example.home_work_49.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.management.relation.RoleNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final UserDao userDao;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
 
     @Override
-    public void updateUserByEmail(String email, UserDto userDto) throws SuchEmailAlreadyExistsException {
-        userDao.getUserByEmail(email).orElseThrow(UserNotFoundException::new);
+    public void updateUserByEmail(String email, UserDto userDto) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
+        boolean isExistsUser = userRepository.existsUserByEmail(email);
+        if(!isExistsUser){
+            throw new UserNotFoundException();
+        }
 
         User user = new User();
         user.setName(userDto.getName());
@@ -32,43 +38,27 @@ public class UserServiceImpl implements UserService {
         user.setPhoneNumber(userDto.getPhoneNumber());
         user.setAvatar(userDto.getAvatar());
         user.setAccountType(userDto.getAccountType().toUpperCase());
+        user.getRoles().add(setUpRoles(userDto));
 
-        if(userDto.getAccountType().equalsIgnoreCase("applicant")){
-            user.setRole(roleRepository.findById(7L).orElseThrow(UserNotFoundException::new));
-        }else{
-            user.setRole(roleRepository.findById(6L).orElseThrow(UserNotFoundException::new));
-        }
-
-        userDao.updateUserByEmail(email, user);
+        userRepository.save(user);
 
     }
-
-    @Override
-    public UserDto getUserByName(String userName) {
-        User user = userDao.getUserByName(userName)
-                .orElseThrow(UserNotFoundException::new);
-        return builder(user);
-    }
-
-
 
     @Override
     public UserDto getUserByPhone(String userPhone) {
-        User user = userDao.getUserByPhone(userPhone)
-                .orElseThrow(UserNotFoundException::new);
+        User user = userRepository.findByPhoneNumber(userPhone);
         return builder(user);
     }
 
     @Override
     public UserDto getUserByEmail(String userEmail) {
-        User user = userDao.getUserByEmail(userEmail)
-                .orElseThrow(UserNotFoundException::new);
+        User user = userRepository.findByEmail(userEmail).orElseThrow(UserNotFoundException::new);
         return builder(user);
     }
 
     @Override
     public List<UserDto> getApplicantsByVacancy(String vacancyName) {
-        List<User> userList =  userDao.getApplicantsByVacancy(vacancyName);
+        List<User> userList = userRepository.findAllByVacancyName(vacancyName);
 
         return userList.stream()
                 .map(e -> UserDto
@@ -100,7 +90,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(UserDto userDto) throws SuchEmailAlreadyExistsException {
+    public void addUser(UserDto userDto) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
 
         User user = new User();
         user.setName(userDto.getName());
@@ -112,17 +102,17 @@ public class UserServiceImpl implements UserService {
         user.setAvatar(userDto.getAvatar());
         user.setAccountType(userDto.getAccountType().toUpperCase());
         user.setEnabled(true);
-        if(userDto.getAccountType().equalsIgnoreCase("applicant")){
-            user.setRole(roleRepository.findById(7L).orElseThrow(UserNotFoundException::new));
-        }else{
-            user.setRole(roleRepository.findById(6L).orElseThrow(UserNotFoundException::new));
-        }
+        user.getRoles().add(setUpRoles(userDto));
 
-        boolean isExists = userDao.emailExists(user.getEmail());
-        if(isExists){
-            throw new SuchEmailAlreadyExistsException();
+        userRepository.save(user);
+    }
+
+    private Role setUpRoles(UserDto userDto) throws RoleNotFoundException {
+        if(userDto.getAccountType().equalsIgnoreCase("applicant")){
+            return roleRepository.findById(7L).orElseThrow(RoleNotFoundException::new);
         }else{
-            userDao.addUser(user);
+            return roleRepository.findById(6L).orElseThrow(RoleNotFoundException::new);
+
         }
     }
 }

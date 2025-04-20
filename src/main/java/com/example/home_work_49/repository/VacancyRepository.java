@@ -11,4 +11,6 @@ public interface VacancyRepository extends JpaRepository<Vacancy, Long> {
     List<Vacancy> findAllByIsActive(Boolean isActive);
 
     List<Vacancy> findAllVacanciesByAuthor_Email(String authorEmail);
+
+    List<Vacancy> findAllByCategory_Name(String categoryName);
 }

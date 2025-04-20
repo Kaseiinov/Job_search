@@ -18,10 +18,10 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("byName/{userName}")
-    public UserDto getUserByName(@PathVariable String userName) {
-        return userService.getUserByName(userName);
-    }
+//    @GetMapping("byName/{userName}")
+//    public UserDto getUserByName(@PathVariable String userName) {
+//        return userService.getUserByName(userName);
+//    }
 
     @GetMapping("byVacancy/{vacancyName}")
     public List<UserDto> getApplicantsByVacancy(@PathVariable String vacancyName) {
@@ -38,17 +38,17 @@ public class UserController {
         return userService.getUserByEmail(userEmail);
     }
 
-    @PostMapping("createUser")
-    public HttpStatus registerUser(@RequestBody @Valid UserDto userDto) throws SuchEmailAlreadyExistsException {
-        log.info("Creating user: {}", userDto.getEmail());
-        userService.addUser(userDto);
-        return HttpStatus.CREATED;
-    }
-
-    @PutMapping("update/{userName}")
-    public HttpStatus updateUserByName(@PathVariable("userName") @Valid String userName,  @RequestBody UserDto userDto) throws SuchEmailAlreadyExistsException {
-        log.warn("Updating user: {}", userDto.getEmail());
-        userService.updateUserByEmail(userName, userDto);
-        return HttpStatus.OK;
-    }
+//    @PostMapping("createUser")
+//    public HttpStatus registerUser(@RequestBody @Valid UserDto userDto) throws SuchEmailAlreadyExistsException {
+//        log.info("Creating user: {}", userDto.getEmail());
+//        userService.addUser(userDto);
+//        return HttpStatus.CREATED;
+//    }
+//
+//    @PutMapping("update/{userName}")
+//    public HttpStatus updateUserByName(@PathVariable("userName") @Valid String userName,  @RequestBody UserDto userDto) throws SuchEmailAlreadyExistsException {
+//        log.warn("Updating user: {}", userDto.getEmail());
+//        userService.updateUserByEmail(userName, userDto);
+//        return HttpStatus.OK;
+//    }
 }
