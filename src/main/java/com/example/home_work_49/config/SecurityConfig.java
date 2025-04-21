@@ -31,14 +31,19 @@ public class SecurityConfig {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        String fetchUsersQuery = "select email, password, enabled\n" +
-                "from users\n" +
-                "where email = ?";
+        String fetchUsersQuery = """
+        SELECT email, password, enabled
+        FROM users
+        WHERE email = ?
+        """;
 
-        String fetchRolesQuery = "select u.email, r.role\n" +
-                "from users u, roles r\n" +
-                "where email = ?\n" +
-                "and u.ROLE_ID = r.id";
+        String fetchRolesQuery = """
+        SELECT r.role
+        FROM users u
+        JOIN usr_roles ur ON u.id = ur.usr_id
+        JOIN roles r ON r.id = ur.role_id
+        WHERE u.email = ?
+        """;
         auth
                 .jdbcAuthentication()
                 .dataSource(dataSource)

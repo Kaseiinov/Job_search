@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: 019 change clobe types in tables to varchar
+      author: Islam Kaseiinov
+      changes:
+        - modifyDataType:
+            tableName: users
+            columnName: avatar
+            newDataType: varchar
+
+        - modifyDataType:
+            tableName: vacancies
+            columnName: description
+            newDataType: varchar
+
+        - modifyDataType:
+            tableName: messages
+            columnName: content
+            newDataType: varchar
+
+

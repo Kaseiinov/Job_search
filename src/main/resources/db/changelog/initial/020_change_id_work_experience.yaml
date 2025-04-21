@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 020 change id type in work experience
+      author: Islam Kaseiinov
+      changes:
+        - modifyDataType:
+            tableName: work_experience_info
+            columnName: id
+            newDataType: bigint
+
+        - modifyDataType:
+            tableName: work_experience_info
+            columnName: resume_id
+            newDataType: bigint

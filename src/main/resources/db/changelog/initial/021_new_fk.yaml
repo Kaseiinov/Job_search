@@ -1,0 +1,110 @@
+databaseChangeLog:
+  - changeSet:
+      id: 020 return fk which i deleted
+      author: Islam Kaseiinov
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: resumes
+            baseColumnNames: applicant_id
+            constraintName: fk_resumes_applicant_id
+            referencedTableName: users
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseTableName: resumes
+            baseColumnNames: category_id
+            constraintName: fk_resumes_category_id
+            referencedTableName: categories
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseTableName: vacancies
+            baseColumnNames: category_id
+            constraintName: fk_vacancies_category_id
+            referencedTableName: categories
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseTableName: vacancies
+            baseColumnNames: author_id
+            constraintName: fk_vacancies_author_id
+            referencedTableName: users
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseTableName: categories
+            baseColumnNames: parent_id
+            constraintName: fk_categories_parent_id
+            referencedTableName: categories
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseTableName: work_experience_info
+            baseColumnNames: resume_id
+            constraintName: fk_work_experience_info_resume_id
+            referencedTableName: resumes
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseTableName: education_info
+            baseColumnNames: resume_id
+            constraintName: fk_education_info_resume_id
+            referencedTableName: resumes
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseTableName: contacts_info
+            baseColumnNames: type_id
+            constraintName: fk_contacts_info_type_id
+            referencedTableName: contact_types
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseTableName: contacts_info
+            baseColumnNames: resume_id
+            constraintName: fk_contacts_info_resume_id
+            referencedTableName: resumes
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseTableName: messages
+            baseColumnNames: responded_applicant_id
+            constraintName: fk_messages_responded_applicant_id
+            referencedTableName: users
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseTableName: responded_applicants
+            baseColumnNames: resume_id
+            constraintName: fk_responded_applicants_resume_id
+            referencedTableName: resumes
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseTableName: responded_applicants
+            baseColumnNames: vacancy_id
+            constraintName: fk_responded_applicants_vacancy_id
+            referencedTableName: vacancies
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseTableName: users_images
+            baseColumnNames: user_id
+            constraintName: fk_user_id_images
+            referencedTableName: users
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseTableName: usr_roles
+            baseColumnNames: usr_id
+            constraintName: fk_role_id_to_usr
+            referencedTableName: users
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseTableName: usr_roles
+            baseColumnNames: role_id
+            constraintName: fk_usr_email_to_roles
+            referencedTableName: roles
+            referencedColumnNames: id
+

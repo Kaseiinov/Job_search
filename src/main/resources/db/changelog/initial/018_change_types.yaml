@@ -1,0 +1,115 @@
+databaseChangeLog:
+  - changeSet:
+      id: 018 change types of pk
+      author: Islam Kaseiinov
+      changes:
+        - modifyDataType:
+            tableName: users
+            columnName: id
+            newDataType:  bigint
+
+        - modifyDataType:
+            tableName: usr_roles
+            columnName: usr_id
+            newDataType: bigint
+
+        - modifyDataType:
+            tableName: users_images
+            columnName: id
+            newDataType: bigint
+
+        - modifyDataType:
+            tableName: vacancies
+            columnName: id
+            newDataType: bigint
+
+        - modifyDataType:
+            tableName: vacancies
+            columnName: category_id
+            newDataType: bigint
+
+        - modifyDataType:
+            tableName: vacancies
+            columnName: author_id
+            newDataType: bigint
+
+        - modifyDataType:
+            tableName: resumes
+            columnName: id
+            newDataType: bigint
+
+        - modifyDataType:
+            tableName: resumes
+            columnName: applicant_id
+            newDataType: bigint
+
+        - modifyDataType:
+            tableName: resumes
+            columnName: category_id
+            newDataType: bigint
+
+        - modifyDataType:
+            tableName: responded_applicants
+            columnName: id
+            newDataType: bigint
+
+        - modifyDataType:
+            tableName: responded_applicants
+            columnName: resume_id
+            newDataType: bigint
+
+        - modifyDataType:
+            tableName: responded_applicants
+            columnName: vacancy_id
+            newDataType: bigint
+
+        - modifyDataType:
+            tableName: messages
+            columnName: id
+            newDataType: bigint
+
+        - modifyDataType:
+            tableName: messages
+            columnName: responded_applicant_id
+            newDataType: bigint
+
+        - modifyDataType:
+            tableName: education_info
+            columnName: id
+            newDataType: bigint
+
+        - modifyDataType:
+            tableName: education_info
+            columnName: resume_id
+            newDataType: bigint
+
+        - modifyDataType:
+            tableName: contacts_info
+            columnName: id
+            newDataType: bigint
+
+        - modifyDataType:
+            tableName: contacts_info
+            columnName: type_id
+            newDataType: bigint
+
+        - modifyDataType:
+            tableName: contacts_info
+            columnName: resume_id
+            newDataType: bigint
+
+        - modifyDataType:
+            tableName: contact_types
+            columnName: id
+            newDataType: bigint
+
+        - modifyDataType:
+            tableName: categories
+            columnName: id
+            newDataType: bigint
+
+        - modifyDataType:
+            tableName: categories
+            columnName:  parent_id
+            newDataType: bigint
+
