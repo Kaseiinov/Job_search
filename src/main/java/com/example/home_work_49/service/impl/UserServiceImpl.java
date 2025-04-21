@@ -92,6 +92,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addUser(UserDto userDto) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
 
+        boolean isUserExists = userRepository.existsUserByEmail(userDto.getEmail());
+        if(isUserExists){
+            throw new SuchEmailAlreadyExistsException();
+        }
+
         User user = new User();
         user.setId(userDto.getId());
         user.setName(userDto.getName());

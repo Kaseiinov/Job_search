@@ -1,0 +1,152 @@
+databaseChangeLog:
+  - changeSet:
+      id: 028-add constraint to pk keys
+      author: Islam Kaseiinov
+      changes:
+        - addNotNullConstraint:
+            tableName: users
+            columnName: id
+            columnDataType: BIGINT
+
+        - addAutoIncrement:
+            tableName: users
+            columnName: id
+            columnDataType: BIGINT
+
+
+
+
+        - addNotNullConstraint:
+            tableName: work_experience_info
+            columnName: id
+            columnDataType: BIGINT
+
+        - addAutoIncrement:
+            tableName: work_experience_info
+            columnName: id
+            columnDataType: BIGINT
+
+
+
+
+        - addNotNullConstraint:
+            tableName: vacancies
+            columnName: id
+            columnDataType: BIGINT
+
+        - addAutoIncrement:
+            tableName: vacancies
+            columnName: id
+            columnDataType: BIGINT
+
+
+
+
+        - addNotNullConstraint:
+            tableName: users_images
+            columnName: id
+            columnDataType: BIGINT
+
+        - addAutoIncrement:
+            tableName: users_images
+            columnName: id
+            columnDataType: BIGINT
+
+
+
+
+        - addNotNullConstraint:
+            tableName: resumes
+            columnName: id
+            columnDataType: BIGINT
+
+        - addAutoIncrement:
+            tableName: resumes
+            columnName: id
+            columnDataType: BIGINT
+
+
+
+
+        - addNotNullConstraint:
+            tableName: responded_applicants
+            columnName: id
+            columnDataType: BIGINT
+
+        - addAutoIncrement:
+            tableName: responded_applicants
+            columnName: id
+            columnDataType: BIGINT
+
+
+
+
+        - addNotNullConstraint:
+            tableName: messages
+            columnName: id
+            columnDataType: BIGINT
+
+        - addAutoIncrement:
+            tableName: messages
+            columnName: id
+            columnDataType: BIGINT
+
+
+
+
+        - addNotNullConstraint:
+            tableName: education_info
+            columnName: id
+            columnDataType: BIGINT
+
+        - addAutoIncrement:
+            tableName: education_info
+            columnName: id
+            columnDataType: BIGINT
+
+
+
+
+        - addNotNullConstraint:
+            tableName: contacts_info
+            columnName: id
+            columnDataType: BIGINT
+
+        - addAutoIncrement:
+            tableName: contacts_info
+            columnName: id
+            columnDataType: BIGINT
+
+
+
+
+        - addNotNullConstraint:
+            tableName: contact_types
+            columnName: id
+            columnDataType: BIGINT
+
+        - addAutoIncrement:
+            tableName: contact_types
+            columnName: id
+            columnDataType: BIGINT
+
+
+
+
+        - addNotNullConstraint:
+            tableName: categories
+            columnName: id
+            columnDataType: BIGINT
+
+        - addAutoIncrement:
+            tableName: categories
+            columnName: id
+            columnDataType: BIGINT
+
+
+
+
+
+
+
+

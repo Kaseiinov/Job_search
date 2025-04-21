@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: 027 drop fk from tables
+      author: Islam Kaseiinov
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: resumes
+            constraintName: fk_resumes_applicant_id
+        - dropForeignKeyConstraint:
+            baseTableName: resumes
+            constraintName: fk_resumes_category_id
+        - dropForeignKeyConstraint:
+            baseTableName: vacancies
+            constraintName: fk_vacancies_author_id
+        - dropForeignKeyConstraint:
+            baseTableName: vacancies
+            constraintName: fk_vacancies_category_id
+        - dropForeignKeyConstraint:
+            baseTableName: categories
+            constraintName: fk_categories_parent_id
+        - dropForeignKeyConstraint:
+            baseTableName: work_experience_info
+            constraintName: fk_work_experience_info_resume_id
+        - dropForeignKeyConstraint:
+            baseTableName: education_info
+            constraintName: fk_education_info_resume_id
+        - dropForeignKeyConstraint:
+            baseTableName: contacts_info
+            constraintName: fk_contacts_info_resume_id
+        - dropForeignKeyConstraint:
+            baseTableName: contacts_info
+            constraintName: fk_contacts_info_type_id
+        - dropForeignKeyConstraint:
+            baseTableName: messages
+            constraintName: fk_messages_responded_applicant_id
+        - dropForeignKeyConstraint:
+            baseTableName: responded_applicants
+            constraintName: fk_responded_applicants_resume_id
+        - dropForeignKeyConstraint:
+            baseTableName: responded_applicants
+            constraintName: fk_responded_applicants_vacancy_id
+        - dropForeignKeyConstraint:
+            baseTableName: users_images
+            constraintName: fk_user_id_images
+        - dropForeignKeyConstraint:
+            baseTableName: usr_roles
+            constraintName: fk_role_id_to_usr
+        - dropForeignKeyConstraint:
+            baseTableName: usr_roles
+            constraintName: fk_usr_email_to_roles
+
