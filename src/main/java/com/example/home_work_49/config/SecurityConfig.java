@@ -38,7 +38,7 @@ public class SecurityConfig {
         """;
 
         String fetchRolesQuery = """
-        SELECT r.role
+        SELECT u.email, r.role
         FROM users u
         JOIN usr_roles ur ON u.id = ur.usr_id
         JOIN roles r ON r.id = ur.role_id

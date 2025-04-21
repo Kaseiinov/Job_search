@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: 026 update-usr-id
+      author: Islam Kaseiinov
+      changes:
+        - update:
+            tableName: usr_roles
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 7
+            where: usr_id = 4 and role_id = 6
+        - update:
+            tableName: usr_roles
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 6
+            where: usr_id = 5 and role_id = 7
+

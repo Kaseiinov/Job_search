@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -27,12 +28,12 @@ public class User {
     private Boolean enabled;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "users", cascade = CascadeType.ALL)
-    private List<Role> roles;
+    private List<Role> roles = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "applicant")
-    private List<Resume> resumes;
+    private List<Resume> resumes = new ArrayList<>();
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
-    private List<Vacancy> vacancies;
+    private List<Vacancy> vacancies = new ArrayList<>();
     @OneToOne(mappedBy = "user")
     private UserImage userImage;
 

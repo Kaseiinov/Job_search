@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: 023 insert data into usr_roles
+      author: Islam Kaseiinov
+      changes:
+        - sql:
+            sql:
+              insert into usr_roles(usr_id, role_id)
+              values
+              ((select id from users where id = 3), (select id from roles where role = 'ADMIN')),
+              ((select id from users where id = 4), (select id from roles where role = 'EMPLOYER')),
+              ((select id from users where id = 4), (select id from roles where role = 'APPLICANT')),
+              ((select id from users where id = 6), (select id from roles where role = 'APPLICANT'))

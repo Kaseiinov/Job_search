@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
         user.setPhoneNumber(userDto.getPhoneNumber());
         user.setAvatar(userDto.getAvatar());
         user.setAccountType(userDto.getAccountType().toUpperCase());
-        user.getRoles().add(setUpRoles(userDto));
+        user.getRoles().add(roleRepository.findRoleByRole(userDto.getAccountType().toUpperCase()));
 
         userRepository.save(user);
 
@@ -93,6 +93,7 @@ public class UserServiceImpl implements UserService {
     public void addUser(UserDto userDto) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
 
         User user = new User();
+        user.setId(userDto.getId());
         user.setName(userDto.getName());
         user.setSurname(userDto.getSurname());
         user.setAge(userDto.getAge());
@@ -102,17 +103,9 @@ public class UserServiceImpl implements UserService {
         user.setAvatar(userDto.getAvatar());
         user.setAccountType(userDto.getAccountType().toUpperCase());
         user.setEnabled(true);
-        user.getRoles().add(setUpRoles(userDto));
+        user.getRoles().add(roleRepository.findRoleByRole(userDto.getAccountType().toUpperCase()));
 
         userRepository.save(user);
     }
 
-    private Role setUpRoles(UserDto userDto) throws RoleNotFoundException {
-        if(userDto.getAccountType().equalsIgnoreCase("applicant")){
-            return roleRepository.findById(7L).orElseThrow(RoleNotFoundException::new);
-        }else{
-            return roleRepository.findById(6L).orElseThrow(RoleNotFoundException::new);
-
-        }
-    }
 }
