@@ -7,15 +7,15 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
-@Table(name = "users_images")
+//@Entity
+//@Table(name = "users_images")
 public class UserImage {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne()
-    @JoinColumn(name = "user_id")
-    private User user;
-    @Column(name = "file_name")
-    private String fileName;
+//    @OneToOne()
+//    @JoinColumn(name = "user_id")
+//    private User user;
+//    @Column(name = "file_name")
+//    private String fileName;
 }

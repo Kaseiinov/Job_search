@@ -37,7 +37,7 @@ public class VacancyServiceImpl implements VacancyService {
     @Override
     public void updateVacancyById(Long id, VacancyDto vacancyDto) {
 
-        Vacancy vacancy = new Vacancy();
+        Vacancy vacancy = vacancyRepository.findById(id).orElseThrow(VacancyNotFoundException::new);
         vacancy.setName(vacancyDto.getName());
         vacancy.setDescription(vacancyDto.getDescription());
         vacancy.setCategory(categoryRepository.findById(vacancyDto.getCategoryId()).orElseThrow(CategoryNotFountException::new));
@@ -47,14 +47,14 @@ public class VacancyServiceImpl implements VacancyService {
         vacancy.setIsActive(vacancyDto.getIsActive());
         vacancy.setUpdateTime(LocalDateTime.now());
 
-        boolean exists = vacancyRepository.existsById(id);
-        boolean isCategoryExists = categoryRepository.existsById(vacancyDto.getCategoryId());
+//        boolean exists = vacancyRepository.existsById(id);
+//        boolean isCategoryExists = categoryRepository.existsById(vacancyDto.getCategoryId());
 
-        if (!exists) {
-            throw new VacancyNotFoundException();
-        } else if (!isCategoryExists) {
-            throw new CategoryNotFountException();
-        }
+//        if (!exists) {
+//            throw new VacancyNotFoundException();
+//        } else if (!isCategoryExists) {
+//            throw new CategoryNotFountException();
+//        }
         vacancyRepository.save(vacancy);
     }
 

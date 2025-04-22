@@ -39,8 +39,8 @@ public class User {
     private List<Resume> resumes;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
     private List<Vacancy> vacancies;
-    @OneToOne(mappedBy = "user")
-    private UserImage userImage;
+//    @OneToOne(mappedBy = "user")
+//    private UserImage userImage;
 
 
 }

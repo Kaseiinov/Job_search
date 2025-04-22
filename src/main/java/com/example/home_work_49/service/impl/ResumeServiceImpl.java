@@ -12,12 +12,14 @@ import com.example.home_work_49.models.*;
 import com.example.home_work_49.repository.*;
 import com.example.home_work_49.service.ResumeService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ResumeServiceImpl implements ResumeService {
@@ -39,21 +41,21 @@ public class ResumeServiceImpl implements ResumeService {
     @Override
     public void updateResumeById(Long id, ResumeDto resumeDto) {
 
-        Resume resume = new Resume();
+        Resume resume = resumeRepository.findById(id).orElseThrow(ResumeNotFoundException::new);
         resume.setName(resumeDto.getName());
         resume.setCategory(categoryRepository.findById(resumeDto.getCategoryId()).orElseThrow(CategoryNotFountException::new));
         resume.setSalary(resumeDto.getSalary());
         resume.setIsActive(resumeDto.getIsActive());
         resume.setUpdateTime(LocalDateTime.now());
 
-        boolean exist = resumeRepository.existsById(id);
-        boolean isCategoryExists = categoryRepository.existsById(resumeDto.getCategoryId());
+//        boolean exist = resumeRepository.existsById(id);
+//        boolean isCategoryExists = categoryRepository.existsById(resumeDto.getCategoryId());
 
-        if(!exist ){
-            throw new ResumeNotFoundException();
-        } else if (!isCategoryExists) {
-            throw new CategoryNotFountException();
-        }
+//        if(!exist ){
+//            throw new ResumeNotFoundException();
+//        } else if (!isCategoryExists) {
+//            throw new CategoryNotFountException();
+//        }
         resumeRepository.save(resume);
 
 
@@ -129,7 +131,7 @@ public class ResumeServiceImpl implements ResumeService {
         User user = userRepository.findByEmail(auth.getName()).orElseThrow(UserNotFoundException::new);
 
         Resume resume = new Resume();
-        resume.setApplicant(userRepository.findById(user.getId()).orElseThrow(UserNotFoundException::new));
+        resume.setApplicant(user);
         resume.setName(resumeDto.getName());
         resume.setCategory(categoryRepository.findById(resumeDto.getCategoryId()).orElseThrow(CategoryNotFountException::new));
         resume.setSalary(resumeDto.getSalary());
@@ -156,23 +158,6 @@ public class ResumeServiceImpl implements ResumeService {
             contact.setResumeId(resume.getId());
             addContactInfo(contact);
         });
-
-
-
-
-
-
-
-//        Boolean isApplicant = userDao.isUser(resume.getApplicantId(), "applicant").orElseThrow(UserNotFoundException::new);
-//        boolean isCategoryExists = categoryDao.isCategoryExists(resume.getCategoryId());
-//
-//        if(!isApplicant){
-//            throw new ApplicantNotFoundException();
-//        } else if (!isCategoryExists) {
-//            throw new CategoryNotFountException();
-//        }
-
-
     }
 
     public List<ResumeDto> resumeBuilder(List<Resume> resumeList){

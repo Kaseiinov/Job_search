@@ -5,11 +5,11 @@ import org.springframework.http.ResponseEntity;
 
 public interface ImageService {
 
-    String saveImage(UserImageDto userImageDto);
-
-    ResponseEntity<?> findByName(String imageName);
-
-    ResponseEntity<?> findById(long imageId);
-
-    ResponseEntity<?> findByUserId(long userId);
+//    String saveImage(UserImageDto userImageDto);
+//
+//    ResponseEntity<?> findByName(String imageName);
+//
+//    ResponseEntity<?> findById(long imageId);
+//
+//    ResponseEntity<?> findByUserId(long userId);
 }

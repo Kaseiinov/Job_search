@@ -31,15 +31,16 @@ public class UserServiceImpl implements UserService {
             throw new UserNotFoundException();
         }
 
-        User user = new User();
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
         user.setName(userDto.getName());
         user.setSurname(userDto.getSurname());
         user.setAge(userDto.getAge());
+//        user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setPhoneNumber(userDto.getPhoneNumber());
         user.setAvatar(userDto.getAvatar());
-        user.setAccountType(userDto.getAccountType().toUpperCase());
-        user.getRoles().add(roleRepository.findRoleByRole(userDto.getAccountType().toUpperCase()));
+//        user.setAccountType(userDto.getAccountType().toUpperCase());
+//        user.setRoles(Arrays.asList(roleRepository.findRoleByRole(userDto.getAccountType().toUpperCase())));
 
         userRepository.save(user);
 

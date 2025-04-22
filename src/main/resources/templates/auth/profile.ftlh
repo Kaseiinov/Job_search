@@ -21,8 +21,8 @@
                     <#if user.accountType == "EMPLOYER">
                         <h5>${user.name!}</h5>
                     <#elseif user.accountType == "APPLICANT">
-                        <h5>${user.name}</h5>
-                        <p>Возраст: ${user.age}</p>
+                        <h5>${user.name!}</h5>
+                        <p>Возраст: ${user.age!}</p>
                     </#if>
                     <a href="/users/edit/${user.email}" class="btn btn-outline-success btn-sm mt-2">Редактировать</a>
                 </div>
