@@ -27,13 +27,18 @@ public class User {
     private String accountType;
     private Boolean enabled;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "users", cascade = CascadeType.ALL)
-    private List<Role> roles = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "usr_roles",
+            joinColumns = @JoinColumn(name = "usr_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<Role> roles;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "applicant")
-    private List<Resume> resumes = new ArrayList<>();
+    private List<Resume> resumes;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
-    private List<Vacancy> vacancies = new ArrayList<>();
+    private List<Vacancy> vacancies;
     @OneToOne(mappedBy = "user")
     private UserImage userImage;
 

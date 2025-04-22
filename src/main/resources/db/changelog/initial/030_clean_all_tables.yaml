@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: clean-all-tables
+      author: your-name
+      changes:
+        - sql:
+            sql: |
+              SET REFERENTIAL_INTEGRITY FALSE;
+              
+              -- Очищаем таблицы (сначала дочерние, затем родительские)
+              TRUNCATE TABLE usr_roles;
+              TRUNCATE TABLE users;
+              
+              SET REFERENTIAL_INTEGRITY TRUE;
+              
+              ALTER SEQUENCE IF EXISTS hibernate_sequence RESTART WITH 1;

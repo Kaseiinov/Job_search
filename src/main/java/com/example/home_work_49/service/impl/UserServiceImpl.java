@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.management.relation.RoleNotFoundException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -108,7 +109,11 @@ public class UserServiceImpl implements UserService {
         user.setAvatar(userDto.getAvatar());
         user.setAccountType(userDto.getAccountType().toUpperCase());
         user.setEnabled(true);
-        user.getRoles().add(roleRepository.findRoleByRole(userDto.getAccountType().toUpperCase()));
+
+        Role role = roleRepository.findRoleByRole(userDto.getAccountType().toUpperCase());
+
+        user.setRoles(Arrays.asList(role));
+        role.setUsers(Arrays.asList(user));
 
         userRepository.save(user);
     }
