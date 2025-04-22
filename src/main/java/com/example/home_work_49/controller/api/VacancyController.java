@@ -17,10 +17,10 @@ import java.util.List;
 public class VacancyController {
     private final VacancyService vacancyService;
 
-    @GetMapping
-    public List<VacancyDto> getAllVacancies() {
-        return vacancyService.getAllVacancies();
-    }
+//    @GetMapping
+//    public List<VacancyDto> getAllVacancies() {
+//        return vacancyService.getAllVacancies();
+//    }
 
     @PostMapping("createVacancy")
     public HttpStatus createVacancy(@RequestBody @Valid VacancyDto vacancyDto) {

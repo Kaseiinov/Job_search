@@ -1,11 +1,13 @@
 package com.example.home_work_49.service;
 
 import com.example.home_work_49.dto.VacancyDto;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
 public interface VacancyService {
+
     void deleteVacancyById(Long id);
 
     void updateVacancyById(Long id, VacancyDto vacancyDto);
@@ -16,8 +18,7 @@ public interface VacancyService {
 
     List<VacancyDto> getVacancyByCategory(String vacancyCategory);
 
-
-    List<VacancyDto> getAllActiveVacancy();
+    Page<VacancyDto> getAllActiveVacancy(int page, int pageSize);
 
     VacancyDto getVacancyById(Long id);
 

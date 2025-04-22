@@ -40,4 +40,36 @@
             </table>
         </#list>
 
+
+    <nav >
+        <div class="d-flex justify-content-center">
+            <ul class="pagination">
+                <#if hasPrevious>
+                    <li class="page-item ">
+                        <a class="page-link" href="/vacancies?page=${currentPage - 1}" >Previous</a>
+                    </li>
+                <#else>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="/vacancies?page=${currentPage - 1}" >Previous</a>
+                    </li>
+                </#if>
+                <#list 0..(totalPages - 1) as page>
+                    <li class="page-item <#if page == currentPage>active</#if>">
+                        <a class="page-link" href="/vacancies?page=${page}">${page + 1}</a>
+                    </li>
+                </#list>
+                <#if hasNext>
+                    <li class="page-item">
+                        <a class="page-link" href="/vacancies?page=${currentPage + 1}">Next</a>
+                    </li>
+                <#else>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="/vacancies?page=${currentPage + 1}">Next</a>
+                    </li>
+                </#if>
+
+            </ul>
+        </div>
+    </nav>
+
 </@main.layout>

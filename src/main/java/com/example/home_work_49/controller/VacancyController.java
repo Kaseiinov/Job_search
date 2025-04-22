@@ -7,14 +7,12 @@ import com.example.home_work_49.service.CategoryService;
 import com.example.home_work_49.service.VacancyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,8 +24,14 @@ public class VacancyController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public String getVacancies(Model model) {
-        model.addAttribute("vacancies", vacancyService.getAllActiveVacancy());
+    public String getVacancies(@RequestParam(defaultValue = "0")int page, Model model) {
+        int pageSize = 5;
+        Page<VacancyDto> vacancyPage = vacancyService.getAllActiveVacancy(page, pageSize);
+        model.addAttribute("vacancies", vacancyPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("hasNext", vacancyPage.hasNext());
+        model.addAttribute("hasPrevious", vacancyPage.hasPrevious());
+        model.addAttribute("totalPages", vacancyPage.getTotalPages());
         return "employer/vacancies";
     }
 
