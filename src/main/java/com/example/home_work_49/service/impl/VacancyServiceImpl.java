@@ -9,10 +9,7 @@ import com.example.home_work_49.repository.UserRepository;
 import com.example.home_work_49.repository.VacancyRepository;
 import com.example.home_work_49.service.VacancyService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -83,9 +80,10 @@ public class VacancyServiceImpl implements VacancyService {
 //    }
 
     @Override
-    public Page<VacancyDto> getAllActiveVacancy(int page, int pageSize) {
+    public Page<VacancyDto> getAllActiveVacancyByCreatedDateDesc(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
-        Page<Vacancy> vacancyPage = vacancyRepository.findAllByIsActive(true, pageable);
+
+        Page<Vacancy> vacancyPage = vacancyRepository.findAllByIsActiveOrderByCreatedDateDesc(true, pageable);
 
         List<VacancyDto> vacancyDtoList = vacancyPage.stream()
                 .map(e -> VacancyDto.builder()

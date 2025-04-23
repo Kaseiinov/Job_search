@@ -18,7 +18,7 @@ public interface VacancyService {
 
     List<VacancyDto> getVacancyByCategory(String vacancyCategory);
 
-    Page<VacancyDto> getAllActiveVacancy(int page, int pageSize);
+    Page<VacancyDto> getAllActiveVacancyByCreatedDateDesc(int page, int pageSize);
 
     VacancyDto getVacancyById(Long id);
 

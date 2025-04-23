@@ -26,7 +26,7 @@ public class VacancyController {
     @GetMapping
     public String getVacancies(@RequestParam(defaultValue = "0")int page, Model model) {
         int pageSize = 5;
-        Page<VacancyDto> vacancyPage = vacancyService.getAllActiveVacancy(page, pageSize);
+        Page<VacancyDto> vacancyPage = vacancyService.getAllActiveVacancyByCreatedDateDesc(page, pageSize);
         model.addAttribute("vacancies", vacancyPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("hasNext", vacancyPage.hasNext());
