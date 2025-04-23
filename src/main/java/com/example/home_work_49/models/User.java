@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -22,7 +21,10 @@ public class User {
     private String password;
     @Column(name = "phone_number")
     private String phoneNumber;
-    private String avatar;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user")
+    private List<UserImage> avatars;
+
     @Column(name = "account_type")
     private String accountType;
     private Boolean enabled;
@@ -39,8 +41,6 @@ public class User {
     private List<Resume> resumes;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
     private List<Vacancy> vacancies;
-//    @OneToOne(mappedBy = "user")
-//    private UserImage userImage;
 
 
 }

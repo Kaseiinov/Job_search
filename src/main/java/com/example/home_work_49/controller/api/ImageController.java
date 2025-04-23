@@ -6,8 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("images")
+@RestController("restImages")
+@RequestMapping("api/images")
 @RequiredArgsConstructor
 public class ImageController {
 //    private final ImageService imageService;

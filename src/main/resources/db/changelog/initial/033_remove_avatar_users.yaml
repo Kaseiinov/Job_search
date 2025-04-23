@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: 033 remove-avatar-column
+      author: Islam Kaseiinov
+      changes:
+        - dropColumn:
+            tableName: users
+            columnName: avatar

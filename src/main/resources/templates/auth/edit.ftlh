@@ -11,7 +11,7 @@
 
     <h2>Иземенение пользователя</h2>
 
-    <form action="/users/edit" method="post">
+    <form action="/users/edit" method="post" enctype="multipart/form-data">
         <input type="hidden" name="id" value="${userDto.id}">
         <input type="hidden" name="email" value="${userDto.email}">
         <input type="hidden" name="accountType" value="${userDto.accountType}">
@@ -46,21 +46,14 @@
             <@spring.showErrors "<br>" "error text-danger" />
         </div>
 
-<#--        <div class="mb-3">-->
-<#--            <label class="form-label">Account type:</label>-->
-<#--            <div>-->
-<#--                <div class="form-check form-check-inline">-->
-<#--                    <input class="form-check-input" type="radio" name="accountType" id="applicant" value="applicant" checked>-->
-<#--                    <label class="form-check-label" for="applicant">Applicant</label>-->
-<#--                </div>-->
-<#--                <div class="form-check form-check-inline">-->
-<#--                    <input class="form-check-input" type="radio" name="accountType" id="employer" value="employer">-->
-<#--                    <label class="form-check-label" for="employer">Employer</label>-->
-<#--                </div>-->
-<#--            </div>-->
-<#--        </div>-->
+        <div class="mb-3">
+            <label for="formFileMultiple" class="form-label">Photo</label>
+            <input type="hidden" name="userId" value="${userDto.id}">
+            <input name="file" class="form-control" type="file" id="formFileMultiple">
+            <@spring.showErrors "<br>" "error text-danger" />
 
+        </div>
 
-        <button type="submit" class="btn btn-success w-100">Сохранить</button>
+        <button type="submit" class="btn btn-success w-100 mb-3">Сохранить</button>
     </form>
 </@main.layout>

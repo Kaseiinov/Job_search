@@ -1,11 +1,14 @@
 package com.example.home_work_49.service.impl;
 
 import com.example.home_work_49.dto.UserDto;
+import com.example.home_work_49.dto.UserImageDto;
 import com.example.home_work_49.exceptions.SuchEmailAlreadyExistsException;
 import com.example.home_work_49.exceptions.UserNotFoundException;
 import com.example.home_work_49.models.Role;
 import com.example.home_work_49.models.User;
+import com.example.home_work_49.models.UserImage;
 import com.example.home_work_49.repository.RoleRepository;
+import com.example.home_work_49.repository.UserImageRepository;
 import com.example.home_work_49.repository.UserRepository;
 import com.example.home_work_49.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -13,9 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.management.relation.RoleNotFoundException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -23,9 +24,10 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    private final UserImageRepository userImageRepository;
 
     @Override
-    public void updateUserByEmail(String email, UserDto userDto) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
+    public void updateUserByEmail(String email, UserDto userDto, UserImageDto userImageDto) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
         boolean isExistsUser = userRepository.existsUserByEmail(email);
         if(!isExistsUser){
             throw new UserNotFoundException();
@@ -38,7 +40,7 @@ public class UserServiceImpl implements UserService {
 //        user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setPhoneNumber(userDto.getPhoneNumber());
-        user.setAvatar(userDto.getAvatar());
+        user.setAvatars(userImageRepository.findByFileName(userImageDto.getFile().toString()));
 //        user.setAccountType(userDto.getAccountType().toUpperCase());
 //        user.setRoles(Arrays.asList(roleRepository.findRoleByRole(userDto.getAccountType().toUpperCase())));
 
@@ -71,7 +73,9 @@ public class UserServiceImpl implements UserService {
                         .age(e.getAge())
                         .email(e.getEmail())
                         .phoneNumber(e.getPhoneNumber())
-                        .avatar(e.getAvatar())
+                        .avatar(userImageRepository.findByUser_Id(e.getId())
+                                .map(UserImage::getFileName)
+                                .orElse(null))
                         .accountType(e.getAccountType())
                         .build())
                 .toList();
@@ -86,7 +90,9 @@ public class UserServiceImpl implements UserService {
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .phoneNumber(user.getPhoneNumber())
-                .avatar(user.getAvatar())
+                .avatar(userImageRepository.findByUser_Id(user.getId())
+                        .map(UserImage::getFileName)
+                        .orElse(null))
                 .accountType(user.getAccountType())
                 .build();
     }
@@ -107,7 +113,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setPhoneNumber(userDto.getPhoneNumber());
-        user.setAvatar(userDto.getAvatar());
+        user.setAvatars(Arrays.asList(userImageRepository.findByUser_Id(user.getId()).orElse(null)));
         user.setAccountType(userDto.getAccountType().toUpperCase());
         user.setEnabled(true);
 

@@ -2,8 +2,12 @@ package com.example.home_work_49.controller;
 
 import com.example.home_work_49.dto.ResumeDto;
 import com.example.home_work_49.dto.UserDto;
+import com.example.home_work_49.dto.UserImageDto;
 import com.example.home_work_49.dto.VacancyDto;
 import com.example.home_work_49.exceptions.SuchEmailAlreadyExistsException;
+import com.example.home_work_49.models.User;
+import com.example.home_work_49.repository.UserImageRepository;
+import com.example.home_work_49.service.ImageService;
 import com.example.home_work_49.service.ResumeService;
 import com.example.home_work_49.service.UserService;
 import com.example.home_work_49.service.VacancyService;
@@ -25,6 +29,7 @@ public class UserController {
     private final UserService userService;
     private final ResumeService resumeService;
     private final VacancyService vacancyService;
+    private final ImageService imageService;
 
     @GetMapping("profile")
     public String getProfile(Model model ,Authentication auth){
@@ -43,17 +48,22 @@ public class UserController {
 
     @GetMapping("edit/{userEmail}")
     public String updateUser(Model model, @PathVariable String userEmail){
-        model.addAttribute("userDto", userService.getUserByEmail(userEmail));
+        UserDto user = userService.getUserByEmail(userEmail);
+        model.addAttribute("userDto", user);
+        model.addAttribute("userImage", new UserImageDto());
         return "auth/edit";
     }
 
     @PostMapping("edit")
-    public String updateUser(@Valid UserDto userDto, BindingResult bindingResult, Model model) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
+    public String updateUser(@Valid UserDto userDto, BindingResult bindingResult, UserImageDto userImageDto, Model model) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
         if(!bindingResult.hasErrors()){
-            userService.updateUserByEmail(userDto.getEmail(), userDto);
+            System.out.println(userImageDto.getFile() + " " + userImageDto.getUserId());
+            imageService.saveImage(userImageDto);
+            userService.updateUserByEmail(userDto.getEmail(), userDto, userImageDto);
             return "redirect:/users/profile";
         }
         model.addAttribute("userDto", userDto);
+        model.addAttribute("userImage", userImageDto);
         return "auth/edit";
     }
 
