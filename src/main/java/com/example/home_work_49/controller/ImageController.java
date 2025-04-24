@@ -24,6 +24,11 @@ public class ImageController {
         return imageService.findByUserId(userId);
     }
 
+    @GetMapping("byName/{fileName}")
+    public ResponseEntity<?> getImageByUserid(@PathVariable String fileName){
+        return imageService.findByName(fileName);
+    }
+
     @PostMapping("upload")
     public String uploadImage(UserImageDto userImageDto){
         return imageService.saveImage(userImageDto);

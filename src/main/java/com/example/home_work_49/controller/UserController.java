@@ -50,20 +50,16 @@ public class UserController {
     public String updateUser(Model model, @PathVariable String userEmail){
         UserDto user = userService.getUserByEmail(userEmail);
         model.addAttribute("userDto", user);
-        model.addAttribute("userImage", new UserImageDto());
         return "auth/edit";
     }
 
     @PostMapping("edit")
-    public String updateUser(@Valid UserDto userDto, BindingResult bindingResult, UserImageDto userImageDto, Model model) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
+    public String updateUser(@Valid UserDto userDto, BindingResult bindingResult, Model model) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
         if(!bindingResult.hasErrors()){
-            System.out.println(userImageDto.getFile() + " " + userImageDto.getUserId());
-            imageService.saveImage(userImageDto);
-            userService.updateUserByEmail(userDto.getEmail(), userDto, userImageDto);
+            userService.updateUserByEmail(userDto.getEmail(), userDto);
             return "redirect:/users/profile";
         }
         model.addAttribute("userDto", userDto);
-        model.addAttribute("userImage", userImageDto);
         return "auth/edit";
     }
 

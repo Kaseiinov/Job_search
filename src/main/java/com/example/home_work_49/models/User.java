@@ -22,8 +22,8 @@ public class User {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user")
-    private List<UserImage> avatars;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private UserImage avatar;
 
     @Column(name = "account_type")
     private String accountType;

@@ -24,7 +24,7 @@ public class UserDto {
     @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{4,24}$", message = "Should contain at least one uppercase letter and one lowercase letter and at least one number")
     private String password;
     private String phoneNumber;
-    private String avatar;
+    private UserImageDto avatar;
 
     @NotBlank
     @Pattern(regexp = "(?i)employer|applicant|admin", message = "Role must be 'Employer', 'Applicant' or 'Admin'")

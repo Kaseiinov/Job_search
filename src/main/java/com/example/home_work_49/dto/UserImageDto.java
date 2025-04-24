@@ -14,4 +14,5 @@ public class UserImageDto {
     private Long id;
     private Long userId;
     private MultipartFile file;
+    private String fileName;
 }

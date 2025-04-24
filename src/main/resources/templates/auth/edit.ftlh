@@ -49,7 +49,7 @@
         <div class="mb-3">
             <label for="formFileMultiple" class="form-label">Photo</label>
             <input type="hidden" name="userId" value="${userDto.id}">
-            <input name="file" class="form-control" type="file" id="formFileMultiple">
+            <input name="avatar.file" class="form-control" type="file" id="formFileMultiple">
             <@spring.showErrors "<br>" "error text-danger" />
 
         </div>

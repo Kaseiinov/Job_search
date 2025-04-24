@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface UserService {
 
-    void updateUserByEmail(String email, UserDto userDto, UserImageDto userImageDto) throws SuchEmailAlreadyExistsException, RoleNotFoundException;
+    void updateUserByEmail(String email, UserDto userDto) throws SuchEmailAlreadyExistsException, RoleNotFoundException;
 
     UserDto getUserByPhone(String phoneNumber);
 

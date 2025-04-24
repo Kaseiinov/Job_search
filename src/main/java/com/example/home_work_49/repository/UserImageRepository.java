@@ -12,5 +12,5 @@ public interface UserImageRepository extends JpaRepository<UserImage,Long> {
 
     Optional<UserImage> findByUser_Id(Long userId);
 
-    List<UserImage> findByFileName(String fileName);
+    Optional<UserImage> findByFileName(String fileName);
 }
