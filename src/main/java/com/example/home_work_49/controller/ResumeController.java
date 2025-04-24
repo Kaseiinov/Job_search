@@ -5,14 +5,12 @@ import com.example.home_work_49.service.CategoryService;
 import com.example.home_work_49.service.ResumeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +23,23 @@ public class ResumeController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public String getResumes(Model model) {
-        model.addAttribute("resumes", resumeService.getAllActiveResumes());
+    public String getResumes(@RequestParam(defaultValue = "0")int page, @RequestParam(defaultValue = "default") String sortBy, Model model) {
+        int pageSize = 5;
+
+        Page<ResumeDto> resumes;
+
+        switch (sortBy) {
+            case "dateDesc" -> resumes = resumeService.getAllActiveResumeByCreatedDateDesc(page, pageSize);
+            case "dateAsc" -> resumes = resumeService.getAllActiveResumeByCreatedDateAsc(page, pageSize);
+            default -> resumes = resumeService.getAllActiveResumes(page, pageSize);
+        }
+
+        model.addAttribute("resumes", resumes.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("hasNext", resumes.hasNext());
+        model.addAttribute("hasPrevious", resumes.hasPrevious());
+        model.addAttribute("totalPages", resumes.getTotalPages());
+        model.addAttribute("sortBy", sortBy);
         return "applicant/resumes";
     }
 

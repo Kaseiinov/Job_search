@@ -32,7 +32,7 @@ public class VacancyController {
         switch (sortBy) {
             case "dateDesc" -> vacancies = vacancyService.getAllActiveVacancyByCreatedDateDesc(page, pageSize);
             case "dateAsc" -> vacancies = vacancyService.getAllActiveVacancyByCreatedDateAsc(page, pageSize);
-            default -> vacancies = vacancyService.getAllVacancies(page, pageSize);
+            default -> vacancies = vacancyService.getAllActiveVacancies(page, pageSize);
         }
 
 //        Page<VacancyDto> vacancyPage = vacancyService.getAllActiveVacancyByCreatedDateDesc(page, pageSize);

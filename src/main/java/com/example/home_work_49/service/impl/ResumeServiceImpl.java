@@ -1,9 +1,6 @@
 package com.example.home_work_49.service.impl;
 
-import com.example.home_work_49.dto.ContactsInfoDto;
-import com.example.home_work_49.dto.EducationInfoDto;
-import com.example.home_work_49.dto.ResumeDto;
-import com.example.home_work_49.dto.WorkExperienceInfoDto;
+import com.example.home_work_49.dto.*;
 import com.example.home_work_49.exceptions.CategoryNotFountException;
 import com.example.home_work_49.exceptions.ContactNotFoundException;
 import com.example.home_work_49.exceptions.ResumeNotFoundException;
@@ -13,6 +10,10 @@ import com.example.home_work_49.repository.*;
 import com.example.home_work_49.service.ResumeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -32,10 +33,26 @@ public class ResumeServiceImpl implements ResumeService {
     private final ContactInfoRepository contactInfoRepository;
 
     @Override
-    public List<ResumeDto> getAllActiveResumes(){
-        List<Resume> resumes = resumeRepository.findAllByIsActive(true);
+    public Page<ResumeDto> getAllActiveResumes(int page, int pageSize){
+        Pageable pageable =  PageRequest.of(page,pageSize);
+        Page<Resume> resumes = resumeRepository.findAllByIsActive(true, pageable);
 
-        return resumeBuilder(resumes);
+        return resumesPageBuilder(resumes, pageable);
+
+    }
+
+    @Override
+    public Page<ResumeDto> getAllActiveResumeByCreatedDateDesc(int page, int pageSize){
+        Pageable pageable =  PageRequest.of(page,pageSize);
+        Page<Resume> resumes = resumeRepository.findAllByIsActiveOrderByCreatedDateDesc(true, pageable);
+        return resumesPageBuilder(resumes, pageable);
+    }
+
+    @Override
+    public Page<ResumeDto> getAllActiveResumeByCreatedDateAsc(int page, int pageSize){
+        Pageable pageable =  PageRequest.of(page,pageSize);
+        Page<Resume> resumes = resumeRepository.findAllByIsActiveOrderByCreatedDateAsc(true, pageable);
+        return resumesPageBuilder(resumes, pageable);
     }
 
     @Override
@@ -195,6 +212,24 @@ public class ResumeServiceImpl implements ResumeService {
                 .createdDate(resume.getCreatedDate())
                 .updateTime(resume.getUpdateTime())
                 .build();
+    }
+
+    public Page<ResumeDto> resumesPageBuilder(Page<Resume> resumes, Pageable pageable) {
+        List<ResumeDto> resumeDtoList = resumes.stream()
+                .map(e -> ResumeDto
+                        .builder()
+                        .id(e.getId())
+                        .applicantId(e.getApplicant().getId())
+                        .name(e.getName())
+                        .categoryId(e.getCategory().getId())
+                        .salary(e.getSalary())
+                        .isActive(e.getIsActive())
+                        .createdDate(e.getCreatedDate())
+                        .updateTime(e.getUpdateTime())
+                        .build())
+                .toList();
+
+        return new PageImpl<>(resumeDtoList, pageable, resumes.getTotalElements());
     }
 
 }

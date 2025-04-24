@@ -50,10 +50,10 @@ public class ResumeController {
         return HttpStatus.OK;
     }
 
-    @GetMapping("active")
-    public List<ResumeDto> getAllActiveResumes() {
-        return  resumeService.getAllActiveResumes();
-    }
+//    @GetMapping("active")
+//    public List<ResumeDto> getAllActiveResumes() {
+//        return  resumeService.getAllActiveResumes();
+//    }
 
     @GetMapping("category/{resumeCategory}")
     public List<ResumeDto> getResumeByCategory(@PathVariable("resumeCategory") String resumeCategory) {

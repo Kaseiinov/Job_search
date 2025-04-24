@@ -12,7 +12,7 @@ public interface VacancyService {
 
     void updateVacancyById(Long id, VacancyDto vacancyDto);
 
-    Page<VacancyDto> getAllVacancies(int page, int pageSize);
+    Page<VacancyDto> getAllActiveVacancies(int page, int pageSize);
 
     List<VacancyDto> getVacanciesByUser(String userEmail);
 

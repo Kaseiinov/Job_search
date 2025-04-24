@@ -53,9 +53,9 @@ public class VacancyServiceImpl implements VacancyService {
     }
 
     @Override
-    public Page<VacancyDto> getAllVacancies(int page, int pageSize) {
+    public Page<VacancyDto> getAllActiveVacancies(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
-        Page<Vacancy> vacancyPage = vacancyRepository.findAll(pageable);
+        Page<Vacancy> vacancyPage = vacancyRepository.findAllByIsActive(true, pageable);
 
         return vacanciesPageBuilder(vacancyPage, pageable);
     }
