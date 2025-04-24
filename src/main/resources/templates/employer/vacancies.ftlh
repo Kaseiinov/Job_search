@@ -2,6 +2,15 @@
 <@main.layout>
 
     <h2 class="mb-4 text-center">Список вакансий</h2>
+
+    <form method="get" action="/vacancies" class="w-50 mx-auto mb-3">
+        <select name="sortBy" class="form-select" onchange="this.form.submit()">
+            <option value="">Сортировать по</option>
+            <option value="dateDesc" <#if sortBy == "dateDesc">selected</#if>>Сначала новые</option>
+            <option value="dateAsc" <#if sortBy == "dateAsc">selected</#if>>Сначала старые</option>
+        </select>
+    </form>
+
         <#list vacancies as vacancy>
 
             <table class="table table-bordered table-striped">

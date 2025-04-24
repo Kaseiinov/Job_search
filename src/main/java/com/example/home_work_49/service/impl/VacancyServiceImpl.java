@@ -53,10 +53,11 @@ public class VacancyServiceImpl implements VacancyService {
     }
 
     @Override
-    public List<VacancyDto> getAllVacancies() {
-        List<Vacancy> vacancyList = vacancyRepository.findAll();
+    public Page<VacancyDto> getAllVacancies(int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<Vacancy> vacancyPage = vacancyRepository.findAll(pageable);
 
-        return vacancyBuilder(vacancyList);
+        return vacanciesPageBuilder(vacancyPage, pageable);
     }
 
     @Override
@@ -85,23 +86,16 @@ public class VacancyServiceImpl implements VacancyService {
 
         Page<Vacancy> vacancyPage = vacancyRepository.findAllByIsActiveOrderByCreatedDateDesc(true, pageable);
 
-        List<VacancyDto> vacancyDtoList = vacancyPage.stream()
-                .map(e -> VacancyDto.builder()
-                        .id(e.getId())
-                        .name(e.getName())
-                        .description(e.getDescription())
-                        .categoryId(e.getCategory().getId())
-                        .salary(e.getSalary())
-                        .expFrom(e.getExpFrom())
-                        .expTo(e.getExpTo())
-                        .isActive(e.getIsActive())
-                        .authorId(e.getAuthor().getId())
-                        .createdDate(e.getCreatedDate())
-                        .updateTime(e.getUpdateTime())
-                        .build())
-                .toList();
+        return vacanciesPageBuilder(vacancyPage, pageable);
+    }
 
-        return new PageImpl<>(vacancyDtoList, pageable, vacancyPage.getTotalElements());
+    @Override
+    public Page<VacancyDto> getAllActiveVacancyByCreatedDateAsc(int page, int pageSize){
+        Pageable pageable = PageRequest.of(page, pageSize);
+
+        Page<Vacancy> vacancyPage = vacancyRepository.findAllByIsActiveOrderByCreatedDateAsc(true, pageable);
+
+        return vacanciesPageBuilder(vacancyPage, pageable);
     }
 
 
@@ -128,15 +122,6 @@ public class VacancyServiceImpl implements VacancyService {
 
         vacancyRepository.save(vacancy);
 
-
-//        Boolean isEmployer = userDao.isUser(vacancyDto.getAuthorId(), "employer").orElseThrow(UserNotFoundException::new);
-//        boolean isCategoryExists = categoryDao.isCategoryExists(vacancyDto.getCategoryId());
-//
-//        if(!isEmployer){
-//            throw new EmployerNotFounException();
-//        } else if (!isCategoryExists) {
-//            throw new CategoryNotFountException();
-//        }
 
     }
 
@@ -174,6 +159,26 @@ public class VacancyServiceImpl implements VacancyService {
                 .createdDate(vacancy.getCreatedDate())
                 .updateTime(vacancy.getUpdateTime())
                 .build();
+    }
+
+    public Page<VacancyDto> vacanciesPageBuilder(Page<Vacancy> vacancies, Pageable pageable) {
+        List<VacancyDto> vacancyDtoList = vacancies.stream()
+                .map(e -> VacancyDto.builder()
+                        .id(e.getId())
+                        .name(e.getName())
+                        .description(e.getDescription())
+                        .categoryId(e.getCategory().getId())
+                        .salary(e.getSalary())
+                        .expFrom(e.getExpFrom())
+                        .expTo(e.getExpTo())
+                        .isActive(e.getIsActive())
+                        .authorId(e.getAuthor().getId())
+                        .createdDate(e.getCreatedDate())
+                        .updateTime(e.getUpdateTime())
+                        .build())
+                .toList();
+
+        return new PageImpl<>(vacancyDtoList, pageable, vacancies.getTotalElements());
     }
 
 }

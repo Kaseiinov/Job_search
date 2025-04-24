@@ -12,13 +12,15 @@ public interface VacancyService {
 
     void updateVacancyById(Long id, VacancyDto vacancyDto);
 
-    List<VacancyDto> getAllVacancies();
+    Page<VacancyDto> getAllVacancies(int page, int pageSize);
 
     List<VacancyDto> getVacanciesByUser(String userEmail);
 
     List<VacancyDto> getVacancyByCategory(String vacancyCategory);
 
     Page<VacancyDto> getAllActiveVacancyByCreatedDateDesc(int page, int pageSize);
+
+    Page<VacancyDto> getAllActiveVacancyByCreatedDateAsc(int page, int pageSize);
 
     VacancyDto getVacancyById(Long id);
 

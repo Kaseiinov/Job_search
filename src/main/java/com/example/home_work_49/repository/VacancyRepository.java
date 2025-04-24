@@ -17,4 +17,6 @@ public interface VacancyRepository extends JpaRepository<Vacancy, Long> {
     List<Vacancy> findAllByCategory_Name(String categoryName);
 
     Page<Vacancy> findAllByIsActiveOrderByCreatedDateDesc(Boolean isActive, Pageable pageable);
+
+    Page<Vacancy> findAllByIsActiveOrderByCreatedDateAsc(Boolean isActive, Pageable pageable);
 }

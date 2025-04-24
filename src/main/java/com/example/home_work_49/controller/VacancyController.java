@@ -24,14 +24,24 @@ public class VacancyController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public String getVacancies(@RequestParam(defaultValue = "0")int page, Model model) {
+    public String getVacancies(@RequestParam(defaultValue = "0")int page, @RequestParam(defaultValue = "default") String sortBy, Model model) {
         int pageSize = 5;
-        Page<VacancyDto> vacancyPage = vacancyService.getAllActiveVacancyByCreatedDateDesc(page, pageSize);
-        model.addAttribute("vacancies", vacancyPage.getContent());
+
+        Page<VacancyDto> vacancies;
+
+        switch (sortBy) {
+            case "dateDesc" -> vacancies = vacancyService.getAllActiveVacancyByCreatedDateDesc(page, pageSize);
+            case "dateAsc" -> vacancies = vacancyService.getAllActiveVacancyByCreatedDateAsc(page, pageSize);
+            default -> vacancies = vacancyService.getAllVacancies(page, pageSize);
+        }
+
+//        Page<VacancyDto> vacancyPage = vacancyService.getAllActiveVacancyByCreatedDateDesc(page, pageSize);
+        model.addAttribute("vacancies", vacancies.getContent());
         model.addAttribute("currentPage", page);
-        model.addAttribute("hasNext", vacancyPage.hasNext());
-        model.addAttribute("hasPrevious", vacancyPage.hasPrevious());
-        model.addAttribute("totalPages", vacancyPage.getTotalPages());
+        model.addAttribute("hasNext", vacancies.hasNext());
+        model.addAttribute("hasPrevious", vacancies.hasPrevious());
+        model.addAttribute("totalPages", vacancies.getTotalPages());
+        model.addAttribute("sortBy", sortBy);
         return "employer/vacancies";
     }
 
