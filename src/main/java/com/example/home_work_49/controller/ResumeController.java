@@ -46,6 +46,7 @@ public class ResumeController {
     public String createResume(@Valid ResumeDto resumeDto, BindingResult bindingResult, Model model, Authentication auth) {
         if (!bindingResult.hasErrors()) {
             resumeService.addResume(resumeDto, auth);
+            System.out.println("Редирект на /resumes");
             return "redirect:/resumes";
         }
         model.addAttribute("resumeDto", resumeDto);

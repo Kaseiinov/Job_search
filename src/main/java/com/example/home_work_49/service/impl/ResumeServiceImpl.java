@@ -143,21 +143,28 @@ public class ResumeServiceImpl implements ResumeService {
 
 //        Resume savedResume = resumeDao.getResumeByName(resumeDto.getName()).orElseThrow(ResumeNotFoundException::new);
 
-        WorkExperienceInfoDto experienceInfo = resumeDto.getWorkExperience();
-        experienceInfo.setResumeId(resume.getId());
+        if (resumeDto.getWorkExperience() != null) {
+            WorkExperienceInfoDto experience = resumeDto.getWorkExperience();
+            experience.setResumeId(resume.getId());
+            addWorkExperienceInfo(experience);
+        }
 
-        addWorkExperienceInfo(experienceInfo);
+        if (resumeDto.getEducation() != null) {
+            EducationInfoDto education = resumeDto.getEducation();
+            education.setResumeId(resume.getId());
+            addEducationInfo(education);
+        }
 
-        EducationInfoDto education = resumeDto.getEducation();
-        education.setResumeId(resume.getId());
+        if (resumeDto.getContacts() != null) {
+            List<ContactsInfoDto> contacts = resumeDto.getContacts().stream()
+                    .filter(contact -> contact.getValue() != null && !contact.getValue().isBlank())
+                    .toList();
 
-        addEducationInfo(education);
-
-        List<ContactsInfoDto> contactsDto = resumeDto.getContacts();
-        contactsDto.forEach(contact -> {
-            contact.setResumeId(resume.getId());
-            addContactInfo(contact);
-        });
+            contacts.forEach(contact -> {
+                contact.setResumeId(resume.getId());
+                addContactInfo(contact);
+            });
+        }
     }
 
     public List<ResumeDto> resumeBuilder(List<Resume> resumeList){
