@@ -2,7 +2,6 @@ package com.example.home_work_49.service.impl;
 
 import com.example.home_work_49.dto.UserDto;
 import com.example.home_work_49.dto.UserImageDto;
-import com.example.home_work_49.exceptions.ImageNotFoundException;
 import com.example.home_work_49.exceptions.SuchEmailAlreadyExistsException;
 import com.example.home_work_49.exceptions.UserNotFoundException;
 import com.example.home_work_49.models.Role;
@@ -16,7 +15,6 @@ import com.example.home_work_49.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.management.relation.RoleNotFoundException;
 import java.util.*;
@@ -69,6 +67,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserByEmail(String userEmail) {
         User user = userRepository.findByEmail(userEmail).orElseThrow(UserNotFoundException::new);
+        return builder(user);
+    }
+
+    @Override
+    public UserDto getUserById(Long id) {
+        User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         return builder(user);
     }
 

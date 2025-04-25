@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ResumeDto {
     private Long id;
-    private Long applicantId;
+    private UserDto user;
     @NotBlank
     private String name;
     @NotNull
@@ -32,6 +32,7 @@ public class ResumeDto {
     private WorkExperienceInfoDto workExperience;
     private EducationInfoDto education;
     private List<ContactsInfoDto> contacts;
+
 
     public String getCreatedDateFormatted() {
         return createdDate != null

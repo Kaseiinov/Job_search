@@ -3,6 +3,7 @@ package com.example.home_work_49.controller;
 import com.example.home_work_49.dto.*;
 import com.example.home_work_49.service.CategoryService;
 import com.example.home_work_49.service.ResumeService;
+import com.example.home_work_49.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,7 @@ import java.util.List;
 public class ResumeController {
     private final ResumeService resumeService;
     private final CategoryService categoryService;
+    private final UserService userService;
 
     @GetMapping
     public String getResumes(@RequestParam(defaultValue = "0")int page, @RequestParam(defaultValue = "default") String sortBy, Model model) {

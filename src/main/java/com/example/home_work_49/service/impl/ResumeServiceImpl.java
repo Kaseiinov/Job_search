@@ -185,51 +185,192 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     public List<ResumeDto> resumeBuilder(List<Resume> resumeList){
-        return resumeList
-                .stream()
-                .map(e -> ResumeDto
-                        .builder()
-                        .id(e.getId())
-                        .applicantId(e.getApplicant().getId())
-                        .name(e.getName())
-                        .categoryId(e.getCategory().getId())
-                        .salary(e.getSalary())
-                        .isActive(e.getIsActive())
-                        .createdDate(e.getCreatedDate())
-                        .updateTime(e.getUpdateTime())
-                        .build())
+        return resumeList.stream()
+                .map(e -> {
+                    WorkExperienceInfoDto experienceDto = null;
+                    if (e.getExperience() != null) {
+                        experienceDto = WorkExperienceInfoDto.builder()
+                                .id(e.getExperience().getId())
+                                .companyName(e.getExperience().getCompanyName())
+                                .position(e.getExperience().getPosition())
+                                .responsibilities(e.getExperience().getResponsibilities())
+                                .resumeId(e.getId())
+                                .years(e.getExperience().getYears())
+                                .build();
+                    }
+
+                    EducationInfoDto educationDto = null;
+                    if (e.getEducation() != null) {
+                        educationDto = EducationInfoDto.builder()
+                                .id(e.getEducation().getId())
+                                .resumeId(e.getId())
+                                .degree(e.getEducation().getDegree())
+                                .institution(e.getEducation().getInstitution())
+                                .program(e.getEducation().getProgram())
+                                .startDate(e.getEducation().getStartDate())
+                                .endDate(e.getEducation().getEndDate())
+                                .build();
+                    }
+
+                    List<ContactsInfoDto> contactsDto = e.getContacts() != null
+                            ? e.getContacts().stream()
+                            .map(ed -> ContactsInfoDto.builder()
+                                    .id(ed.getId())
+                                    .resumeId(e.getId())
+                                    .typeId(ed.getType().getId())
+                                    .value(ed.getValue())
+                                    .build())
+                            .toList()
+                            : List.of();
+
+                    return ResumeDto.builder()
+                            .id(e.getId())
+                            .user(UserDto.builder()
+                                    .id(e.getApplicant().getId())
+                                    .name(e.getApplicant().getName())
+                                    .surname(e.getApplicant().getSurname())
+                                    .email(e.getApplicant().getEmail())
+                                    .age(e.getApplicant().getAge())
+                                    .phoneNumber(e.getApplicant().getPhoneNumber())
+                                    .build())
+                            .name(e.getName())
+                            .categoryId(e.getCategory().getId())
+                            .salary(e.getSalary())
+                            .isActive(e.getIsActive())
+                            .createdDate(e.getCreatedDate())
+                            .updateTime(e.getUpdateTime())
+                            .workExperience(experienceDto)
+                            .education(educationDto)
+                            .contacts(contactsDto)
+                            .build();
+                })
                 .toList();
     }
 
-    public ResumeDto resumeBuilder(Resume resume){
+    public ResumeDto resumeBuilder(Resume resume) {
+        WorkExperienceInfoDto experienceDto = null;
+        if (resume.getExperience() != null) {
+            experienceDto = WorkExperienceInfoDto.builder()
+                    .id(resume.getExperience().getId())
+                    .companyName(resume.getExperience().getCompanyName())
+                    .position(resume.getExperience().getPosition())
+                    .responsibilities(resume.getExperience().getResponsibilities())
+                    .resumeId(resume.getId())
+                    .years(resume.getExperience().getYears())
+                    .build();
+        }
+
+        EducationInfoDto educationDto = null;
+        if (resume.getEducation() != null) {
+            educationDto = EducationInfoDto.builder()
+                    .id(resume.getEducation().getId())
+                    .resumeId(resume.getId())
+                    .degree(resume.getEducation().getDegree())
+                    .institution(resume.getEducation().getInstitution())
+                    .program(resume.getEducation().getProgram())
+                    .startDate(resume.getEducation().getStartDate())
+                    .endDate(resume.getEducation().getEndDate())
+                    .build();
+        }
+
+        List<ContactsInfoDto> contactsDto = resume.getContacts() != null
+                ? resume.getContacts().stream()
+                .map(ed -> ContactsInfoDto.builder()
+                        .id(ed.getId())
+                        .resumeId(resume.getId())
+                        .typeId(ed.getType().getId())
+                        .value(ed.getValue())
+                        .build())
+                .toList()
+                : List.of();
+
         return ResumeDto.builder()
                 .id(resume.getId())
-                .applicantId(resume.getApplicant().getId())
+                .user(UserDto.builder()
+                        .id(resume.getApplicant().getId())
+                        .name(resume.getApplicant().getName())
+                        .surname(resume.getApplicant().getSurname())
+                        .email(resume.getApplicant().getEmail())
+                        .age(resume.getApplicant().getAge())
+                        .phoneNumber(resume.getApplicant().getPhoneNumber())
+                        .build())
                 .name(resume.getName())
                 .categoryId(resume.getCategory().getId())
                 .salary(resume.getSalary())
                 .isActive(resume.getIsActive())
                 .createdDate(resume.getCreatedDate())
                 .updateTime(resume.getUpdateTime())
+                .workExperience(experienceDto)
+                .education(educationDto)
+                .contacts(contactsDto)
                 .build();
     }
 
+
     public Page<ResumeDto> resumesPageBuilder(Page<Resume> resumes, Pageable pageable) {
         List<ResumeDto> resumeDtoList = resumes.stream()
-                .map(e -> ResumeDto
-                        .builder()
-                        .id(e.getId())
-                        .applicantId(e.getApplicant().getId())
-                        .name(e.getName())
-                        .categoryId(e.getCategory().getId())
-                        .salary(e.getSalary())
-                        .isActive(e.getIsActive())
-                        .createdDate(e.getCreatedDate())
-                        .updateTime(e.getUpdateTime())
-                        .build())
+                .map(e -> {
+                    WorkExperienceInfoDto experienceDto = null;
+                    if (e.getExperience() != null) {
+                        experienceDto = WorkExperienceInfoDto.builder()
+                                .id(e.getExperience().getId())
+                                .companyName(e.getExperience().getCompanyName())
+                                .position(e.getExperience().getPosition())
+                                .responsibilities(e.getExperience().getResponsibilities())
+                                .resumeId(e.getId())
+                                .years(e.getExperience().getYears())
+                                .build();
+                    }
+
+                    EducationInfoDto educationDto = null;
+                    if (e.getEducation() != null) {
+                        educationDto = EducationInfoDto.builder()
+                                .id(e.getEducation().getId())
+                                .resumeId(e.getId())
+                                .degree(e.getEducation().getDegree())
+                                .institution(e.getEducation().getInstitution())
+                                .program(e.getEducation().getProgram())
+                                .startDate(e.getEducation().getStartDate())
+                                .endDate(e.getEducation().getEndDate())
+                                .build();
+                    }
+
+                    List<ContactsInfoDto> contactsDto = e.getContacts() != null
+                            ? e.getContacts().stream()
+                            .map(ed -> ContactsInfoDto.builder()
+                                    .id(ed.getId())
+                                    .resumeId(e.getId())
+                                    .typeId(ed.getType().getId())
+                                    .value(ed.getValue())
+                                    .build())
+                            .toList()
+                            : List.of();
+
+                    return ResumeDto.builder()
+                            .id(e.getId())
+                            .user(UserDto.builder()
+                                    .id(e.getApplicant().getId())
+                                    .name(e.getApplicant().getName())
+                                    .surname(e.getApplicant().getSurname())
+                                    .email(e.getApplicant().getEmail())
+                                    .age(e.getApplicant().getAge())
+                                    .phoneNumber(e.getApplicant().getPhoneNumber())
+                                    .build())
+                            .name(e.getName())
+                            .categoryId(e.getCategory().getId())
+                            .salary(e.getSalary())
+                            .isActive(e.getIsActive())
+                            .createdDate(e.getCreatedDate())
+                            .updateTime(e.getUpdateTime())
+                            .workExperience(experienceDto)
+                            .education(educationDto)
+                            .contacts(contactsDto)
+                            .build();
+                })
                 .toList();
 
         return new PageImpl<>(resumeDtoList, pageable, resumes.getTotalElements());
     }
+
 
 }

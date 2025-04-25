@@ -3,51 +3,40 @@
 
     <h2 class="mb-4 text-center">Список вакансий</h2>
 
-    <form method="get" action="/vacancies" class="w-50 mx-auto mb-3">
-        <select name="sortBy" class="form-select" onchange="this.form.submit()">
+    <form method="get" action="/vacancies" class="d-flex justify-content-end mb-3">
+        <select name="sortBy" class="form-select w-auto" onchange="this.form.submit()">
             <option value="">Сортировать по</option>
             <option value="dateDesc" <#if sortBy == "dateDesc">selected</#if>>Сначала новые</option>
             <option value="dateAsc" <#if sortBy == "dateAsc">selected</#if>>Сначала старые</option>
         </select>
     </form>
 
-        <#list vacancies as vacancy>
+    <#list vacancies as vacancy>
 
-            <table class="table table-bordered table-striped">
-                <thead class="table-dark">
-                <tr>
-                    <th>Название</th>
-                    <th>Описание</th>
-                    <th>Категория</th>
-                    <th>Зарплата</th>
-                    <th>Опыт (от - до)</th>
-                    <th>Активно</th>
-                    <th>Дата создания</th>
-                    <th>Обновлено</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr >
-                    <td >${vacancy.name}</td>
-                    <td >${vacancy.description!}</td>
-                    <td >${vacancy.categoryId}</td>
-                    <td >${vacancy.salary!}</td>
-                    <td >
-                        <#if vacancy.expFrom?? || vacancy.expTo??>
-                            ${vacancy.expFrom!0} - ${vacancy.expTo!0}
-                        <#else>
-                            Нет опыта
-                        </#if>
-                    </td>
-                    <td>
-                        <span>${vacancy.isActive?then('Да', 'Нет')}</span>
-                    </td>
-                    <td >${vacancy.createdDateFormatted}</td>
-                    <td >${vacancy.updateTimeFormatted!}</td>
-                </tr>
-                </tbody>
-            </table>
-        </#list>
+        <style>
+            .card {
+                border-radius: 25px;
+            }
+        </style>
+
+        <div class="card w-100 mb-3 overflow-hidden">
+            <div class="card-body">
+                <h5 class="card-title">${vacancy.name}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                    <#if vacancy.expFrom?? || vacancy.expTo??>
+                        ${vacancy.expFrom!0} - ${vacancy.expTo!0}
+                    <#else>
+                        Без опыта
+                    </#if>
+                </h6>
+                <p class="card-text">${vacancy.description!}</p>
+                <a href="/vacancies" class="btn btn-outline-info">Card link</a>
+                <a href="/vacancies" class="btn btn-outline-info">Another link</a>
+            </div>
+        </div>
+
+
+    </#list>
 
 
     <nav >
