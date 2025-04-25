@@ -11,6 +11,14 @@
     </head>
 <body>
 
+    <#assign known = SPRING_SECURITY_CONTEXT?? >
+    <#if known>
+        <#assign
+        user = SPRING_SECURITY_CONTEXT.authentication.principal
+        name = user.getUsername()
+        >
+    </#if>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">Navbar</a>
@@ -22,9 +30,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/users/profile">Profile</a>
-                </li>
+<#--                <li class="nav-item">-->
+<#--                    <a class="nav-link" href="/users/profile">Profile</a>-->
+<#--                </li>-->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Vacancies
@@ -44,8 +52,36 @@
                 </li>
 
             </ul>
-            <a href="/auth/login" class="btn btn-outline-success ">Login</a>
-            <a href="/auth/register" class="btn btn-outline-success ms-4">Register</a>
+<#--            <a href="/auth/login" class="btn btn-outline-success ">Login</a>-->
+<#--            <a href="/auth/register" class="btn btn-outline-success ms-4">Register</a>-->
+            <#if user??>
+                <a href="/users/profile" class="nav-link mr4-l">
+                    Profile
+                    <#--                <#list user.authorities as auth>-->
+                    <#--                    <span class="text-danger">${auth}</span>-->
+                    <#--                    <#if auth?has_next>-->
+                    <#--                        /-->
+                    <#--                    </#if>-->
+                    <#--                </#list>-->
+                </a>
+                <#if _csrf??>
+                    <form action="/logout" method="post">
+                        <input type="hidden" name="${(_csrf.parameterName)!'csrf'}"
+                               value="${(_csrf.token)!'--no-token--'}"/>
+                        <button type="submit" class="btn btn-outline-info m-2"
+                                id="logout">Logout
+                        </button>
+                    </form>
+                <#else>
+                    <a href="/logout" class="btn btn-outline-info m-2"
+                       id="logout">Logout</a>
+                </#if>
+            <#else>
+                <a href="/auth/login"
+                   class="btn btn-outline-info m-2">Login</a>
+                <a href="/auth/register"
+                   class="btn btn-outline-info m-2">Register</a>
+            </#if>
         </div>
     </div>
 </nav>

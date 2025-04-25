@@ -29,27 +29,27 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        String fetchUsersQuery = """
-        SELECT email, password, enabled
-        FROM users
-        WHERE email = ?
-        """;
-
-        String fetchRolesQuery = """
-        SELECT u.email, r.role
-        FROM users u
-        JOIN usr_roles ur ON u.id = ur.usr_id
-        JOIN roles r ON r.id = ur.role_id
-        WHERE u.email = ?
-        """;
-        auth
-                .jdbcAuthentication()
-                .dataSource(dataSource)
-                .usersByUsernameQuery(fetchUsersQuery)
-                .authoritiesByUsernameQuery(fetchRolesQuery);
-    }
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        String fetchUsersQuery = """
+//        SELECT email, password, enabled
+//        FROM users
+//        WHERE email = ?
+//        """;
+//
+//        String fetchRolesQuery = """
+//        SELECT u.email, r.role
+//        FROM users u
+//        JOIN usr_roles ur ON u.id = ur.usr_id
+//        JOIN roles r ON r.id = ur.role_id
+//        WHERE u.email = ?
+//        """;
+//        auth
+//                .jdbcAuthentication()
+//                .dataSource(dataSource)
+//                .usersByUsernameQuery(fetchUsersQuery)
+//                .authoritiesByUsernameQuery(fetchRolesQuery);
+//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -68,7 +68,7 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .permitAll())
-                .csrf(AbstractHttpConfigurer::disable)
+//                .csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests(authorize -> authorize
                         // Public endpoints

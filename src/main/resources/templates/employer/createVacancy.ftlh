@@ -20,6 +20,11 @@
     </style>
 
     <form action="/vacancies/create" method="post">
+        <#if _csrf??>
+            <input type="hidden" name="${(_csrf.parameterName)!'csrf-param-name'}"
+                   value="${(_csrf.token)!'csrf-token'}"/>
+        </#if>
+
         <div class="mb-3">
             <label for="vacancyName" class="form-label">Название вакансии:</label>
             <@spring.formInput "vacancyDto.name" 'id="vacancyName" class="form-control"' />
