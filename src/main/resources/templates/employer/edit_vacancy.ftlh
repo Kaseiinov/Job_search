@@ -40,6 +40,7 @@
                     </#list>
                 </#if>
             </select>
+            <@spring.showErrors "<br>" "error text-danger" />
         </div>
 
         <div class="mb-3">

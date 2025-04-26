@@ -17,9 +17,11 @@ public class VacancyDto {
     private Long id;
     @NotBlank
     private String name;
+    @NotBlank
     private String description;
     @NotNull
     private Long categoryId;
+    @NotNull
     @PositiveOrZero
     private Double salary;
     private Integer expFrom;

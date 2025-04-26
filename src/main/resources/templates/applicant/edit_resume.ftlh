@@ -22,8 +22,8 @@
                         <option value="${category.id}">${category.name}</option>
                     </#list>
                 </#if>
-
             </select>
+            <@spring.showErrors "<br>" "error text-danger" />
         </div>
         <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Ожидаемый уровень оклада</label>

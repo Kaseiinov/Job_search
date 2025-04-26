@@ -21,6 +21,7 @@ public class ResumeDto {
     private String name;
     @NotNull
     private Long categoryId;
+    @NotNull
     @PositiveOrZero
     private Double salary;
     @NotNull

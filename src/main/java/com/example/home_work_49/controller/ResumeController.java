@@ -62,7 +62,7 @@ public class ResumeController {
         if (!bindingResult.hasErrors()) {
             resumeService.addResume(resumeDto, auth);
             System.out.println("Редирект на /resumes");
-            return "redirect:/resumes";
+            return "redirect:/users/profile";
         }
         model.addAttribute("resumeDto", resumeDto);
         model.addAttribute("categories", categoryService.getCategories());

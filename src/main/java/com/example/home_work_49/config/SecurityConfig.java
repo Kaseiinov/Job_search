@@ -87,7 +87,7 @@ public class SecurityConfig {
 
 
                         // Resume endpoints
-                        .requestMatchers("/resumes").permitAll()
+                        .requestMatchers("/resumes").hasAnyAuthority("EMPLOYER", "ADMIN")
                         .requestMatchers("/resumes/**").hasAnyAuthority("APPLICANT", "ADMIN")
 
 
