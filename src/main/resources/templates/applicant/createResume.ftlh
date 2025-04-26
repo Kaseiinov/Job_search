@@ -92,27 +92,27 @@
             <label class="form-label">Ссылки на соц. сети:</label>
             <div class="d-flex align-items-center mb-2">
                 <img src="https://img.icons8.com/ios-glyphs/30/new-post.png" class="me-2" alt="email">
-                <input type="hidden" name="contacts[0].typeId" value="3">
+                <input type="hidden" name="contacts[0].typeId" value="1">
                 <input type="email" name="contacts[0].value" class="form-control" placeholder="example@mail.com">
             </div>
             <div class="d-flex align-items-center mb-2">
                 <img src="https://img.icons8.com/ios-glyphs/30/phone.png" class="me-2" alt="phone">
-                <input type="hidden" name="contacts[1].typeId" value="4">
+                <input type="hidden" name="contacts[1].typeId" value="2">
                 <input type="tel" name="contacts[1].value" class="form-control" placeholder="+996 999 555 555">
             </div>
             <div class="d-flex align-items-center mb-2">
                 <img src="https://img.icons8.com/ios-filled/30/facebook.png" class="me-2" alt="fb">
-                <input type="hidden" name="contacts[2].typeId" value="6">
+                <input type="hidden" name="contacts[2].typeId" value="4">
                 <input type="text" name="contacts[2].value" class="form-control">
             </div>
             <div class="d-flex align-items-center mb-2">
                 <img src="https://img.icons8.com/ios-filled/30/linkedin.png" class="me-2" alt="linkedin">
-                <input type="hidden" name="contacts[3].typeId" value="7">
+                <input type="hidden" name="contacts[3].typeId" value="5">
                 <input type="text" name="contacts[3].value" class="form-control">
             </div>
             <div class="d-flex align-items-center mb-2">
                 <img src="https://img.icons8.com/ios-filled/30/telegram-app.png" class="me-2" alt="telegram">
-                <input type="hidden" name="contacts[4].typeId" value="5">
+                <input type="hidden" name="contacts[4].typeId" value="3">
                 <input type="text" name="contacts[4].value" class="form-control">
             </div>
         </div>

@@ -158,7 +158,6 @@ public class ResumeServiceImpl implements ResumeService {
 
         resumeRepository.save(resume);
 
-//        Resume savedResume = resumeDao.getResumeByName(resumeDto.getName()).orElseThrow(ResumeNotFoundException::new);
 
         if (resumeDto.getWorkExperience() != null) {
             WorkExperienceInfoDto experience = resumeDto.getWorkExperience();
@@ -346,6 +345,14 @@ public class ResumeServiceImpl implements ResumeService {
                             .toList()
                             : List.of();
 
+                    UserImageDto userImageDto = new UserImageDto();
+                    if(e.getApplicant().getAvatar() != null){
+                        userImageDto.setUserId(e.getApplicant().getId());
+                        userImageDto.setId(e.getApplicant().getAvatar().getId());
+                        userImageDto.setFileName(e.getApplicant().getAvatar().getFileName());
+                    }
+
+
                     return ResumeDto.builder()
                             .id(e.getId())
                             .user(UserDto.builder()
@@ -355,6 +362,7 @@ public class ResumeServiceImpl implements ResumeService {
                                     .email(e.getApplicant().getEmail())
                                     .age(e.getApplicant().getAge())
                                     .phoneNumber(e.getApplicant().getPhoneNumber())
+                                    .avatar(userImageDto)
                                     .build())
                             .name(e.getName())
                             .categoryId(e.getCategory().getId())

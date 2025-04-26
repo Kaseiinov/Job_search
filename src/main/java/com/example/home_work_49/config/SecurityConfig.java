@@ -74,6 +74,8 @@ public class SecurityConfig {
                         // Public endpoints
                         .requestMatchers("/auth/register").permitAll()
                         .requestMatchers("/").permitAll()
+                        .requestMatchers("/images/**").permitAll()
+
 
                         // User endpoints
                         .requestMatchers("/users/**").fullyAuthenticated()

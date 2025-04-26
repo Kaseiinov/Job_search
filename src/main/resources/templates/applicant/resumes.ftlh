@@ -5,6 +5,7 @@
         .card {
             border-radius: 25px;
         }
+
     </style>
 
         <h2 class="mb-4 text-center">Список резюме</h2>
@@ -21,10 +22,14 @@
 
             <div class="card p-3 mb-4" >
                 <div class="d-flex align-items-start">
-                    <#if resume.user.avatar??>
-                        <img src="/images/byName/${resume.user.avatar.fileName!}" width="80" height="80" alt="avatar" class="me-3">
+                    <#if resume.user.avatar?? && resume.user.avatar.fileName??>
+                        <img src="/images/byName/${resume.user.avatar.fileName}"
+                             width="80"
+                             height="80"
+                             alt="avatar"
+                             class="me-3 rounded">
                     <#else>
-                        <img src="/images/byName/default.png" width="80" height="80" alt="avatar" class="me-3">
+                        <i class="fas fa-user-circle me-3 rounded" style="font-size: 80px; color: #6c757d;"></i>
                     </#if>
                     <div class="flex-grow-1">
                         <h5 class="mb-1">${resume.name}</h5>
