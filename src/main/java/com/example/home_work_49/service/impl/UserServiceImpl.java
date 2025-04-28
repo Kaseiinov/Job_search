@@ -11,12 +11,16 @@ import com.example.home_work_49.repository.RoleRepository;
 import com.example.home_work_49.repository.UserImageRepository;
 import com.example.home_work_49.repository.UserRepository;
 import com.example.home_work_49.service.UserService;
+import com.example.home_work_49.util.CommonUtilities;
 import com.example.home_work_49.util.FileUtil;
+import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.management.relation.RoleNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 @Service
@@ -27,6 +31,40 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final UserImageRepository userImageRepository;
     private final FileUtil fileUtil;
+    private final PasswordEncoder encoder;
+    private final EmailService emailService;
+
+
+    @Override
+    public void makeResetPasswdLink(HttpServletRequest request) throws UserNotFoundException, MessagingException, UnsupportedEncodingException {
+        String email = request.getParameter("email");
+        String token = UUID.randomUUID().toString();
+        updateResetPasswordToken(token, email);
+        String resetPasswordLnk = CommonUtilities.getSiteURL(request) + "/auth/reset_password?token=" + token;
+        emailService.sendEmail(email, resetPasswordLnk);
+    }
+
+    @Override
+    public void updateResetPasswordToken(String token, String email){
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
+        user.setResetPasswordToken(token);
+        userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public User getUserByResetPasswordToken(String token){
+        return userRepository.findByResetPasswordToken(token).orElseThrow(UserNotFoundException::new);
+    }
+
+    @Override
+    public void updatePassword(User user, String password){
+        String encodedPassword = encoder.encode(password);
+        user.setPassword(encodedPassword);
+        user.setResetPasswordToken(null);
+        userRepository.saveAndFlush(user);
+    }
+
+
 
     @Override
     public void updateUserByEmail(String email, UserDto userDto) throws SuchEmailAlreadyExistsException, RoleNotFoundException {

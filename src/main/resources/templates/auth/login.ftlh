@@ -49,6 +49,8 @@
                                     class="btn btn-primary btn-block mb-4">Sign in
                             </button>
 
+                            <a href="/auth/forgot_password">Forgot password?</a>
+
                         </form>
 
                     </div>

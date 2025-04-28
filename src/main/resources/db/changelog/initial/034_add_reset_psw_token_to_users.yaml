@@ -1,0 +1,12 @@
+
+databaseChangeLog:
+  - changeSet:
+      id: 034 add new field to users table
+      author: Islam Kaseiinov
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: reset_password_token
+                  type: varchar(255)

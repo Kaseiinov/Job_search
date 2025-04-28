@@ -10,6 +10,8 @@ spring:
     username: root
     password: qwerty
     driver-class-name: org.h2.Driver
+
+
 #  sql:
 #    init:
 #      mode: always
@@ -18,6 +20,23 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+
+#============================= Mail config
+
+  mail:
+    host: smtp.gmail.com
+    username: izlax6002@gmail.com
+    password: "sznj qgnx hsjj fyuz"
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+#============================= Mail config
+
 
 logging:
   level:
