@@ -20,6 +20,7 @@
         <input type="hidden" name="id" value="${userDto.id}">
         <input type="hidden" name="email" value="${userDto.email}">
         <input type="hidden" name="accountType" value="${userDto.accountType}">
+        <input type="hidden" name="password" value="${userDto.password}">
 
         <div class="mb-3">
             <label class="form-label">Name:</label>
@@ -36,12 +37,6 @@
         <div class="mb-3">
             <label class="form-label">age:</label>
             <@spring.formInput "userDto.age" 'class="form-control form-control-lg"' />
-            <@spring.showErrors "<br>" "error text-danger" />
-        </div>
-
-        <div class="mb-3">
-            <label for="form3Example4cg" class="form-label">Password:</label>
-            <@spring.formPasswordInput "userDto.password" 'id="form3Example4cg" class="form-control form-control-lg"' />
             <@spring.showErrors "<br>" "error text-danger" />
         </div>
 

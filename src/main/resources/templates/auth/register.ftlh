@@ -46,6 +46,19 @@
                                     <#--                                        <input type="text" id="form3Example1cg" class="form-control form-control-lg"-->
                                     <#--                                               name="username"/>-->
                                     <#--                                    </div>-->
+
+                                    <div data-mdb-input-init class="form-outline mb-4">
+                                        <label class="form-label" for="form3Example1cg">Your first name</label>
+                                        <@spring.formInput "userDto.name" 'id="form3Example1cg" class="form-control form-control-lg"' />
+                                        <@spring.showErrors "<br>" "error text-danger" />
+                                    </div>
+
+                                    <div data-mdb-input-init class="form-outline mb-4">
+                                        <label class="form-label" for="form3Example2cg">Your last name</label>
+                                        <@spring.formInput "userDto.surname" 'id="form3Example2cg" class="form-control form-control-lg"' />
+                                        <@spring.showErrors "<br>" "error text-danger" />
+                                    </div>
+
                                     <div data-mdb-input-init class="form-outline mb-4">
                                         <label class="form-label" for="form3Example3cg">Your Email</label>
                                         <@spring.formInput "userDto.email" 'id="form3Example3cg" class="form-control form-control-lg"' />

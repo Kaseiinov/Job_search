@@ -12,7 +12,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserDto {
     private Long id;
+    @NotBlank
     private String name;
+    @NotBlank
     private String surname;
     @PositiveOrZero
     private Integer age;
