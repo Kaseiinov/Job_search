@@ -110,6 +110,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserEditDto getUserByEmailByEditType(String userEmail) {
+        User user = userRepository.findByEmail(userEmail).orElseThrow(UserNotFoundException::new);
+        return builderEditType(user);
+    }
+
+    @Override
     public UserDto getUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         return builder(user);
@@ -141,26 +147,7 @@ public class UserServiceImpl implements UserService {
                 .toList();
     }
 
-    private UserDto builder(User user) {
-        return UserDto.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .surname(user.getSurname())
-                .age(user.getAge())
-                .email(user.getEmail())
-                .password(user.getPassword())
-                .phoneNumber(user.getPhoneNumber())
-                .avatar(
-                        user.getAvatar() == null ? null :
-                                UserImageDto.builder()
-                                        .id(user.getAvatar().getId())
-                                        .userId(user.getId())
-                                        .fileName(user.getAvatar().getFileName())
-                                        .build()
-                )
-                .accountType(user.getAccountType())
-                .build();
-    }
+
 
     @Override
     public void addUser(UserDto userDto) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
@@ -187,6 +174,48 @@ public class UserServiceImpl implements UserService {
         role.setUsers(Arrays.asList(user));
 
         userRepository.save(user);
+    }
+
+    private UserDto builder(User user) {
+        return UserDto.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .surname(user.getSurname())
+                .age(user.getAge())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .phoneNumber(user.getPhoneNumber())
+                .avatar(
+                        user.getAvatar() == null ? null :
+                                UserImageDto.builder()
+                                        .id(user.getAvatar().getId())
+                                        .userId(user.getId())
+                                        .fileName(user.getAvatar().getFileName())
+                                        .build()
+                )
+                .accountType(user.getAccountType())
+                .build();
+    }
+
+    private UserEditDto builderEditType(User user) {
+        return UserEditDto.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .surname(user.getSurname())
+                .age(user.getAge())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .phoneNumber(user.getPhoneNumber())
+                .avatar(
+                        user.getAvatar() == null ? null :
+                                UserImageDto.builder()
+                                        .id(user.getAvatar().getId())
+                                        .userId(user.getId())
+                                        .fileName(user.getAvatar().getFileName())
+                                        .build()
+                )
+                .accountType(user.getAccountType())
+                .build();
     }
 
 }

@@ -18,40 +18,39 @@
         </#if>
 
 
-        <input type="hidden" name="id" value="${userDto.id}">
-        <input type="hidden" name="email" value="${userDto.email}">
-        <input type="hidden" name="accountType" value="${userDto.accountType}">
-        <input type="hidden" name="password" value="${userDto.password}">
+        <input type="hidden" name="id" value="${userEditDto.id}">
+        <input type="hidden" name="email" value="${userEditDto.email}">
+        <input type="hidden" name="accountType" value="${userEditDto.accountType}">
+        <input type="hidden" name="password" value="${userEditDto.password}">
 
         <div class="mb-3">
             <label class="form-label">Name:</label>
-            <@spring.formInput "userDto.name" 'class="form-control form-control-lg"' />
+            <@spring.formInput "userEditDto.name" 'class="form-control form-control-lg"' />
             <@spring.showErrors "<br>" "error text-danger" />
         </div>
 
         <div class="mb-3">
             <label class="form-label">Surname:</label>
-            <@spring.formInput "userDto.surname" 'class="form-control form-control-lg"' />
+            <@spring.formInput "userEditDto.surname" 'class="form-control form-control-lg"' />
             <@spring.showErrors "<br>" "error text-danger" />
         </div>
 
         <div class="mb-3">
             <label class="form-label">age:</label>
-            <@spring.formInput "userDto.age" 'class="form-control form-control-lg"' />
+            <@spring.formInput "userEditDto.age" 'class="form-control form-control-lg"' />
             <@spring.showErrors "<br>" "error text-danger" />
         </div>
 
         <div class="mb-3">
             <label class="form-label">Phone number:</label>
-            <@spring.formInput "userDto.phoneNumber" 'class="form-control form-control-lg"' />
+            <@spring.formInput "userEditDto.phoneNumber" 'class="form-control form-control-lg"' />
             <@spring.showErrors "<br>" "error text-danger" />
         </div>
 
         <div class="mb-3">
             <label for="formFileMultiple" class="form-label">Photo</label>
-            <input type="hidden" name="avatar.userId" value="${userDto.id}">
+            <input type="hidden" name="avatar.userId" value="${userEditDto.id}">
             <input name="avatar.file" class="form-control" type="file" id="formFileMultiple">
-            <@spring.showErrors "<br>" "error text-danger" />
 
         </div>
 

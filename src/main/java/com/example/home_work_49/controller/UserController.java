@@ -45,18 +45,18 @@ public class UserController {
 
     @GetMapping("edit/{userEmail}")
     public String updateUser(Model model, @PathVariable String userEmail){
-        UserDto user = userService.getUserByEmail(userEmail);
-        model.addAttribute("userDto", user);
+        UserEditDto user = userService.getUserByEmailByEditType(userEmail);
+        model.addAttribute("userEditDto", user);
         return "auth/edit";
     }
 
     @PostMapping("edit")
-    public String updateUser(@Valid UserEditDto userEditDto, BindingResult bindingResult, Model model) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
+    public String updateUser(@Valid UserEditDto user, BindingResult bindingResult, Model model) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
         if(!bindingResult.hasErrors()){
-            userService.updateUserByEmail(userEditDto.getEmail(), userEditDto);
+            userService.updateUserByEmail(user.getEmail(), user);
             return "redirect:/users/profile";
         }
-        model.addAttribute("userDto", userEditDto);
+        model.addAttribute("userEditDto", user);
         return "auth/edit";
     }
 

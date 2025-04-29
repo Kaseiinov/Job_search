@@ -29,6 +29,8 @@ public interface UserService {
 
     UserDto getUserByEmail(String userEmail);
 
+    UserEditDto getUserByEmailByEditType(String userEmail);
+
     UserDto getUserById(Long id);
 
     List<UserDto> getApplicantsByVacancy(String vacancyName);
