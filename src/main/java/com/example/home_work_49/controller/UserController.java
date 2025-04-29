@@ -1,9 +1,6 @@
 package com.example.home_work_49.controller;
 
-import com.example.home_work_49.dto.ResumeDto;
-import com.example.home_work_49.dto.UserDto;
-import com.example.home_work_49.dto.UserImageDto;
-import com.example.home_work_49.dto.VacancyDto;
+import com.example.home_work_49.dto.*;
 import com.example.home_work_49.exceptions.SuchEmailAlreadyExistsException;
 import com.example.home_work_49.models.User;
 import com.example.home_work_49.repository.UserImageRepository;
@@ -54,12 +51,12 @@ public class UserController {
     }
 
     @PostMapping("edit")
-    public String updateUser(@Valid UserDto userDto, BindingResult bindingResult, Model model) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
+    public String updateUser(@Valid UserEditDto userEditDto, BindingResult bindingResult, Model model) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
         if(!bindingResult.hasErrors()){
-            userService.updateUserByEmail(userDto.getEmail(), userDto);
+            userService.updateUserByEmail(userEditDto.getEmail(), userEditDto);
             return "redirect:/users/profile";
         }
-        model.addAttribute("userDto", userDto);
+        model.addAttribute("userDto", userEditDto);
         return "auth/edit";
     }
 

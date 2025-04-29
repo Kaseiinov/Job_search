@@ -1,6 +1,7 @@
 package com.example.home_work_49.service.impl;
 
 import com.example.home_work_49.dto.UserDto;
+import com.example.home_work_49.dto.UserEditDto;
 import com.example.home_work_49.dto.UserImageDto;
 import com.example.home_work_49.exceptions.SuchEmailAlreadyExistsException;
 import com.example.home_work_49.exceptions.UserNotFoundException;
@@ -67,13 +68,13 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void updateUserByEmail(String email, UserDto userDto) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
+    public void updateUserByEmail(String email, UserEditDto userEditDto) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
         boolean isExistsUser = userRepository.existsUserByEmail(email);
         if(!isExistsUser){
             throw new UserNotFoundException();
         }
 
-        String filename = fileUtil.saveUploadFile(userDto.getAvatar().getFile(), "images/");
+        String filename = fileUtil.saveUploadFile(userEditDto.getAvatar().getFile(), "images/");
 
         User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
 
@@ -81,12 +82,12 @@ public class UserServiceImpl implements UserService {
         userImage.setUser(user);
         userImage.setFileName(filename);
 
-        user.setName(userDto.getName());
-        user.setSurname(userDto.getSurname());
-        user.setAge(userDto.getAge());
+        user.setName(userEditDto.getName());
+        user.setSurname(userEditDto.getSurname());
+        user.setAge(userEditDto.getAge());
 //        user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
-        user.setPhoneNumber(userDto.getPhoneNumber());
+        user.setPassword(userEditDto.getPassword());
+        user.setPhoneNumber(userEditDto.getPhoneNumber());
         user.setAvatar(userImage);
 
 //        user.setAccountType(userDto.getAccountType().toUpperCase());

@@ -1,6 +1,7 @@
 package com.example.home_work_49.service;
 
 import com.example.home_work_49.dto.UserDto;
+import com.example.home_work_49.dto.UserEditDto;
 import com.example.home_work_49.dto.UserImageDto;
 import com.example.home_work_49.exceptions.SuchEmailAlreadyExistsException;
 import com.example.home_work_49.exceptions.UserNotFoundException;
@@ -22,7 +23,7 @@ public interface UserService {
 
     void updatePassword(User user, String password);
 
-    void updateUserByEmail(String email, UserDto userDto) throws SuchEmailAlreadyExistsException, RoleNotFoundException;
+    void updateUserByEmail(String email, UserEditDto userEditDto) throws SuchEmailAlreadyExistsException, RoleNotFoundException;
 
     UserDto getUserByPhone(String phoneNumber);
 

@@ -17,6 +17,7 @@
                    value="${(_csrf.token)!'csrf-token'}"/>
         </#if>
 
+
         <input type="hidden" name="id" value="${userDto.id}">
         <input type="hidden" name="email" value="${userDto.email}">
         <input type="hidden" name="accountType" value="${userDto.accountType}">
@@ -48,7 +49,7 @@
 
         <div class="mb-3">
             <label for="formFileMultiple" class="form-label">Photo</label>
-            <input type="hidden" name="userId" value="${userDto.id}">
+            <input type="hidden" name="avatar.userId" value="${userDto.id}">
             <input name="avatar.file" class="form-control" type="file" id="formFileMultiple">
             <@spring.showErrors "<br>" "error text-danger" />
 

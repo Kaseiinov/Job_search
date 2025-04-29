@@ -35,17 +35,10 @@
                                 <h2 class="text-uppercase text-center mb-5">Create an account</h2>
 
                                 <form action="/auth/register" method="post">
-                                    <!-- CSRF -->
-                                    <#--                                    <#if _csrf??>-->
-                                    <#--                                        <input type="hidden" name="${(_csrf.parameterName)!'csrf-param-name'}"-->
-                                    <#--                                               value="${(_csrf.token)!'csrf-token'}"/>-->
-                                    <#--                                    </#if>-->
-
-                                    <#--                                    <div data-mdb-input-init class="form-outline mb-4">-->
-                                    <#--                                        <label class="form-label" for="form3Example1cg">Your Name</label>-->
-                                    <#--                                        <input type="text" id="form3Example1cg" class="form-control form-control-lg"-->
-                                    <#--                                               name="username"/>-->
-                                    <#--                                    </div>-->
+                                    <#if _csrf??>
+                                        <input type="hidden" name="${(_csrf.parameterName)!'csrf-param-name'}"
+                                               value="${(_csrf.token)!'csrf-token'}"/>
+                                    </#if>
 
                                     <div data-mdb-input-init class="form-outline mb-4">
                                         <label class="form-label" for="form3Example1cg">Your first name</label>
@@ -56,6 +49,12 @@
                                     <div data-mdb-input-init class="form-outline mb-4">
                                         <label class="form-label" for="form3Example2cg">Your last name</label>
                                         <@spring.formInput "userDto.surname" 'id="form3Example2cg" class="form-control form-control-lg"' />
+                                        <@spring.showErrors "<br>" "error text-danger" />
+                                    </div>
+
+                                    <div data-mdb-input-init class="form-outline mb-4">
+                                        <label class="form-label" for="form3Example0cg">Your phone number</label>
+                                        <@spring.formInput "userDto.phoneNumber" 'id="form3Example0cg" class="form-control form-control-lg"' />
                                         <@spring.showErrors "<br>" "error text-danger" />
                                     </div>
 
@@ -81,8 +80,8 @@
 
                                     <div class="d-flex justify-content-center">
                                         <button type="submit"
-                                                data-mdb-button-init
-                                                data-mdb-ripple-init
+<#--                                                data-mdb-button-init-->
+<#--                                                data-mdb-ripple-init-->
                                                 class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">
                                             Register
                                         </button>

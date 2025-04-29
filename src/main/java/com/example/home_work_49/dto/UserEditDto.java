@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class UserEditDto {
     private Long id;
     @NotBlank
     private String name;
@@ -22,15 +22,12 @@ public class UserDto {
     @Email
     private String email;
     @NotBlank
-    @Size(min = 4, max = 24, message = "Length must be >= 4 and <= 24")
-    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{4,24}$", message = "Should contain at least one uppercase letter and one lowercase letter and at least one number")
     private String password;
     @NotBlank
     private String phoneNumber;
     private UserImageDto avatar;
 
     @NotBlank
-    @Pattern(regexp = "(?i)employer|applicant|admin", message = "Role must be 'Employer', 'Applicant' or 'Admin'")
     private String accountType;
 
     private Boolean enabled;
