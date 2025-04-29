@@ -80,7 +80,7 @@ public class AuthController {
     }
 
     @PostMapping("/reset_password")
-    public String processResetPassword(@Valid ResetPasswordFormDto form, BindingResult bindingResult, Model model) {
+    public String processResetPassword(@Valid @ModelAttribute("form") ResetPasswordFormDto form, BindingResult bindingResult, Model model) {
         if(!bindingResult.hasErrors()){
             String token = form.getToken();
             String password = form.getPassword();
