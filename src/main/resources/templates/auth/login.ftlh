@@ -45,12 +45,10 @@
                                 <label class="form-label" for="form2Example2">Password</label>
                             </div>
                             <!-- Submit button -->
-                            <button type="submit" data-mdb-button-init data-mdb-ripple-init
-                                    class="btn btn-primary btn-block mb-4">Sign in
-                            </button>
-
-                            <a href="/auth/forgot_password">Forgot password?</a>
-
+                            <div class="d-flex align-items-center mb-4">
+                                <button type="submit" class="btn btn-primary me-3">Sign in</button>
+                                <a href="/auth/forgot_password" class="text-decoration-none text-primary small">Forgot password?</a>
+                            </div>
                         </form>
 
                     </div>
