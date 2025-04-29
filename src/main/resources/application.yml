@@ -5,6 +5,8 @@ spring:
     static-path-pattern: /static/**
   freemarker:
     expose-session-attributes: true
+    expose-request-attributes: true
+    expose-spring-macro-helpers: true
   datasource:
     url: jdbc:h2:./db/JobSearchDB;AUTO_SERVER=TRUE
     username: root

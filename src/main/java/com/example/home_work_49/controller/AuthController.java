@@ -1,5 +1,6 @@
 package com.example.home_work_49.controller;
 
+import com.example.home_work_49.dto.ResetPasswordFormDto;
 import com.example.home_work_49.dto.UserDto;
 import com.example.home_work_49.exceptions.SuchEmailAlreadyExistsException;
 import com.example.home_work_49.models.User;
@@ -68,6 +69,7 @@ public class AuthController {
             Model model
 
     ) {
+        model.addAttribute("form", new ResetPasswordFormDto());
         try {
             userService.getUserByResetPasswordToken(token);
             model.addAttribute("token", token);
@@ -78,17 +80,23 @@ public class AuthController {
     }
 
     @PostMapping("/reset_password")
-    public String processResetPassword(HttpServletRequest request, Model model) {
-        String token = request.getParameter("token");
-        String password = request.getParameter("password");
-        try {
-            User user = userService.getUserByResetPasswordToken(token);
-            userService.updatePassword(user, password);
-            model.addAttribute("message", "You have successfully changed your password.");
-        } catch (UsernameNotFoundException ex) {
-            model.addAttribute("message", "Invalid Token");
+    public String processResetPassword(@Valid ResetPasswordFormDto form, BindingResult bindingResult, Model model) {
+        if(!bindingResult.hasErrors()){
+            String token = form.getToken();
+            String password = form.getPassword();
+            try {
+                User user = userService.getUserByResetPasswordToken(token);
+                userService.updatePassword(user, password);
+                model.addAttribute("message", "You have successfully changed your password.");
+            } catch (UsernameNotFoundException ex) {
+                model.addAttribute("message", "Invalid Token");
+            }
+            return "auth/message";
         }
-        return "auth/message";
+        model.addAttribute("token", form.getToken());
+        model.addAttribute("form", form);
+        return "auth/reset_password_form";
+
     }
 
 }

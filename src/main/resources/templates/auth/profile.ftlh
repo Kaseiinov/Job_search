@@ -16,10 +16,11 @@
 
         <div class="d-flex align-items-center justify-content-between mb-4">
             <div class="d-flex align-items-center">
+
                 <#if user.avatar??>
                     <img src="/images/byName/${user.avatar.fileName!}" width="80" height="80" alt="avatar" class="me-3">
                 <#else>
-                    <img src="/images/byName/default.png" width="80" height="80" alt="avatar" class="me-3">
+                    <i class="fas fa-user-circle me-3 rounded" style="font-size: 80px; color: #6c757d;"></i>
                 </#if>
 
                 <div>
