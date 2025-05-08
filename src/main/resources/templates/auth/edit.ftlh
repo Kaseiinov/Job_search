@@ -9,7 +9,7 @@
         }
     </style>
 
-    <h2>Иземенение пользователя</h2>
+    <h2><@spring.message "auth.form.editUser" /></h2>
 
     <form action="/users/edit" method="post" enctype="multipart/form-data">
         <#if _csrf??>
@@ -24,36 +24,36 @@
         <input type="hidden" name="password" value="${userEditDto.password}">
 
         <div class="mb-3">
-            <label class="form-label">Name:</label>
+            <label class="form-label"><@spring.message "auth.form.name" /></label>
             <@spring.formInput "userEditDto.name" 'class="form-control form-control-lg"' />
             <@spring.showErrors "<br>" "error text-danger" />
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Surname:</label>
+            <label class="form-label"><@spring.message "auth.form.lastName" /></label>
             <@spring.formInput "userEditDto.surname" 'class="form-control form-control-lg"' />
             <@spring.showErrors "<br>" "error text-danger" />
         </div>
 
         <div class="mb-3">
-            <label class="form-label">age:</label>
+            <label class="form-label"><@spring.message "auth.form.age" /></label>
             <@spring.formInput "userEditDto.age" 'class="form-control form-control-lg"' />
             <@spring.showErrors "<br>" "error text-danger" />
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Phone number:</label>
+            <label class="form-label"><@spring.message "auth.form.phoneNumber" /></label>
             <@spring.formInput "userEditDto.phoneNumber" 'class="form-control form-control-lg"' />
             <@spring.showErrors "<br>" "error text-danger" />
         </div>
 
         <div class="mb-3">
-            <label for="formFileMultiple" class="form-label">Photo</label>
+            <label for="formFileMultiple" class="form-label"><@spring.message "auth.form.avatar" /></label>
             <input type="hidden" name="avatar.userId" value="${userEditDto.id}">
             <input name="avatar.file" class="form-control" type="file" id="formFileMultiple">
 
         </div>
 
-        <button type="submit" class="btn btn-success w-100 mb-3">Сохранить</button>
+        <button type="submit" class="btn btn-success w-100 mb-3"><@spring.message "auth.form.save" /></button>
     </form>
 </@main.layout>

@@ -1,15 +1,15 @@
 <#import "../layout.ftlh" as main>
-<@main.layout>
+<@main.layout ; spring>
 
     <body class="bg-light">
 
         <div class="text-center mb-4">
             <h2 style="color: red;">
-                Личный кабинет
+                <@spring.message "auth.profile.personalAcc" />
                 <#if user.accountType == "EMPLOYER">
-                    Работодателя
+                    <@spring.message "auth.profile.employer" />
                 <#elseif user.accountType == "APPLICANT">
-                    Соискателя
+                    <@spring.message "auth.profile.applicant" />
                 </#if>
             </h2>
         </div>
@@ -30,19 +30,19 @@
                         <h5>${user.name!}</h5>
                         <p>Возраст: ${user.age!}</p>
                     </#if>
-                    <a href="/users/edit/${user.email}" class="btn btn-outline-success btn-sm mt-2">Редактировать</a>
+                    <a href="/users/edit/${user.email}" class="btn btn-outline-success btn-sm mt-2"><@spring.message "auth.profile.edit" /></a>
                 </div>
             </div>
 
             <div>
                 <#if user.accountType == "APPLICANT">
-                    <a href="/resumes/create" class="btn btn-outline-danger">+ Создать резюме</a>
+                    <a href="/resumes/create" class="btn btn-outline-danger">+ <@spring.message "auth.profile.createResume" /></a>
                 <#elseif user.accountType == "EMPLOYER">
-                    <a href="/vacancies/create" class="btn btn-outline-danger">+ Создать вакансию</a>
+                    <a href="/vacancies/create" class="btn btn-outline-danger">+ <@spring.message "auth.profile.createVacancy" /></a>
                 </#if>
                 <#if user.accountType == "APPLICANT">
                     <a href="#" class="btn btn-outline-secondary position-relative ms-3">
-                        Отклики
+                        <@spring.message "auth.profile.responses" />
 <#--                        <#if responsesCount?? && responsesCount > 0>-->
 <#--                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-->
 <#--                            ${responsesCount}-->
@@ -55,7 +55,7 @@
 
         <div>
             <h5>
-                <#if user.accountType == "EMPLOYER">Созданные вакансии:<#else>Резюме:</#if>
+                <#if user.accountType == "EMPLOYER"><@spring.message "auth.profile.createdVacancy" /><#else><@spring.message "auth.profile.resume" /></#if>
             </h5>
 
             <div class="row">
@@ -65,17 +65,17 @@
                             <div class="card-body">
                                 <h6 class="card-title">${item.name}</h6>
                                 <p class="card-text text-muted">
-                                    Дата обновления: ${item.updateTimeFormatted!""}
+                                    <@spring.message "auth.profile.dateUpdate" /> ${item.updateTimeFormatted!""}
                                 </p>
                                 <#if user.accountType == "APPLICANT">
                                     <div class="d-flex justify-content-between">
-                                        <a href="/resumes/update/${item.id}" class="btn btn-outline-primary btn-sm">Обновить</a>
-                                        <a href="/resumes/edit/${item.id}" class="btn btn-outline-success btn-sm">Ред.</a>
+                                        <a href="/resumes/update/${item.id}" class="btn btn-outline-primary btn-sm"><@spring.message "auth.profile.update" /></a>
+                                        <a href="/resumes/edit/${item.id}" class="btn btn-outline-success btn-sm"><@spring.message "auth.profile.edit" /></a>
                                     </div>
                                 <#elseif user.accountType == "EMPLOYER">
                                     <div class="d-flex justify-content-between">
-                                        <a href="/vacancies/update/${item.id}" class="btn btn-outline-primary btn-sm">Обновить</a>
-                                        <a href="/vacancies/edit/${item.id}" class="btn btn-outline-success btn-sm">Ред.</a>
+                                        <a href="/vacancies/update/${item.id}" class="btn btn-outline-primary btn-sm"><@spring.message "auth.profile.update" /></a>
+                                        <a href="/vacancies/edit/${item.id}" class="btn btn-outline-success btn-sm"><@spring.message "auth.profile.edit" /></a>
                                     </div>
                                 </#if>
 

@@ -2,7 +2,7 @@
 <#import "../layout.ftlh" as main>
 <@main.layout ; spring>
     <div class="text-center">
-        <h2>Reset Your Password</h2>
+        <h2><@spring.message "auth.resetPassword.header" /></h2>
         <#if error??>
             <b class="text-danger">${error}</b>
         </#if>
@@ -25,7 +25,7 @@
 <#--                    <input type="password" name="password" class="form-control"-->
 <#--                           placeholder="Enter your new password" required autofocus/>-->
                     <p class="text-center">
-                        <button type="submit" class="btn btn-primary mt-3">Change Password</button>
+                        <button type="submit" class="btn btn-primary mt-3"><@spring.message "auth.resetPassword.changePassword" /></button>
                     </p>
                 </form>
             </div>

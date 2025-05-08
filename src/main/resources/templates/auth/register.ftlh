@@ -32,7 +32,7 @@
                     <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                         <div class="card" style="border-radius: 15px;">
                             <div class="card-body p-5">
-                                <h2 class="text-uppercase text-center mb-5">Create an account</h2>
+                                <h2 class="text-uppercase text-center mb-5"><@spring.message "auth.register.createAcc" /></h2>
 
                                 <form action="/auth/register" method="post">
                                     <#if _csrf??>
@@ -41,31 +41,31 @@
                                     </#if>
 
                                     <div data-mdb-input-init class="form-outline mb-4">
-                                        <label class="form-label" for="form3Example1cg">Your first name</label>
+                                        <label class="form-label" for="form3Example1cg"><@spring.message "auth.register.name" /></label>
                                         <@spring.formInput "userDto.name" 'id="form3Example1cg" class="form-control form-control-lg"' />
                                         <@spring.showErrors "<br>" "error text-danger" />
                                     </div>
 
                                     <div data-mdb-input-init class="form-outline mb-4">
-                                        <label class="form-label" for="form3Example2cg">Your last name</label>
+                                        <label class="form-label" for="form3Example2cg"><@spring.message "auth.register.lastName" /></label>
                                         <@spring.formInput "userDto.surname" 'id="form3Example2cg" class="form-control form-control-lg"' />
                                         <@spring.showErrors "<br>" "error text-danger" />
                                     </div>
 
                                     <div data-mdb-input-init class="form-outline mb-4">
-                                        <label class="form-label" for="form3Example0cg">Your phone number</label>
+                                        <label class="form-label" for="form3Example0cg"><@spring.message "auth.register.phoneNumber" /></label>
                                         <@spring.formInput "userDto.phoneNumber" 'id="form3Example0cg" class="form-control form-control-lg"' />
                                         <@spring.showErrors "<br>" "error text-danger" />
                                     </div>
 
                                     <div data-mdb-input-init class="form-outline mb-4">
-                                        <label class="form-label" for="form3Example3cg">Your Email</label>
+                                        <label class="form-label" for="form3Example3cg"><@spring.message "auth.register.email" /></label>
                                         <@spring.formInput "userDto.email" 'id="form3Example3cg" class="form-control form-control-lg"' />
                                         <@spring.showErrors "<br>" "error text-danger" />
                                     </div>
 
                                     <div data-mdb-input-init class="form-outline mb-4">
-                                        <label class="form-label" for="form3Example4cg">Password</label>
+                                        <label class="form-label" for="form3Example4cg"><@spring.message "auth.register.password" /></label>
                                         <@spring.formInput "userDto.password" 'id="form3Example4cg" class="form-control form-control-lg"' />
                                         <@spring.showErrors "<br>" "error text-danger" />
                                     </div>
@@ -83,7 +83,7 @@
 <#--                                                data-mdb-button-init-->
 <#--                                                data-mdb-ripple-init-->
                                                 class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">
-                                            Register
+                                            <@spring.message "auth.register.register" />
                                         </button>
                                     </div>
                                 </form>

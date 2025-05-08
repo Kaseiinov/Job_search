@@ -1,5 +1,5 @@
 <#import "../layout.ftlh" as main>
-<@main.layout>
+<@main.layout ; spring>
     <section class=" text-center text-lg-start">
         <style>
             .rounded-t-5 {
@@ -36,18 +36,18 @@
                             <!-- Email input -->
                             <div data-mdb-input-init class="form-outline mb-4">
                                 <input type="email" id="form2Example1" class="form-control" name="username"/>
-                                <label class="form-label" for="form2Example1">Email address</label>
+                                <label class="form-label" for="form2Example1"><@spring.message "auth.form.email" /></label>
                             </div>
 
                             <!-- Password input -->
                             <div data-mdb-input-init class="form-outline mb-4">
                                 <input type="password" id="form2Example2" class="form-control" name="password"/>
-                                <label class="form-label" for="form2Example2">Password</label>
+                                <label class="form-label" for="form2Example2"><@spring.message "auth.form.password" /></label>
                             </div>
                             <!-- Submit button -->
                             <div class="d-flex align-items-center mb-4">
-                                <button type="submit" class="btn btn-primary me-3">Sign in</button>
-                                <a href="/auth/forgot_password" class="text-decoration-none text-primary small">Forgot password?</a>
+                                <button type="submit" class="btn btn-primary me-3"><@spring.message "auth.form.signIn" /></button>
+                                <a href="/auth/forgot_password" class="text-decoration-none text-primary small"><@spring.message "auth.form.forgotPassword" /></a>
                             </div>
                         </form>
 
