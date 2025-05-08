@@ -7,7 +7,7 @@
         }
     </style>
 
-    <h2 class="mb-4 text-center">Список вакансий</h2>
+    <h2 class="mb-4 text-center"><@spring.message "vacancy.list.listOfVacancy" /></h2>
 
     <form method="get" action="/" class="d-flex justify-content-end mb-3">
         <select name="sortBy" class="form-select w-auto" onchange="this.form.submit()">

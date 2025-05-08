@@ -1,13 +1,13 @@
 <#import "../layout.ftlh" as main>
-<@main.layout>
+<@main.layout ; spring>
 
-    <h2 class="mb-4 text-center">Список вакансий</h2>
+    <h2 class="mb-4 text-center"><@spring.message "vacancy.list.listOfVacancy" /></h2>
 
     <form method="get" action="/vacancies" class="d-flex justify-content-end mb-3">
         <select name="sortBy" class="form-select w-auto" onchange="this.form.submit()">
-            <option value="">Сортировать по</option>
-            <option value="dateDesc" <#if sortBy == "dateDesc">selected</#if>>Сначала новые</option>
-            <option value="dateAsc" <#if sortBy == "dateAsc">selected</#if>>Сначала старые</option>
+            <option value=""><@spring.message "index.form.sortBy" /></option>
+            <option value="dateDesc" <#if sortBy == "dateDesc">selected</#if>><@spring.message "index.form.newestFirst" /></option>
+            <option value="dateAsc" <#if sortBy == "dateAsc">selected</#if>><@spring.message "index.form.oldestFirst" /></option>
         </select>
     </form>
 
@@ -26,12 +26,12 @@
                     <#if vacancy.expFrom?? || vacancy.expTo??>
                         ${vacancy.expFrom!0} - ${vacancy.expTo!0}
                     <#else>
-                        Без опыта
+                        <@spring.message "index.list.noExperience" />
                     </#if>
                 </h6>
                 <p class="card-text">${vacancy.description!}</p>
-                <a href="/vacancies" class="btn btn-outline-info">Card link</a>
-                <a href="/vacancies" class="btn btn-outline-info">Another link</a>
+<#--                <a href="/vacancies" class="btn btn-outline-info">Card link</a>-->
+<#--                <a href="/vacancies" class="btn btn-outline-info">Another link</a>-->
             </div>
         </div>
 
@@ -44,11 +44,11 @@
             <ul class="pagination">
                 <#if hasPrevious>
                     <li class="page-item ">
-                        <a class="page-link" href="/vacancies?page=${currentPage - 1}" >Previous</a>
+                        <a class="page-link" href="/vacancies?page=${currentPage - 1}" ><@spring.message "index.nav.previous" /></a>
                     </li>
                 <#else>
                     <li class="page-item disabled">
-                        <a class="page-link" href="/vacancies?page=${currentPage - 1}" >Previous</a>
+                        <a class="page-link" href="/vacancies?page=${currentPage - 1}" ><@spring.message "index.nav.previous" /></a>
                     </li>
                 </#if>
                 <#list 0..(totalPages - 1) as page>
@@ -58,11 +58,11 @@
                 </#list>
                 <#if hasNext>
                     <li class="page-item">
-                        <a class="page-link" href="/vacancies?page=${currentPage + 1}">Next</a>
+                        <a class="page-link" href="/vacancies?page=${currentPage + 1}"><@spring.message "index.nav.next" /></a>
                     </li>
                 <#else>
                     <li class="page-item disabled">
-                        <a class="page-link" href="/vacancies?page=${currentPage + 1}">Next</a>
+                        <a class="page-link" href="/vacancies?page=${currentPage + 1}"><@spring.message "index.nav.next" /></a>
                     </li>
                 </#if>
 
