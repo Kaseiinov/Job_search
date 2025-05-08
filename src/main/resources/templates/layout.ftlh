@@ -22,33 +22,37 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">Navbar</a>
+        <a class="navbar-brand" href="/">JobSearch</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    <a class="nav-link active" aria-current="page" href="/"><@spring.message "layout.nave.home" /></a>
                 </li>
 <#--                <li class="nav-item">-->
 <#--                    <a class="nav-link" href="/users/profile">Profile</a>-->
 <#--                </li>-->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Vacancies
-                    </a>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><@spring.message "layout.nave.vacancies" /></a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/vacancies">Vacancies</a></li>
+                        <li><a class="dropdown-item" href="/vacancies"><@spring.message "layout.nave.vacancies" /></a></li>
                     </ul>
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Resumes
-                    </a>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><@spring.message "layout.nave.resumes" /></a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/resumes">Resumes</a></li>
+                        <li><a class="dropdown-item" href="/resumes"><@spring.message "layout.nave.resumes" /></a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><@spring.message "layout.nav.lang.exchange" /></a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="?lang=en"><@spring.message "layout.nav.lang_en" /></a></li>
+                        <li><a class="dropdown-item" href="?lang=ru"><@spring.message "layout.nav.lang_ru" /></a></li>
                     </ul>
                 </li>
 
@@ -57,7 +61,7 @@
 <#--            <a href="/auth/register" class="btn btn-outline-success ms-4">Register</a>-->
             <#if user??>
                 <a href="/users/profile" class="nav-link mr4-l">
-                    Profile
+                    <@spring.message "layout.nave.profile" />
                     <#--                <#list user.authorities as auth>-->
                     <#--                    <span class="text-danger">${auth}</span>-->
                     <#--                    <#if auth?has_next>-->
@@ -70,18 +74,18 @@
                         <input type="hidden" name="${(_csrf.parameterName)!'csrf'}"
                                value="${(_csrf.token)!'--no-token--'}"/>
                         <button type="submit" class="btn btn-outline-info m-2"
-                                id="logout">Logout
+                                id="logout"><@spring.message "layout.nave.logout" />
                         </button>
                     </form>
                 <#else>
                     <a href="/logout" class="btn btn-outline-info m-2"
-                       id="logout">Logout</a>
+                       id="logout"><@spring.message "layout.nave.logout" /></a>
                 </#if>
             <#else>
                 <a href="/auth/login"
-                   class="btn btn-outline-info m-2">Login</a>
+                   class="btn btn-outline-info m-2"><@spring.message "layout.nave.login" /></a>
                 <a href="/auth/register"
-                   class="btn btn-outline-info m-2">Register</a>
+                   class="btn btn-outline-info m-2"><@spring.message "layout.nave.register" /></a>
             </#if>
         </div>
     </div>
