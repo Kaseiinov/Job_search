@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import javax.management.relation.RoleNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
@@ -29,9 +30,11 @@ public interface UserService {
 
     UserDto getUserByEmail(String userEmail);
 
+    Optional<User> getUserByEmailModel(String userEmail);
+
     UserEditDto getUserByEmailByEditType(String userEmail);
 
-    UserDto getUserById(Long id);
+    Optional<User> getUserById(Long id);
 
     List<UserDto> getApplicantsByVacancy(String vacancyName);
 

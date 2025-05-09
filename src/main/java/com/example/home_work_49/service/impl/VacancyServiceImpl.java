@@ -7,6 +7,8 @@ import com.example.home_work_49.models.Vacancy;
 import com.example.home_work_49.repository.CategoryRepository;
 import com.example.home_work_49.repository.UserRepository;
 import com.example.home_work_49.repository.VacancyRepository;
+import com.example.home_work_49.service.CategoryService;
+import com.example.home_work_49.service.UserService;
 import com.example.home_work_49.service.VacancyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
@@ -22,8 +24,8 @@ import java.util.List;
 public class VacancyServiceImpl implements VacancyService {
 
     private final VacancyRepository vacancyRepository;
-    private final CategoryRepository categoryRepository;
-    private final UserRepository userRepository;
+    private final CategoryService categoryService;
+    private final UserService userService;
 
     @Override
     public void deleteVacancyById(Long id) {
@@ -41,7 +43,7 @@ public class VacancyServiceImpl implements VacancyService {
         Vacancy vacancy = vacancyRepository.findById(id).orElseThrow(VacancyNotFoundException::new);
         vacancy.setName(vacancyDto.getName());
         vacancy.setDescription(vacancyDto.getDescription());
-        vacancy.setCategory(categoryRepository.findById(vacancyDto.getCategoryId()).orElseThrow(CategoryNotFountException::new));
+        vacancy.setCategory(categoryService.findByIdModel(vacancyDto.getCategoryId()).orElseThrow(CategoryNotFountException::new));
         vacancy.setSalary(vacancyDto.getSalary());
         vacancy.setExpFrom(vacancyDto.getExpFrom());
         vacancy.setExpTo(vacancyDto.getExpTo());
@@ -107,11 +109,11 @@ public class VacancyServiceImpl implements VacancyService {
 
     @Override
     public void addVacancy(VacancyDto vacancyDto, Authentication auth) {
-        User user = userRepository.findByEmail(auth.getName()).orElseThrow(UserNotFoundException::new);
+        User user = userService.getUserByEmailModel(auth.getName()).orElseThrow(UserNotFoundException::new);
         Vacancy vacancy = new Vacancy();
         vacancy.setName(vacancyDto.getName());
         vacancy.setDescription(vacancyDto.getDescription());
-        vacancy.setCategory(categoryRepository.findById(vacancyDto.getCategoryId()).orElseThrow(CategoryNotFountException::new));
+        vacancy.setCategory(categoryService.findByIdModel(vacancyDto.getCategoryId()).orElseThrow(CategoryNotFountException::new));
         vacancy.setSalary(vacancyDto.getSalary());
         vacancy.setExpFrom(vacancyDto.getExpFrom());
         vacancy.setExpTo(vacancyDto.getExpTo());

@@ -11,6 +11,7 @@ import com.example.home_work_49.models.UserImage;
 import com.example.home_work_49.repository.RoleRepository;
 import com.example.home_work_49.repository.UserImageRepository;
 import com.example.home_work_49.repository.UserRepository;
+import com.example.home_work_49.service.RoleService;
 import com.example.home_work_49.service.UserService;
 import com.example.home_work_49.util.CommonUtilities;
 import com.example.home_work_49.util.FileUtil;
@@ -29,8 +30,7 @@ import java.util.*;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final RoleRepository roleRepository;
-    private final UserImageRepository userImageRepository;
+    private final RoleService roleService;
     private final FileUtil fileUtil;
     private final PasswordEncoder encoder;
     private final EmailService emailService;
@@ -110,15 +110,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> getUserByEmailModel(String userEmail) {
+        User user = userRepository.findByEmail(userEmail).orElseThrow(UserNotFoundException::new);
+        return Optional.of(user);
+    }
+
+    @Override
     public UserEditDto getUserByEmailByEditType(String userEmail) {
         User user = userRepository.findByEmail(userEmail).orElseThrow(UserNotFoundException::new);
         return builderEditType(user);
     }
 
     @Override
-    public UserDto getUserById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
-        return builder(user);
+    public Optional<User> getUserById(Long id) {
+        return Optional.of(userRepository.findById(id).orElseThrow(UserNotFoundException::new));
     }
 
     @Override
@@ -168,7 +173,7 @@ public class UserServiceImpl implements UserService {
         user.setAccountType(userDto.getAccountType().toUpperCase());
         user.setEnabled(true);
 
-        Role role = roleRepository.findRoleByRole(userDto.getAccountType().toUpperCase());
+        Role role = roleService.findRoleByRole(userDto.getAccountType().toUpperCase());
 
         user.setRoles(Arrays.asList(role));
         role.setUsers(Arrays.asList(user));

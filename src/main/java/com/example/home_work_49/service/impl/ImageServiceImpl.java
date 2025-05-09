@@ -10,6 +10,7 @@ import com.example.home_work_49.models.UserImage;
 import com.example.home_work_49.repository.UserImageRepository;
 import com.example.home_work_49.repository.UserRepository;
 import com.example.home_work_49.service.ImageService;
+import com.example.home_work_49.service.UserService;
 import com.example.home_work_49.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,14 +25,14 @@ public class ImageServiceImpl implements ImageService {
 
     private final UserImageRepository userImageRepository;
     private final FileUtil fileUtil;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Override
     public String saveImage(UserImageDto userImageDto) {
 
         String filename = fileUtil.saveUploadFile(userImageDto.getFile(), "images/");
 
-        User user = userRepository.findById(userImageDto.getUserId()).orElseThrow(UserNotFoundException::new);
+        User user = userService.getUserById(userImageDto.getUserId()).orElseThrow(UserNotFoundException::new);
 
         UserImage userImage = new UserImage();
         userImage.setUser(user);

@@ -7,7 +7,7 @@ import com.example.home_work_49.exceptions.ResumeNotFoundException;
 import com.example.home_work_49.exceptions.UserNotFoundException;
 import com.example.home_work_49.models.*;
 import com.example.home_work_49.repository.*;
-import com.example.home_work_49.service.ResumeService;
+import com.example.home_work_49.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -24,13 +24,13 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ResumeServiceImpl implements ResumeService {
-    private final UserRepository userRepository;
-    private final CategoryRepository categoryRepository;
+    private final UserService userService;
+    private final CategoryService categoryService;
     private final ResumeRepository resumeRepository;
-    private final ContactTypeRepository contactTypeRepository;
-    private final WorkExperienceRepository workExperienceRepository;
-    private final EducationRepository educationRepository;
-    private final ContactInfoRepository contactInfoRepository;
+    private final ContactTypeService contactTypeService;
+    private final WorkExperienceService workExperienceService;
+    private final EducationInfoService educationInfoService;
+    private final ContactInfoService contactInfoService;
 
     @Override
     public Page<ResumeDto> getAllActiveResumes(int page, int pageSize){
@@ -60,7 +60,7 @@ public class ResumeServiceImpl implements ResumeService {
 
         Resume resume = resumeRepository.findById(id).orElseThrow(ResumeNotFoundException::new);
         resume.setName(resumeDto.getName());
-        resume.setCategory(categoryRepository.findById(resumeDto.getCategoryId()).orElseThrow(CategoryNotFountException::new));
+        resume.setCategory(categoryService.findByIdModel(resumeDto.getCategoryId()).orElseThrow(CategoryNotFountException::new));
         resume.setSalary(resumeDto.getSalary());
         resume.setIsActive(resumeDto.getIsActive());
         resume.setUpdateTime(LocalDateTime.now());
@@ -117,7 +117,7 @@ public class ResumeServiceImpl implements ResumeService {
         workExp.setPosition(workExpDto.getPosition());
         workExp.setResponsibilities(workExpDto.getResponsibilities());
 
-        workExperienceRepository.save(workExp);
+        workExperienceService.save(workExp);
     }
 
     @Override
@@ -130,27 +130,27 @@ public class ResumeServiceImpl implements ResumeService {
         education.setEndDate(educationDto.getEndDate());
         education.setDegree(educationDto.getDegree());
 
-        educationRepository.save(education);
+        educationInfoService.save(education);
     }
 
     @Override
     public void addContactInfo(ContactsInfoDto contactDto) {
         ContactInfo contact = new ContactInfo();
         contact.setResume(resumeRepository.findById(contactDto.getResumeId()).orElseThrow(ResumeNotFoundException::new));
-        contact.setType(contactTypeRepository.findById(contactDto.getTypeId()).orElseThrow(ContactNotFoundException::new));
+        contact.setType(contactTypeService.findById(contactDto.getTypeId()).orElseThrow(ContactNotFoundException::new));
         contact.setValue(contactDto.getValue());
 
-        contactInfoRepository.save(contact);
+        contactInfoService.save(contact);
     }
 
     @Override
     public void addResume(ResumeDto resumeDto, Authentication auth){
-        User user = userRepository.findByEmail(auth.getName()).orElseThrow(UserNotFoundException::new);
+        User user = userService.getUserByEmailModel(auth.getName()).orElseThrow(UserNotFoundException::new);
 
         Resume resume = new Resume();
         resume.setApplicant(user);
         resume.setName(resumeDto.getName());
-        resume.setCategory(categoryRepository.findById(resumeDto.getCategoryId()).orElseThrow(CategoryNotFountException::new));
+        resume.setCategory(categoryService.findByIdModel(resumeDto.getCategoryId()).orElseThrow(CategoryNotFountException::new));
         resume.setSalary(resumeDto.getSalary());
         resume.setIsActive(resumeDto.getIsActive());
         resume.setCreatedDate(LocalDateTime.now());
