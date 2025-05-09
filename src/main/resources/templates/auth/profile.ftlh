@@ -69,12 +69,12 @@
                                 </p>
                                 <#if user.accountType == "APPLICANT">
                                     <div class="d-flex justify-content-between">
-                                        <a href="/resumes/update/${item.id}" class="btn btn-outline-primary btn-sm"><@spring.message "auth.profile.update" /></a>
+                                        <a href="#" class="btn btn-outline-primary btn-sm"><@spring.message "auth.profile.update" /></a>
                                         <a href="/resumes/edit/${item.id}" class="btn btn-outline-success btn-sm"><@spring.message "auth.profile.edit" /></a>
                                     </div>
                                 <#elseif user.accountType == "EMPLOYER">
                                     <div class="d-flex justify-content-between">
-                                        <a href="/vacancies/update/${item.id}" class="btn btn-outline-primary btn-sm"><@spring.message "auth.profile.update" /></a>
+                                        <a href="#" class="btn btn-outline-primary btn-sm"><@spring.message "auth.profile.update" /></a>
                                         <a href="/vacancies/edit/${item.id}" class="btn btn-outline-success btn-sm"><@spring.message "auth.profile.edit" /></a>
                                     </div>
                                 </#if>

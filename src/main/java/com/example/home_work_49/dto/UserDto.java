@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.UniqueElements;
 
 @Data
 @Builder
@@ -16,7 +17,7 @@ public class UserDto {
     private String name;
     @NotBlank
     private String surname;
-    @PositiveOrZero
+    @Min(18)
     private Integer age;
     @NotBlank
     @Email

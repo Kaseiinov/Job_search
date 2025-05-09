@@ -30,8 +30,8 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler(SuchEmailAlreadyExistsException.class)
     public String handleSuchEmailAlreadyExists(Model model, HttpServletRequest request) {
-        model.addAttribute("status", HttpStatus.FOUND.value());
-        model.addAttribute("reason", HttpStatus.FOUND.getReasonPhrase());
+        model.addAttribute("status", HttpStatus.CONFLICT.value());
+        model.addAttribute("reason", HttpStatus.CONFLICT.getReasonPhrase());
         model.addAttribute("details", request);
         return "errors/error";
     }

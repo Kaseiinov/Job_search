@@ -16,7 +16,7 @@ public class UserEditDto {
     private String name;
     @NotBlank
     private String surname;
-    @PositiveOrZero
+    @Min(18)
     private Integer age;
     @NotBlank
     @Email

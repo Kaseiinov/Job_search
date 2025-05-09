@@ -45,8 +45,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="vacancySalary" class="form-label">${vacancyDto.salary?string["#,##0.00"]}</label>
-            <label for="vacancySalary" class="form-label"><@spring.message code="vacancy.form.salary" arguments=["KGS"] /></label>
+            <label for="vacancySalary" class="form-label"><@spring.message "vacancy.form.salary" /></label>
             <@spring.formInput "vacancyDto.salary" 'id="vacancySalary" class="form-control"' />
             <@spring.showErrors "vacancyDto.salary" "error text-danger" />
         </div>
