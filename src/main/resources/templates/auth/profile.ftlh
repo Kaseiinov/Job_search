@@ -18,7 +18,7 @@
             <div class="d-flex align-items-center">
 
                 <#if user.avatar??>
-                    <img src="/images/byName/${user.avatar.fileName!}" width="80" height="80" alt="avatar" class="me-3">
+                    <img src="/images/byName/${user.avatar.fileName!}" width="80" height="80" alt="<@spring.message "auth.form.avatar" />" class="me-3">
                 <#else>
                     <i class="fas fa-user-circle me-3 rounded" style="font-size: 80px; color: #6c757d;"></i>
                 </#if>

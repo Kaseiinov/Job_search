@@ -26,7 +26,7 @@
                         <img src="/images/byName/${resume.user.avatar.fileName}"
                              width="80"
                              height="80"
-                             alt="avatar"
+                             alt="<@spring.message "auth.form.avatar" />"
                              class="me-3 rounded">
                     <#else>
                         <i class="fas fa-user-circle me-3 rounded" style="font-size: 80px; color: #6c757d;"></i>
