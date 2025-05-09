@@ -1,5 +1,5 @@
 <#import "../layout.ftlh" as main>
-<@main.layout>
+<@main.layout ; spring>
 
     <style>
         .card {
@@ -8,13 +8,13 @@
 
     </style>
 
-        <h2 class="mb-4 text-center">Список резюме</h2>
+        <h2 class="mb-4 text-center"><@spring.message "resume.createResume.listOfResume" /></h2>
 
     <form method="get" action="/resumes" class="d-flex justify-content-end mb-3">
         <select name="sortBy" class="form-select w-auto" onchange="this.form.submit()">
-            <option value="">Сортировать по</option>
-            <option value="dateDesc" <#if sortBy == "dateDesc">selected</#if>>Сначала новые</option>
-            <option value="dateAsc" <#if sortBy == "dateAsc">selected</#if>>Сначала старые</option>
+            <option value=""><@spring.message "index.form.sortBy" /></option>
+            <option value="dateDesc" <#if sortBy == "dateDesc">selected</#if>><@spring.message "index.form.newestFirst" /></option>
+            <option value="dateAsc" <#if sortBy == "dateAsc">selected</#if>><@spring.message "index.form.oldestFirst" /></option>
         </select>
     </form>
 
@@ -35,11 +35,11 @@
                         <h5 class="mb-1">${resume.name}</h5>
                         <#if resume.user.age??>
                             <div class="text-muted small">
-                                ${resume.user.age} года • <span class="text-success">Обновлено ${resume.updateTime!}</span>
+                                ${resume.user.age} года • <span class="text-success"><@spring.message "resume.createResume.updated" /> ${resume.updateTime!}</span>
                             </div>
                         <#else>
                             <div class="text-muted small">
-                                <span class="text-success">Обновлено ${resume.updateTime!}</span>
+                                <span class="text-success"><@spring.message "resume.createResume.updated" /> ${resume.updateTime!}</span>
                             </div>
                         </#if>
 
@@ -53,15 +53,15 @@
                     <#if resume.workExperience?? && resume.workExperience.years??>
                         ${resume.workExperience.years}
                     <#else>
-                        нет
+                        <@spring.message "index.list.noExperience" />
                     </#if>
                 </div>
 
                 <#if resume.workExperience?? && resume.workExperience.companyName??>
                     <div class="small mb-2">
-                        <strong>Последнее место работы</strong><br>
+                        <strong><@spring.message "resume.createResume.lastPlaceOfWork" /></strong><br>
                         <span class="fw-bold">${resume.workExperience.companyName}</span><br>
-                        <a href="#" class="text-primary small">Подробнее о последнем месте</a>
+                        <a href="#" class="text-primary small"><@spring.message "resume.createResume.moreAboutLastPlaceOfWork" /></a>
                     </div>
                 </#if>
 
@@ -76,11 +76,11 @@
             <ul class="pagination">
                 <#if hasPrevious>
                     <li class="page-item ">
-                        <a class="page-link" href="/resumes?page=${currentPage - 1}" >Previous</a>
+                        <a class="page-link" href="/resumes?page=${currentPage - 1}" ><@spring.message "index.nav.previous" /></a>
                     </li>
                 <#else>
                     <li class="page-item disabled">
-                        <a class="page-link" href="/resumes?page=${currentPage - 1}" >Previous</a>
+                        <a class="page-link" href="/resumes?page=${currentPage - 1}" ><@spring.message "index.nav.previous" /></a>
                     </li>
                 </#if>
                 <#list 0..(totalPages - 1) as page>
@@ -90,11 +90,11 @@
                 </#list>
                 <#if hasNext>
                     <li class="page-item">
-                        <a class="page-link" href="/resumes?page=${currentPage + 1}">Next</a>
+                        <a class="page-link" href="/resumes?page=${currentPage + 1}"><@spring.message "index.nav.next" /></a>
                     </li>
                 <#else>
                     <li class="page-item disabled">
-                        <a class="page-link" href="/resumes?page=${currentPage + 1}">Next</a>
+                        <a class="page-link" href="/resumes?page=${currentPage + 1}"><@spring.message "index.nav.next" /></a>
                     </li>
                 </#if>
 
