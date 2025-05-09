@@ -56,6 +56,10 @@ public class VacancyController {
 
     @PostMapping("create")
     public String createVacancy(@Valid VacancyDto vacancyDto, BindingResult bindingResult, Model model, Authentication auth) {
+        if (vacancyDto.getExpFrom() != null && vacancyDto.getExpTo() != null && vacancyDto.getExpFrom() >= vacancyDto.getExpTo()) {
+            bindingResult.rejectValue("expTo", "vacancy.expTo.invalid");
+        }
+
         if(!bindingResult.hasErrors()){
             vacancyService.addVacancy(vacancyDto, auth);
             return "redirect:/vacancies";
@@ -74,6 +78,10 @@ public class VacancyController {
 
     @PostMapping("edit")
     public String editVacancy(@Valid VacancyDto vacancyDto, BindingResult bindingResult, Model model, Authentication auth) {
+        if (vacancyDto.getExpFrom() != null && vacancyDto.getExpTo() != null && vacancyDto.getExpFrom() >= vacancyDto.getExpTo()) {
+            bindingResult.rejectValue("expTo", "vacancy.expTo.invalid");
+        }
+
         if (!bindingResult.hasErrors()) {
             vacancyService.updateVacancyById(vacancyDto.getId(), vacancyDto);
             return "redirect:/users/profile";

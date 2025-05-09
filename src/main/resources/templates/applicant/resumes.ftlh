@@ -35,11 +35,11 @@
                         <h5 class="mb-1">${resume.name}</h5>
                         <#if resume.user.age??>
                             <div class="text-muted small">
-                                ${resume.user.age} года • <span class="text-success"><@spring.message "resume.createResume.updated" /> ${resume.updateTime!}</span>
+                                ${resume.user.age} года • <span class="text-success"><@spring.message "resume.createResume.updated" /> ${resume.updateTimeFormatted!""}</span>
                             </div>
                         <#else>
                             <div class="text-muted small">
-                                <span class="text-success"><@spring.message "resume.createResume.updated" /> ${resume.updateTime!}</span>
+                                <span class="text-success"><@spring.message "resume.createResume.updated" /> ${resume.updateTimeFormatted!""}</span>
                             </div>
                         </#if>
 

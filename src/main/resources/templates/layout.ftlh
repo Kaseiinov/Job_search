@@ -20,6 +20,13 @@
         >
     </#if>
 
+<#--    <#assign isApplicant = false>-->
+<#--    <#list user.roles as role>-->
+<#--        <#if role.name?lower_case == "applicant">-->
+<#--            <#assign isApplicant = true>-->
+<#--        </#if>-->
+<#--    </#list>-->
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">JobSearch</a>
@@ -32,6 +39,10 @@
                     <a class="nav-link active" aria-current="page" href="/"><@spring.message "layout.nave.home" /></a>
                 </li>
 <#--                <li class="nav-item">-->
+<#--                    <a class="nav-link active" aria-current="page" href="/">${user}</a>-->
+<#--                </li>-->
+
+<#--                <li class="nav-item">-->
 <#--                    <a class="nav-link" href="/users/profile">Profile</a>-->
 <#--                </li>-->
                 <li class="nav-item dropdown">
@@ -41,12 +52,14 @@
                     </ul>
                 </li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><@spring.message "layout.nave.resumes" /></a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/resumes"><@spring.message "layout.nave.resumes" /></a></li>
-                    </ul>
-                </li>
+<#--                <#if user?? && user.accountType?? && user.accountType?lower_case != "applicant">-->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><@spring.message "layout.nave.resumes" /></a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/resumes"><@spring.message "layout.nave.resumes" /></a></li>
+                        </ul>
+                    </li>
+<#--                </#if>-->
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><@spring.message "layout.nav.lang.exchange" /></a>
