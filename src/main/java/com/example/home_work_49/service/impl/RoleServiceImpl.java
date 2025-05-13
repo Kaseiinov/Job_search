@@ -6,6 +6,7 @@ import com.example.home_work_49.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+
 @Service
 @RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
@@ -15,4 +16,5 @@ public class RoleServiceImpl implements RoleService {
     public Role findRoleByRole(String role){
         return roleRepository.findRoleByRole(role);
     }
+
 }

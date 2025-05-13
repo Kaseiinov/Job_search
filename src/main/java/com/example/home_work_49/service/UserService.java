@@ -39,4 +39,6 @@ public interface UserService {
     List<UserDto> getApplicantsByVacancy(String vacancyName);
 
     void addUser(UserDto userDto) throws SuchEmailAlreadyExistsException, RoleNotFoundException;
+
+    void save(User user);
 }

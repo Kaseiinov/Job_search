@@ -8,8 +8,6 @@ import com.example.home_work_49.exceptions.UserNotFoundException;
 import com.example.home_work_49.models.Role;
 import com.example.home_work_49.models.User;
 import com.example.home_work_49.models.UserImage;
-import com.example.home_work_49.repository.RoleRepository;
-import com.example.home_work_49.repository.UserImageRepository;
 import com.example.home_work_49.repository.UserRepository;
 import com.example.home_work_49.service.RoleService;
 import com.example.home_work_49.service.UserService;
@@ -111,8 +109,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getUserByEmailModel(String userEmail) {
-        User user = userRepository.findByEmail(userEmail).orElseThrow(UserNotFoundException::new);
-        return Optional.of(user);
+        Optional<User> user = userRepository.findByEmail(userEmail);
+        return user;
     }
 
     @Override
@@ -178,7 +176,12 @@ public class UserServiceImpl implements UserService {
         user.setRoles(Arrays.asList(role));
         role.setUsers(Arrays.asList(user));
 
-        userRepository.save(user);
+        userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public void save(User user){
+        userRepository.saveAndFlush(user);
     }
 
     private UserDto builder(User user) {

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Getter
@@ -20,5 +21,7 @@ public class Role {
     private List<Authority> authorities;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "roles", cascade = CascadeType.ALL)
-    private List<User> users;
+    private Collection<User> users;
+
+
 }

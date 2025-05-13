@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Collection;
 import java.util.List;
 
 @Setter
@@ -30,18 +31,22 @@ public class User {
     private String accountType;
     private Boolean enabled;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "usr_roles",
             joinColumns = @JoinColumn(name = "usr_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private List<Role> roles;
+    private Collection<Role> roles;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "applicant")
     private List<Resume> resumes;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
     private List<Vacancy> vacancies;
 
+    public void addRole(Role role){
+        this.roles.add(role);
+        role.getUsers().add(this);
+    }
 
 }

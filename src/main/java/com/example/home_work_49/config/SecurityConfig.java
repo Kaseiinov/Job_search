@@ -1,5 +1,8 @@
 package com.example.home_work_49.config;
 
+import com.example.home_work_49.models.CustomOAuth2User;
+import com.example.home_work_49.service.impl.AuthUserDetailsService;
+import com.example.home_work_49.service.impl.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,12 +25,14 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final DataSource dataSource;
+//    private final DataSource dataSource;
+    private final AuthUserDetailsService authUserDetailsService;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 
 //    @Autowired
 //    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -69,6 +74,16 @@ public class SecurityConfig {
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .permitAll())
 //                .csrf(AbstractHttpConfigurer::disable)
+
+                .oauth2Login(oauth -> oauth
+                .loginPage("/auth/login")
+                .userInfoEndpoint(userConfig -> userConfig
+                        .userService(customOAuth2UserService))
+                .successHandler((request, response, authentication) -> {
+                    var oauthUser = (CustomOAuth2User) authentication.getPrincipal();
+                    authUserDetailsService.processOAuthPostLogin(oauthUser.getAttribute("email"), oauthUser.getAttribute("given_name"), oauthUser.getAttribute("family_name"));
+                    response.sendRedirect("/");
+                }))
 
                 .authorizeHttpRequests(authorize -> authorize
                         // Public endpoints

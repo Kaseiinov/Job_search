@@ -1,0 +1,38 @@
+
+databaseChangeLog:
+  - changeSet:
+      id: 031
+      author: Islam Kaseiinov
+      changes:
+        - delete:
+            tableName: contact_types
+        - insert:
+            tableName: contact_types
+            columns:
+              - column:
+                  name: type
+                  value: "Email"
+        - insert:
+            tableName: contact_types
+            columns:
+              - column:
+                  name: type
+                  value: "Phone"
+        - insert:
+            tableName: contact_types
+            columns:
+              - column:
+                  name: type
+                  value: "Telegram"
+        - insert:
+            tableName: contact_types
+            columns:
+              - column:
+                  name: type
+                  value: "Facebook"
+        - insert:
+            tableName: contact_types
+            columns:
+              - column:
+                  name: type
+                  value: "Linkedin"

@@ -38,6 +38,20 @@ spring:
 
 #============================= Mail config
 
+  #============================ oAuth2.0 config
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id:
+            client-secret:
+            scope:
+              - email
+              - profile
+
+#============================ oAuth2.0 config
+
 
 logging:
   level:
