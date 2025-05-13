@@ -7,3 +7,15 @@ for (let i = 0; i < array.length; i++) {
     console.log(element);
 }
 
+// Task-2
+
+const elements = document.getElementsByClassName('element')
+
+for (let i = 0; i < elements.length; i++){
+    if(i < 3){
+        elements[i].style.color = 'red'
+    } else{
+        elements[i].style.color = 'green'
+    }
+}
+
