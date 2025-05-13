@@ -19,3 +19,13 @@ for (let i = 0; i < elements.length; i++){
     }
 }
 
+// Task-3
+
+const container = document.querySelector('.container');
+
+for (let i = 0; i < 5; i++) {
+    let element = document.createElement('div');
+    element.innerHTML = `Element ${i+1}`;
+    element.classList.add('element');
+    container.appendChild(element);
+}
