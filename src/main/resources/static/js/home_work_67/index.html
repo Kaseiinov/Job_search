@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список стран</title>
+</head>
+<body>
+<h1>Список стран</h1>
+<ul id="country-list"></ul>
+
+<script>
+    const request = new XMLHttpRequest();
+
+    request.onload = function () {
+        if (request.status === 200) {
+            const data = JSON.parse(request.responseText);
+            const list = document.getElementById('country-list');
+
+            data.forEach(country => {
+                const li = document.createElement('li');
+                const name = country.name.common;
+                li.innerHTML = `<a href="country.html?name=${encodeURIComponent(name)}">${name}</a>`;
+                list.appendChild(li);
+            });
+        } else {
+            console.error('Ошибка запроса:', request.status);
+        }
+    };
+
+    request.open('GET', 'https://restcountries.com/v3.1/all');
+    request.send();
+</script>
+</body>
+</html>
