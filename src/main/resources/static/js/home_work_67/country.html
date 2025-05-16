@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Info about countries</title>
+</head>
+<body>
+<div id="info">load</div>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const countryName = params.get('name');
+
+    const request = new XMLHttpRequest();
+
+    request.onload = function () {
+        if (request.status === 200) {
+            const data = JSON.parse(request.responseText);
+            const country = data[0];
+
+            const name = country.name.common;
+            const capital = country.capital ? country.capital[0] : 'Нет столицы';
+            const currencyCodes = country.currencies ? Object.keys(country.currencies).join(', ') : 'Нет данных';
+            const borderCodes = country.borders ? country.borders.join(', ') : 'Нет границ';
+
+            document.getElementById('info').innerHTML = `
+                    <h1>${name}</h1>
+                    <p><strong>Столица:</strong> ${capital}</p>
+                    <p><strong>Коды валют:</strong> ${currencyCodes}</p>
+                    <p><strong>Коды стран по границе:</strong> ${borderCodes}</p>
+                `;
+        } else {
+            document.getElementById('info').textContent = 'Ошибка загрузки данных.';
+            console.error('Ошибка запроса:', request.status);
+        }
+    };
+
+    request.open('GET', 'https://restcountries.com/v3.1/name/' + encodeURIComponent(countryName));
+    request.send();
+</script>
+</body>
+</html>
