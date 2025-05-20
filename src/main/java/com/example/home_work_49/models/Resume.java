@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 @Getter
@@ -37,4 +38,12 @@ public class Resume {
     private EducationInfo education;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "resume")
     private List<ContactInfo> contacts;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "responded_applicants",
+            joinColumns = @JoinColumn(name = "resume_id"),
+            inverseJoinColumns = @JoinColumn(name = "vacancy_id")
+    )
+    private Collection<Vacancy> vacancies;
 }

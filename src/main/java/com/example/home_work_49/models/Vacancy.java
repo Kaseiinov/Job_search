@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 @Getter
 @Setter
@@ -34,4 +35,7 @@ public class Vacancy {
     private LocalDateTime createdDate;
     @Column(name = "update_time")
     private LocalDateTime updateTime;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "vacancies")
+    private Collection<Resume> resumes;
 }

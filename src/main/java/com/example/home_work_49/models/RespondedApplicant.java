@@ -13,7 +13,9 @@ public class RespondedApplicant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name= "resume_id")
     private Long resumeId;
+    @Column(name= "vacancy_id")
     private Long vacancyId;
     private boolean confirmation;
 }
