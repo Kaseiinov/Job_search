@@ -22,6 +22,10 @@ public interface VacancyService {
 
     Page<VacancyDto> getAllActiveVacancyByCreatedDateAsc(int page, int pageSize);
 
+    Page<VacancyDto> getAllActiveVacancyByResponseDesc(int page, int pageSize);
+
+    Page<VacancyDto> getAllActiveVacancyByResponseAsc(int page, int pageSize);
+
     VacancyDto getVacancyById(Long id);
 
     void addVacancy(VacancyDto vacancyDto, Authentication auth);
