@@ -29,7 +29,7 @@
             <@spring.showErrors "<br>" "error text-danger" />
         </div>
 
-        <div class="card mb-3">
+        <div class="card mb-3 about_me">
             <div class="card-body">
                 <p class="mb-3"><@spring.message "resume.createResume.aboutMy" /></p>
 
@@ -59,7 +59,7 @@
             </div>
         </div>
 
-        <div class="card">
+        <div class="card education">
             <div class="card-body">
                 <div class="mb-2">
                     <label for="degree" class="form-label"><@spring.message "resume.createResume.education" /></label>
@@ -88,7 +88,7 @@
             </div>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 contacts">
             <label class="form-label"><@spring.message "resume.createResume.linkToSN" /></label>
             <div class="d-flex align-items-center mb-2">
                 <img src="https://img.icons8.com/ios-glyphs/30/new-post.png" class="me-2" alt="email">
