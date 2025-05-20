@@ -1,5 +1,6 @@
 <#import "../layout.ftlh" as main>
 <@main.layout ; spring>
+    <script src="../../static/js/scripts.js"></script>
     <form action="/resumes/create" method="post">
         <#if _csrf??>
             <input type="hidden" name="${(_csrf.parameterName)!'csrf-param-name'}"
@@ -29,6 +30,7 @@
             <@spring.showErrors "<br>" "error text-danger" />
         </div>
 
+        <button class="btn btn-primary my-3" type="button" id="aboutMe">Add about myself</button>
         <div class="card mb-3 about_me">
             <div class="card-body">
                 <p class="mb-3"><@spring.message "resume.createResume.aboutMy" /></p>
@@ -59,6 +61,8 @@
             </div>
         </div>
 
+        <button class="btn btn-primary my-3" type="button" id="educationButton">Add education</button>
+
         <div class="card education">
             <div class="card-body">
                 <div class="mb-2">
@@ -87,6 +91,8 @@
 
             </div>
         </div>
+
+        <button class="btn btn-primary my-3" type="button" id="contactButton">Add my contacts</button>
 
         <div class="mb-3 contacts">
             <label class="form-label"><@spring.message "resume.createResume.linkToSN" /></label>
