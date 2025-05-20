@@ -24,6 +24,8 @@ public class MainController {
         switch (sortBy) {
             case "dateDesc" -> vacancies = vacancyService.getAllActiveVacancyByCreatedDateDesc(page, pageSize);
             case "dateAsc" -> vacancies = vacancyService.getAllActiveVacancyByCreatedDateAsc(page, pageSize);
+            case "vacancyResponseDesc" -> vacancies = vacancyService.getAllActiveVacancyByResponseDesc(page, pageSize);
+            case "vacancyResponseAsc" -> vacancies = vacancyService.getAllActiveVacancyByResponseAsc(page, pageSize);
             default -> vacancies = vacancyService.getAllActiveVacancies(page, pageSize);
         }
 

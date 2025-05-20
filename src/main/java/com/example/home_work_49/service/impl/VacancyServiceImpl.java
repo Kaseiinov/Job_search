@@ -4,8 +4,6 @@ import com.example.home_work_49.dto.VacancyDto;
 import com.example.home_work_49.exceptions.*;
 import com.example.home_work_49.models.User;
 import com.example.home_work_49.models.Vacancy;
-import com.example.home_work_49.repository.CategoryRepository;
-import com.example.home_work_49.repository.UserRepository;
 import com.example.home_work_49.repository.VacancyRepository;
 import com.example.home_work_49.service.CategoryService;
 import com.example.home_work_49.service.UserService;
@@ -96,6 +94,24 @@ public class VacancyServiceImpl implements VacancyService {
         Pageable pageable = PageRequest.of(page, pageSize);
 
         Page<Vacancy> vacancyPage = vacancyRepository.findAllByIsActiveOrderByCreatedDateAsc(true, pageable);
+
+        return vacanciesPageBuilder(vacancyPage, pageable);
+    }
+
+    @Override
+    public Page<VacancyDto> getAllActiveVacancyByResponseDesc(int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+
+        Page<Vacancy> vacancyPage = vacancyRepository.findAllByIsActiveOrderByResponseDesc(true, pageable);
+
+        return vacanciesPageBuilder(vacancyPage, pageable);
+    }
+
+    @Override
+    public Page<VacancyDto> getAllActiveVacancyByResponseAsc(int page, int pageSize){
+        Pageable pageable = PageRequest.of(page, pageSize);
+
+        Page<Vacancy> vacancyPage = vacancyRepository.findAllByIsActiveOrderByResponseASC(true, pageable);
 
         return vacanciesPageBuilder(vacancyPage, pageable);
     }
