@@ -14,6 +14,8 @@
             <option value=""><@spring.message "index.form.sortBy" /></option>
             <option value="dateDesc" <#if sortBy == "dateDesc">selected</#if>><@spring.message "index.form.newestFirst" /></option>
             <option value="dateAsc" <#if sortBy == "dateAsc">selected</#if>><@spring.message "index.form.oldestFirst" /></option>
+            <option value="vacancyResponseDesc" <#if sortBy == "vacancyResponseDesc">selected</#if>><@spring.message "index.form.responseDesc" /></option>
+            <option value="vacancyResponseAsc" <#if sortBy == "vacancyResponseAsc">selected</#if>><@spring.message "index.form.responseAsc" /></option>
         </select>
     </form>
 
