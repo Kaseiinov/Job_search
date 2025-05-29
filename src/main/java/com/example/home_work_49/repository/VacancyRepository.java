@@ -46,4 +46,8 @@ public interface VacancyRepository extends JpaRepository<Vacancy, Long> {
             nativeQuery = true
     )
     Page<Vacancy> findAllByIsActiveOrderByResponseASC(Boolean isActive, Pageable pageable);
+
+    Page<Vacancy> findAllVacanciesByNameContainingAndIsActiveIsTrue(String name, Boolean isActive, Pageable pageable);
+
+    Page<Vacancy> findAllVacanciesBySalaryGreaterThanEqualAndIsActiveIsTrue(Double salaryIsGreaterThan, Boolean isActive, Pageable pageable);
 }

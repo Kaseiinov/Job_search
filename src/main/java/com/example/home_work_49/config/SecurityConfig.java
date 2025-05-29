@@ -90,6 +90,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/images/**").permitAll()
+                        .requestMatchers("/search/vacancy/advanced").permitAll()
 
 
                         // User endpoints

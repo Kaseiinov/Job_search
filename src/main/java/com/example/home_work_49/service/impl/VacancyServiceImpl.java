@@ -26,6 +26,20 @@ public class VacancyServiceImpl implements VacancyService {
     private final UserService userService;
 
     @Override
+    public Page<VacancyDto> getAllActiveVacancyByContainName(int page, int pageSize, String name) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<Vacancy> vacancies = vacancyRepository.findAllVacanciesByNameContainingAndIsActiveIsTrue(name, true, pageable);
+        return vacanciesPageBuilder(vacancies, pageable);
+    }
+
+    @Override
+    public Page<VacancyDto> getAllActiveVacancyByMinSalary(int page, int pageSize, Double salary) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<Vacancy> vacancies = vacancyRepository.findAllVacanciesBySalaryGreaterThanEqualAndIsActiveIsTrue(salary, true, pageable);
+        return vacanciesPageBuilder(vacancies, pageable);
+    }
+
+    @Override
     public void deleteVacancyById(Long id) {
         boolean exists = vacancyRepository.existsById(id);
         if(exists){

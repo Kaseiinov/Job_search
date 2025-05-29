@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -16,7 +17,9 @@ public class MainController {
     private final VacancyService vacancyService;
 
     @GetMapping
-    public String index(@RequestParam(defaultValue = "0")int page, @RequestParam(defaultValue = "default") String sortBy, Model model) {
+    public String index(@RequestParam(defaultValue = "0")int page,
+                        @RequestParam(defaultValue = "default") String sortBy,
+                        Model model) {
         int pageSize = 5;
 
         Page<VacancyDto> vacancies;
@@ -37,4 +40,5 @@ public class MainController {
         model.addAttribute("sortBy", sortBy);
         return "index";
     }
+
 }

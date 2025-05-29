@@ -8,6 +8,10 @@ import java.util.List;
 
 public interface VacancyService {
 
+    Page<VacancyDto> getAllActiveVacancyByContainName(int page, int pageSize, String name);
+
+    Page<VacancyDto> getAllActiveVacancyByMinSalary(int page, int pageSize, Double salary);
+
     void deleteVacancyById(Long id);
 
     void updateVacancyById(Long id, VacancyDto vacancyDto);
