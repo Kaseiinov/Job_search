@@ -10,6 +10,7 @@ import com.example.home_work_49.service.UserService;
 import com.example.home_work_49.service.VacancyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,17 @@ public class VacancyServiceImpl implements VacancyService {
     private final VacancyRepository vacancyRepository;
     private final CategoryService categoryService;
     private final UserService userService;
+
+    @Override
+    public List<VacancyDto> getFilteredVacancies(
+            Long categoryId,
+            Double minSalary) {
+
+
+        List<Vacancy> vacancies = vacancyRepository.findAllByIsActiveAndCategory_IdAndSalaryIsGreaterThanEqual(true, categoryId, minSalary);
+        return vacancyBuilder(vacancies);
+    }
+
 
     @Override
     public Page<VacancyDto> getAllActiveVacancyByContainName(int page, int pageSize, String name) {

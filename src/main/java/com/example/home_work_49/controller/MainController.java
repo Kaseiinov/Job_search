@@ -2,6 +2,7 @@ package com.example.home_work_49.controller;
 
 import com.example.home_work_49.dto.VacancyDto;
 import com.example.home_work_49.models.Vacancy;
+import com.example.home_work_49.service.CategoryService;
 import com.example.home_work_49.service.VacancyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class MainController {
     private final VacancyService vacancyService;
+    private final CategoryService categoryService;
 
     @GetMapping
     public String index(@RequestParam(defaultValue = "0")int page,
@@ -32,6 +34,7 @@ public class MainController {
             default -> vacancies = vacancyService.getAllActiveVacancies(page, pageSize);
         }
 
+        model.addAttribute("categories", categoryService.getCategories());
         model.addAttribute("vacancies", vacancies.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("hasNext", vacancies.hasNext());

@@ -4,14 +4,16 @@ import com.example.home_work_49.models.Vacancy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface VacancyRepository extends JpaRepository<Vacancy, Long> {
+public interface VacancyRepository extends JpaRepository<Vacancy, Long>, JpaSpecificationExecutor<Vacancy> {
 
     List<Vacancy> findAllVacanciesByAuthor_Email(String authorEmail);
 
@@ -50,4 +52,6 @@ public interface VacancyRepository extends JpaRepository<Vacancy, Long> {
     Page<Vacancy> findAllVacanciesByNameContainingAndIsActiveIsTrue(String name, Boolean isActive, Pageable pageable);
 
     Page<Vacancy> findAllVacanciesBySalaryGreaterThanEqualAndIsActiveIsTrue(Double salaryIsGreaterThan, Boolean isActive, Pageable pageable);
+
+    List<Vacancy> findAllByIsActiveAndCategory_IdAndSalaryIsGreaterThanEqual(Boolean isActive, Long categoryId, Double salaryIsGreaterThan);
 }
