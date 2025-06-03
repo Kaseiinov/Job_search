@@ -16,7 +16,7 @@
             <input type="text" class="form-control p-2  " placeholder="Search here..." id="search-input">
         </div>
         <div class="col-3">
-            <i class="bi bi-sliders fs-2 burger-filter" style="margin-bottom: 5px"></i>
+            <i class="bi bi-sliders fs-2 burger-filter btn" style="margin-bottom: 5px"></i>
         </div>
         <div class="col-3"><form method="get" action="/" class="d-flex justify-content-end">
                 <select name="sortBy" class="form-sele ct w-auto" onchange="this.form.submit()">
@@ -36,7 +36,7 @@
         <div class="col-3 d-none filter-card">
             <form id="filter-form">
 
-                <select id="category">
+                <select id="category" class="mb-3 form-select">
                     <option value="0">Любая категория</option>
                     <#list categories as category>
                         <option value="${category.id}">${category.name}</option>
@@ -45,13 +45,13 @@
 
                 </select>
 
-                <input type="number" id="min-salary" placeholder="Мин. зарплата">
+                <input min="0" class="mb-3 form-control" type="number" id="min-salary" placeholder="Мин. зарплата">
 
                 <div>
-                    <button type="submit">Применить фильтр</button>
+                    <button class="mb-3 btn btn-outline-info" type="submit">Применить фильтр</button>
                 </div>
             </form>
-            <button type="button" id="reset-filter">Сбросить</button>
+            <button class="btn btn-outline-warning" type="button" id="reset-filter">Сбросить</button>
 
 
         </div>

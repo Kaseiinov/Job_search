@@ -24,6 +24,9 @@ window.addEventListener('load', function () {
         document.querySelector('.filter-card').classList.toggle('d-none');
     })
 
+    document.getElementById('min-salary').addEventListener('input', function () {
+        if (this.value < 0) this.value = 0;
+    });
 
     document.getElementById("filter-form").addEventListener("submit", (e) => {
         e.preventDefault();

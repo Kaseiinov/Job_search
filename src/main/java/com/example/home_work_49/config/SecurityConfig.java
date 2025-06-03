@@ -63,7 +63,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
 
-                .httpBasic(Customizer.withDefaults())
+                .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(login -> login
                         .loginPage("/auth/login")
                         .loginProcessingUrl("/auth/login")
@@ -87,6 +87,8 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(authorize -> authorize
                         // Public endpoints
+                        .requestMatchers("/static/**").permitAll()
+
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/images/**").permitAll()
@@ -99,6 +101,7 @@ public class SecurityConfig {
 
                         // Vacancy endpoints
                         .requestMatchers("/vacancies").permitAll()
+                        .requestMatchers("/api/vacancies").permitAll()
                         .requestMatchers("/vacancies/**").hasAnyAuthority("EMPLOYER", "ADMIN")
 
 
