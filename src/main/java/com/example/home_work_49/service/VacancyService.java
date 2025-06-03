@@ -8,13 +8,14 @@ import java.util.List;
 
 public interface VacancyService {
 
+
+
     List<VacancyDto> getFilteredVacancies(
             Long categoryId,
             Double minSalary);
 
     Page<VacancyDto> getAllActiveVacancyByContainName(int page, int pageSize, String name);
 
-    Page<VacancyDto> getAllActiveVacancyByMinSalary(int page, int pageSize, Double salary);
 
     void deleteVacancyById(Long id);
 

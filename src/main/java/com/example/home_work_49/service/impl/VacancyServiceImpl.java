@@ -9,8 +9,10 @@ import com.example.home_work_49.service.CategoryService;
 import com.example.home_work_49.service.UserService;
 import com.example.home_work_49.service.VacancyService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.*;
-import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +34,13 @@ public class VacancyServiceImpl implements VacancyService {
             Double minSalary) {
 
 
-        List<Vacancy> vacancies = vacancyRepository.findAllByIsActiveAndCategory_IdAndSalaryIsGreaterThanEqual(true, categoryId, minSalary);
-        return vacancyBuilder(vacancies);
+        if(categoryId == 0){
+            List<Vacancy> vacancies = vacancyRepository.findAllVacanciesBySalaryGreaterThanEqualAndIsActiveIsTrue(minSalary);
+            return vacancyBuilder(vacancies);
+        }else {
+            List<Vacancy> vacancies = vacancyRepository.findAllByIsActiveAndCategory_IdAndSalaryIsGreaterThanEqual(true, categoryId, minSalary);
+            return vacancyBuilder(vacancies);
+        }
     }
 
 
@@ -43,13 +50,13 @@ public class VacancyServiceImpl implements VacancyService {
         Page<Vacancy> vacancies = vacancyRepository.findAllVacanciesByNameContainingAndIsActiveIsTrue(name, true, pageable);
         return vacanciesPageBuilder(vacancies, pageable);
     }
-
-    @Override
-    public Page<VacancyDto> getAllActiveVacancyByMinSalary(int page, int pageSize, Double salary) {
-        Pageable pageable = PageRequest.of(page, pageSize);
-        Page<Vacancy> vacancies = vacancyRepository.findAllVacanciesBySalaryGreaterThanEqualAndIsActiveIsTrue(salary, true, pageable);
-        return vacanciesPageBuilder(vacancies, pageable);
-    }
+//
+//    @Override
+//    public LIst<VacancyDto> getAllActiveVacancyByMinSalary(int page, int pageSize, Double salary) {
+//        Pageable pageable = PageRequest.of(page, pageSize);
+//        List<Vacancy> vacancies = vacancyRepository.findAllVacanciesBySalaryGreaterThanEqualAndIsActiveIsTrue(salary);
+//        return vacanciesPageBuilder(vacancies, pageable);
+//    }
 
     @Override
     public void deleteVacancyById(Long id) {

@@ -37,7 +37,7 @@
             <form id="filter-form">
 
                 <select id="category">
-                    <option value="">Любая категория</option>
+                    <option value="0">Любая категория</option>
                     <#list categories as category>
                         <option value="${category.id}">${category.name}</option>
                     </#list>
@@ -84,7 +84,7 @@
 
 
     <nav >
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center navigation">
             <ul class="pagination">
                 <#if hasPrevious>
                     <li class="page-item ">

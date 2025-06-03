@@ -5,6 +5,7 @@ import com.example.home_work_49.service.VacancyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,14 +22,13 @@ public class VacancyController {
     @GetMapping
     public ResponseEntity<List<VacancyDto>> getFilteredVacancies(
             @RequestParam(required = false) Long categoryId,
-            @RequestParam(required = false) Double minPrice) {
+            @RequestParam(required = false, defaultValue = "0") Double minPrice) {
 
         List<VacancyDto> vacancies = vacancyService.getFilteredVacancies(
                 categoryId,
                 minPrice
         );
 
-        System.out.println(vacancies);
 
         return ResponseEntity.ok(vacancies);
     }

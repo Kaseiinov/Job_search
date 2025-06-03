@@ -34,21 +34,26 @@ window.addEventListener('load', function () {
         updateFilter(newFilter);
     });
 
+
     document.getElementById("reset-filter").addEventListener("click", (e) => {
-        e.preventDefault();
-        console.log(filter + " before")
         clearFilter();
-        console.log(filter + " after")
+
     })
 
     async function fetchItems() {
         try {
-            const filter = JSON.parse(localStorage.getItem("filter"));
+            let filter;
+            if(localStorage.getItem('filter')) {
+                filter = JSON.parse(localStorage.getItem("filter"))
+            }else{
+                filter = {categoryId: 0, minPrice: 0}
+            }
             const params = new URLSearchParams(filter).toString();
             const response = await fetch(`/api/vacancies?${params}`);
-            const items = await response.json();
-            console.log(items.forEach(item => console.log(item.id)))
-            renderItems(items); // Отрисовка данных
+            const data = await response.json();
+            console.log(data)
+
+            renderItems(data);
         } catch (error) {
             console.error("Ошибка:", error);
         }
@@ -61,24 +66,40 @@ window.addEventListener('load', function () {
 
     function clearFilter() {
         localStorage.removeItem("filter");
-        fetchItems(); // Запрос без параметров
+        window.location.href = "/";
     }
+
+
 
     function renderItems(items) {
-        const listItems = document.querySelectorAll('.list-group-item');
-        console.log(listItems)
+        const vacancyList = document.querySelector('#vacancies-list')
+        document.querySelector('.pagination').style.display = 'none'
+        vacancyList.innerHTML = ' '
 
-        listItems.forEach(item => {
-            const vacancyId = item.getAttribute('data-id');
-            items.forEach(vac => {
-                if(vacancyId !== vac.id){
-                    item.style.display = 'none';
-                }else{
-                    item.style.display = '';
-                }
-            }
-            )
-        });
+        items.forEach(item => {
+            const card = document.createElement('div')
+            card.className =  "card w-100 mb-3 overflow-hidden list-group-item"
+            card.setAttribute('data-id', item.id)
+            card.innerHTML = `
+                <div class="card-body">
+                <h5 class="card-title vacancy-name">${item.name}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                    ${item.expFrom ?? 0} - ${item.expTo ?? 0}
+                </h6>
+                <p class="card-text">${item.description ?? ''}</p>
+                <p class="card-text">${item.salary ?? ''}</p>
+            </div>
+            `
+            vacancyList.appendChild(card)
+
+        })
+
+
     }
+
+    if(localStorage.getItem('filter')) {
+        fetchItems();
+    }
+
 
 })
