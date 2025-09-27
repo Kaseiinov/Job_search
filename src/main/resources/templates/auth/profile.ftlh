@@ -46,6 +46,8 @@
             </#if>
             <a href="/users/profile/publications"
                class="btn btn-outline-danger">My publication</a>
+            <a href="/publications/create"
+               class="btn btn-outline-danger">Create publication</a>
             <#if user.accountType == "APPLICANT">
                 <a href="#" class="btn btn-outline-secondary position-relative ms-3">
                     <@spring.message "auth.profile.responses" />

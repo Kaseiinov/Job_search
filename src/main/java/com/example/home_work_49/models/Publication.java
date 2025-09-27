@@ -29,7 +29,7 @@ public class Publication {
     private LocalDate updateDate;
     private Boolean enabled;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 

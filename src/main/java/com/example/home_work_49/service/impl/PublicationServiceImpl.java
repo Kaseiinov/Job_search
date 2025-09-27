@@ -1,5 +1,6 @@
 package com.example.home_work_49.service.impl;
 
+import com.example.home_work_49.dto.CommentDto;
 import com.example.home_work_49.dto.PublicationDto;
 import com.example.home_work_49.exceptions.CategoryNotFountException;
 import com.example.home_work_49.exceptions.UserNotFoundException;
@@ -42,6 +43,11 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
     @Override
+    public Publication findByIdModel(Long id){
+        return publicationRepository.findById(id).orElseThrow(UserNotFoundException::new);
+    }
+
+    @Override
     public Page<PublicationDto> findByUserEmail(Pageable pageable, String email) {
         Page<Publication> publicationList =  publicationRepository.findAllByUser_Email(email, pageable);
         return convertToDto(publicationList);
@@ -65,6 +71,19 @@ public class PublicationServiceImpl implements PublicationService {
                         .publicationDate(p.getPublicationDate())
                         .updateDate(p.getUpdateDate())
                         .enabled(p.getEnabled())
+                        .comments(p.getComments()
+                                .stream()
+                                .map(c -> CommentDto
+                                        .builder()
+                                        .id(c.getId())
+                                        .content(c.getContent())
+                                        .avatar(c.getAvatar())
+                                        .createdDate(c.getCreatedDate())
+                                        .enabled(c.getEnabled())
+                                        .user(userService.getUserByEmail(p.getUser().getEmail()))
+                                        .build()
+                                ).toList()
+                        )
                         .build()
                 ).toList();
 

@@ -1,11 +1,14 @@
 package com.example.home_work_49.service;
 
 import com.example.home_work_49.dto.PublicationDto;
+import com.example.home_work_49.models.Publication;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface PublicationService {
     void save(PublicationDto publicationDto);
+
+    Publication findByIdModel(Long id);
 
     Page<PublicationDto> findByUserEmail(Pageable pageable, String email);
 

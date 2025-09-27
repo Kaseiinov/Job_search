@@ -1,6 +1,7 @@
 package com.example.home_work_49.controller;
 
 import com.example.home_work_49.dto.CategoryDto;
+import com.example.home_work_49.dto.CommentDto;
 import com.example.home_work_49.dto.PublicationDto;
 import com.example.home_work_49.models.Publication;
 import com.example.home_work_49.service.CategoryService;
@@ -32,6 +33,7 @@ public class PublicationController {
         Page<PublicationDto> publications = publicationService.findAll(pageable);
         model.addAttribute("publications", publications.getContent());
         model.addAttribute("items", publications);
+        model.addAttribute("comment", new CommentDto());
         return "publication/publication";
     }
 

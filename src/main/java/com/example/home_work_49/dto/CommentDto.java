@@ -21,4 +21,6 @@ public class CommentDto {
     private LocalDate createdDate;
     private String avatar;
     private Boolean enabled;
+    private UserDto user;
+    private Long publicationId;
 }

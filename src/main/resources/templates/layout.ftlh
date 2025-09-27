@@ -40,6 +40,10 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/"><@spring.message "layout.nave.home" /></a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/publications">Publications</a>
+
+                </li>
 <#--                <li class="nav-item">-->
 <#--                    <a class="nav-link active" aria-current="page" href="/">${user}</a>-->
 <#--                </li>-->
