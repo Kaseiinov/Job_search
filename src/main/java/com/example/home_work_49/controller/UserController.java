@@ -4,12 +4,12 @@ import com.example.home_work_49.dto.*;
 import com.example.home_work_49.exceptions.SuchEmailAlreadyExistsException;
 import com.example.home_work_49.models.User;
 import com.example.home_work_49.repository.UserImageRepository;
-import com.example.home_work_49.service.ImageService;
-import com.example.home_work_49.service.ResumeService;
-import com.example.home_work_49.service.UserService;
-import com.example.home_work_49.service.VacancyService;
+import com.example.home_work_49.service.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,21 +27,36 @@ public class UserController {
     private final ResumeService resumeService;
     private final VacancyService vacancyService;
     private final ImageService imageService;
+    private final PublicationService publicationService;
 
     @GetMapping("profile")
-    public String getProfile(Model model ,Authentication auth){
+    public String getProfile(@PageableDefault(size = 5)Pageable pageable, Model model , Authentication auth){
         String username = auth.getName();
-        List<ResumeDto> resumes = resumeService.getResumeByUser(username);
-        List<VacancyDto> vacancies = vacancyService.getVacanciesByUser(username);
+        Page<ResumeDto> resumes = resumeService.getPageResumeByUser(pageable, username);
+        Page<VacancyDto> vacancies = vacancyService.getPageVacanciesByUser(username, pageable);
         UserDto userDto = userService.getUserByEmail(username);
         if(userDto.getAccountType().equalsIgnoreCase("employer")){
-            model.addAttribute("items", vacancies);
+            model.addAttribute("items", vacancies.getContent());
+            model.addAttribute("vacancyItems", vacancies);
         }else if(userDto.getAccountType().equalsIgnoreCase("applicant")){
-            model.addAttribute("items", resumes);
+            model.addAttribute("items", resumes.getContent());
+            model.addAttribute("resumeItems", resumes);
+
         }
         model.addAttribute("user",userDto);
         return "auth/profile";
     }
+
+    @GetMapping("profile/publications")
+    public String showPublications(@PageableDefault(size = 5)Pageable pageable, Authentication auth, Model model){
+        Page<PublicationDto> publications = publicationService.findByUserEmail(pageable,auth.getName());
+        model.addAttribute("publications",publications.getContent());
+        model.addAttribute("items", publications);
+        model.addAttribute("profile", "profile");
+        return "publication/publication";
+    }
+
+
 
     @GetMapping("edit/{userEmail}")
     public String updateUser(Model model, @PathVariable String userEmail){

@@ -8,7 +8,6 @@ import com.example.home_work_49.models.User;
 import com.example.home_work_49.models.UserImage;
 //import com.example.home_work_49.repository.UserImageRepository;
 import com.example.home_work_49.repository.UserImageRepository;
-import com.example.home_work_49.repository.UserRepository;
 import com.example.home_work_49.service.ImageService;
 import com.example.home_work_49.service.UserService;
 import com.example.home_work_49.util.FileUtil;
@@ -25,6 +24,7 @@ public class ImageServiceImpl implements ImageService {
 
     private final UserImageRepository userImageRepository;
     private final FileUtil fileUtil;
+
     private final UserService userService;
 
     @Override
@@ -40,6 +40,16 @@ public class ImageServiceImpl implements ImageService {
 
         userImageRepository.save(userImage);
         return filename;
+    }
+
+    @Override
+    public UserImageDto getUserImageByUserId(Long userId) {
+        UserImage userImage = userImageRepository.findByUser_Id(userId).orElseThrow(UserNotFoundException::new);
+        return UserImageDto.builder()
+                .id(userImage.getId())
+                .userId(userImage.getUser().getId())
+                .fileName(userImage.getFileName())
+                .build();
     }
 
     @Override

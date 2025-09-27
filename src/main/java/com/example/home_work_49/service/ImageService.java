@@ -7,6 +7,8 @@ public interface ImageService {
 
     String saveImage(UserImageDto userImageDto);
 
+    UserImageDto getUserImageByUserId(Long userId);
+
     ResponseEntity<?> findByName(String imageName);
 
     ResponseEntity<?> findById(long imageId);

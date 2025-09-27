@@ -8,14 +8,19 @@ import com.example.home_work_49.exceptions.UserNotFoundException;
 import com.example.home_work_49.models.Role;
 import com.example.home_work_49.models.User;
 import com.example.home_work_49.models.UserImage;
+import com.example.home_work_49.repository.UserImageRepository;
 import com.example.home_work_49.repository.UserRepository;
+import com.example.home_work_49.service.ImageService;
 import com.example.home_work_49.service.RoleService;
 import com.example.home_work_49.service.UserService;
 import com.example.home_work_49.util.CommonUtilities;
 import com.example.home_work_49.util.FileUtil;
 import jakarta.mail.MessagingException;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.sql.ast.tree.expression.Over;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +30,7 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -33,6 +39,14 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder encoder;
     private final EmailService emailService;
 
+
+    public void authWithHttpServletRequest(HttpServletRequest request, String passport, String password) {
+        try {
+            request.login(passport, password);
+        } catch (ServletException e) {
+            log.error("Error while login ", e);
+        }
+    }
 
     @Override
     public void makeResetPasswdLink(HttpServletRequest request) throws UserNotFoundException, MessagingException, UnsupportedEncodingException {
@@ -153,7 +167,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void addUser(UserDto userDto) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
+    public void addUser(UserDto userDto, HttpServletRequest request) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
 
         boolean isUserExists = userRepository.existsUserByEmail(userDto.getEmail());
         if(isUserExists){
@@ -177,6 +191,8 @@ public class UserServiceImpl implements UserService {
         role.setUsers(Arrays.asList(user));
 
         userRepository.saveAndFlush(user);
+        authWithHttpServletRequest(request, userDto.getEmail(), userDto.getPassword());
+
     }
 
     @Override

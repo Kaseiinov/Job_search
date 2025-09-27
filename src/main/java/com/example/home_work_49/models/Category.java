@@ -17,6 +17,10 @@ public class Category {
     private Long id;
     private String name;
     private Long parentId;
+
+    @OneToMany(mappedBy = "category")
+    private List<Publication> publications;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
     private List<Resume> resumes;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")

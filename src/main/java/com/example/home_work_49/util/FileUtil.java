@@ -14,10 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.Reader;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -72,7 +69,7 @@ public class FileUtil {
     @SneakyThrows
     public ResponseEntity<?> getOutputFile(String fileName, String subDir, MediaType mediaType) {
         try{
-            byte[] image = Files.readAllBytes(Paths.get(UPLOAD_DIR + subDir + fileName));
+            byte[] image = Files.readAllBytes(Paths.get(UPLOAD_DIR + File.separator + subDir + File.separator + fileName));
             Resource resource = new ByteArrayResource(image);
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment: filename=\"" + fileName + "\"")

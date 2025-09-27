@@ -2,6 +2,7 @@ package com.example.home_work_49.service;
 
 import com.example.home_work_49.dto.VacancyDto;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 
 import java.util.List;
@@ -24,6 +25,8 @@ public interface VacancyService {
     Page<VacancyDto> getAllActiveVacancies(int page, int pageSize);
 
     List<VacancyDto> getVacanciesByUser(String userEmail);
+
+    Page<VacancyDto> getPageVacanciesByUser(String userEmail, Pageable pageable);
 
     List<VacancyDto> getVacancyByCategory(String vacancyCategory);
 

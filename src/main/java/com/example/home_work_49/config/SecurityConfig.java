@@ -2,6 +2,7 @@ package com.example.home_work_49.config;
 
 import com.example.home_work_49.models.CustomOAuth2User;
 import com.example.home_work_49.service.impl.AuthUserDetailsService;
+import com.example.home_work_49.service.impl.CustomAuthenticationSuccessHandler;
 import com.example.home_work_49.service.impl.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,33 +29,8 @@ public class SecurityConfig {
 //    private final DataSource dataSource;
     private final AuthUserDetailsService authUserDetailsService;
     private final CustomOAuth2UserService customOAuth2UserService;
+    private final CustomAuthenticationSuccessHandler successHandler;
 
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        String fetchUsersQuery = """
-//        SELECT email, password, enabled
-//        FROM users
-//        WHERE email = ?
-//        """;
-//
-//        String fetchRolesQuery = """
-//        SELECT u.email, r.role
-//        FROM users u
-//        JOIN usr_roles ur ON u.id = ur.usr_id
-//        JOIN roles r ON r.id = ur.role_id
-//        WHERE u.email = ?
-//        """;
-//        auth
-//                .jdbcAuthentication()
-//                .dataSource(dataSource)
-//                .usersByUsernameQuery(fetchUsersQuery)
-//                .authoritiesByUsernameQuery(fetchRolesQuery);
-//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -67,7 +43,7 @@ public class SecurityConfig {
                 .formLogin(login -> login
                         .loginPage("/auth/login")
                         .loginProcessingUrl("/auth/login")
-                        .defaultSuccessUrl("/")
+                        .successHandler(successHandler)
                         .failureUrl("/auth/login?error=true")
                         .permitAll())
                 .logout(logout -> logout
