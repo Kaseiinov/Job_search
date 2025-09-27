@@ -22,6 +22,9 @@
                             id="toggleBtn-${publication.id}">
                         Add comment (${publication.comments?size!0})
                     </button>
+                    <#if profile??>
+                        <a class="btn btn-primary" href="/publications/edit/${publication.id}">Update</a>
+                    </#if>
                 </div>
 
                 <div id="comments-${publication.id}" class="comments-section" style="display: none;">
@@ -66,7 +69,7 @@
                             </#if>
                         </div>
 
-                        <form action="comments/add" method="post" class="add-comment-form">
+                        <form action="/comments/add" method="post" class="add-comment-form">
                             <#if _csrf??>
                                 <input type="hidden" name="${(_csrf.parameterName)!'csrf-param-name'}"
                                        value="${(_csrf.token)!'csrf-token'}"/>

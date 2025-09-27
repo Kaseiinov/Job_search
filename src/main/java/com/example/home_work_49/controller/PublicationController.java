@@ -8,6 +8,7 @@ import com.example.home_work_49.service.CategoryService;
 import com.example.home_work_49.service.PublicationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -27,6 +29,26 @@ import java.util.List;
 public class PublicationController {
     private final PublicationService publicationService;
     private final CategoryService categoryService;
+
+    @GetMapping("edit/{id}")
+    public String showEdit(@PathVariable Long id, Model model) {
+        PublicationDto publicationDto = publicationService.findByIdDto(id);
+        model.addAttribute("publicationDto", publicationDto);
+        model.addAttribute("categories", categoryService.getCategories());
+        return "publication/edit";
+    }
+
+    @PostMapping("edit/{id}")
+    public String updatePublication(@Valid PublicationDto publicationDto, @PathVariable Long id, BindingResult bindingResult, Model model, Authentication auth) throws ChangeSetPersister.NotFoundException {
+        if (!bindingResult.hasErrors()) {
+            publicationService.update(publicationDto);
+            return "redirect:/users/profile/publications";
+        }
+        model.addAttribute("publicationDto", publicationDto);
+        model.addAttribute("categories", categoryService.getCategories());
+        return "publication/edit";
+
+    }
 
     @GetMapping
     public String publications(@PageableDefault(size = 3)Pageable pageable, Model model) {

@@ -52,8 +52,11 @@ public class UserController {
         Page<PublicationDto> publications = publicationService.findByUserEmail(pageable,auth.getName());
         model.addAttribute("publications",publications.getContent());
         model.addAttribute("items", publications);
+        model.addAttribute("profile", "profile");
         return "publication/publication";
     }
+
+
 
     @GetMapping("edit/{userEmail}")
     public String updateUser(Model model, @PathVariable String userEmail){

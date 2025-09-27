@@ -11,6 +11,7 @@ import com.example.home_work_49.service.PublicationService;
 import com.example.home_work_49.service.UserService;
 import com.example.home_work_49.util.FileUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +27,17 @@ public class PublicationServiceImpl implements PublicationService {
     private final FileUtil fileUtil;
     private final CategoryService categoryService;
     private final UserService userService;
+
+    @Override
+    public void update(PublicationDto publicationDto) throws ChangeSetPersister.NotFoundException {
+        Publication publication = publicationRepository.findById(publicationDto.getId()).orElseThrow(ChangeSetPersister.NotFoundException::new);
+        publication.setTitle(publicationDto.getTitle());
+        publication.setDescription(publicationDto.getDescription());
+        publication.setAvatar(fileUtil.saveUploadFile(publicationDto.getAvatar(), "images"));
+        publication.setUpdateDate(LocalDate.now());
+        publicationRepository.save(publication);
+    }
+
 
     @Override
     public void save(PublicationDto publicationDto) {
@@ -48,6 +60,12 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
     @Override
+    public PublicationDto findByIdDto(Long id){
+        return convertToDto(publicationRepository.findById(id).orElseThrow(UserNotFoundException::new)) ;
+    }
+
+
+    @Override
     public Page<PublicationDto> findByUserEmail(Pageable pageable, String email) {
         Page<Publication> publicationList =  publicationRepository.findAllByUser_Email(email, pageable);
         return convertToDto(publicationList);
@@ -57,6 +75,17 @@ public class PublicationServiceImpl implements PublicationService {
     public Page<PublicationDto> findAll(Pageable pageable) {
         Page<Publication> publicationList =  publicationRepository.findAll(pageable);
         return convertToDto(publicationList);
+    }
+
+    public PublicationDto convertToDto(Publication publication){
+        return PublicationDto
+                .builder()
+                .id(publication.getId())
+                .title(publication.getTitle())
+                .description(publication.getDescription())
+                .publicationDate(publication.getPublicationDate())
+                .updateDate(publication.getUpdateDate())
+                .build();
     }
 
     public Page<PublicationDto> convertToDto(Page<Publication> publicationList) {
