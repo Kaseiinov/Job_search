@@ -5,10 +5,13 @@ import com.example.home_work_49.dto.UserDto;
 import com.example.home_work_49.exceptions.SuchEmailAlreadyExistsException;
 import com.example.home_work_49.models.User;
 import com.example.home_work_49.service.UserService;
+import com.example.home_work_49.service.impl.CustomAuthenticationSuccessHandler;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +26,8 @@ import java.io.UnsupportedEncodingException;
 @RequiredArgsConstructor
 public class AuthController {
     private final UserService userService;
+    private final CustomAuthenticationSuccessHandler successHandler;
+
 
     @GetMapping("register")
     public String register(Model model){
@@ -31,10 +36,18 @@ public class AuthController {
     }
 
     @PostMapping("register")
-    public String register(@Valid UserDto userDto, BindingResult bindingResult, Model model) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
+    public String register(@Valid UserDto userDto, BindingResult bindingResult, HttpServletRequest request, Model model) throws SuchEmailAlreadyExistsException, RoleNotFoundException {
         if(!bindingResult.hasErrors()){
-            userService.addUser(userDto);
-            return "redirect:/auth/login";
+            userService.addUser(userDto, request);
+
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+            if (authentication != null && authentication.isAuthenticated()) {
+                String redirectUrl = successHandler.determineRedirectUrl(authentication);
+                return "redirect:" + redirectUrl;
+            }
+
+            return "redirect:/";
         }
         model.addAttribute("userDto", userDto);
         return "auth/register";
