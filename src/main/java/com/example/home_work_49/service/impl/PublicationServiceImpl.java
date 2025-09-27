@@ -3,8 +3,11 @@ package com.example.home_work_49.service.impl;
 import com.example.home_work_49.dto.CommentDto;
 import com.example.home_work_49.dto.PublicationDto;
 import com.example.home_work_49.exceptions.CategoryNotFountException;
+import com.example.home_work_49.exceptions.IncorrectRoleException;
+import com.example.home_work_49.exceptions.PublicationNotFoundException;
 import com.example.home_work_49.exceptions.UserNotFoundException;
 import com.example.home_work_49.models.Publication;
+import com.example.home_work_49.models.User;
 import com.example.home_work_49.repository.PublicationRepository;
 import com.example.home_work_49.service.CategoryService;
 import com.example.home_work_49.service.PublicationService;
@@ -28,18 +31,27 @@ public class PublicationServiceImpl implements PublicationService {
     private final UserService userService;
 
     @Override
+    public void deletePublication(Long id, String email) throws IncorrectRoleException {
+        Publication publication = publicationRepository.findById(id).orElseThrow(PublicationNotFoundException::new);
+        User user = userService.getUserByEmailModel(email).orElseThrow(UserNotFoundException::new);
+        if(publication.getUser().equals(user)) {
+            publication.setEnabled(false);
+            publicationRepository.save(publication);
+        }else {
+            throw new IncorrectRoleException();
+        }
+    }
+
+    @Override
     public Page<PublicationDto> findWithFilters(Long categoryId, String createdDate, String sortBy,
                                                 LocalDate updatedSince, String search, Pageable pageable) {
 
-        // Создаем спецификацию для фильтрации
         Specification<Publication> spec = Specification.where(null);
 
-        // Фильтр по категории
         if (categoryId != null) {
             spec = spec.and(PublicationSpecifications.hasCategory(categoryId));
         }
 
-        // Фильтр по дате создания
         if (createdDate != null) {
             LocalDate dateFilter = switch (createdDate) {
                 case "today" -> LocalDate.now();
@@ -53,20 +65,17 @@ public class PublicationServiceImpl implements PublicationService {
             }
         }
 
-        // Фильтр по дате обновления
         if (updatedSince != null) {
             spec = spec.and(PublicationSpecifications.updatedAfter(updatedSince));
         }
 
-        // Поиск по тексту
         if (search != null && !search.trim().isEmpty()) {
             spec = spec.and(PublicationSpecifications.containsText(search));
         }
 
-        // Сортировка
         Pageable sortedPageable = getSortedPageable(sortBy, pageable);
 
-        Page<Publication> publications = publicationRepository.findAll(spec, sortedPageable);
+        Page<Publication> publications = publicationRepository.findEnabledPublications(spec, sortedPageable);
         return convertToDto(publications);
     }
 
@@ -79,7 +88,7 @@ public class PublicationServiceImpl implements PublicationService {
             case "oldest" -> Sort.by("publicationDate").ascending();
             case "updated" -> Sort.by("updateDate").descending();
             case "mostCommented" -> Sort.by("comments.size").descending();
-            default -> Sort.by("publicationDate").descending(); // newest
+            default -> Sort.by("publicationDate").descending();
         };
 
         return PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
@@ -124,7 +133,7 @@ public class PublicationServiceImpl implements PublicationService {
 
     @Override
     public Page<PublicationDto> findByUserEmail(Pageable pageable, String email) {
-        Page<Publication> publicationList =  publicationRepository.findAllByUser_Email(email, pageable);
+        Page<Publication> publicationList =  publicationRepository.findAllByEnabledAndUser_Email(true, email, pageable);
         return convertToDto(publicationList);
     }
 

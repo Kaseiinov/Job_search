@@ -1,70 +1,73 @@
 <#import "../layout.ftlh" as main>
 <@main.layout ; spring>
 
-    <div class="filter-block w-75 mx-auto mb-4">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">🔍 Filter Publications</h5>
-            </div>
-            <div class="card-body">
-                <form method="get" action="/publications" class="row g-3">
-                    <div class="col-md-4">
-                        <label for="category" class="form-label">Category</label>
-                        <select class="form-select" id="category" name="categoryId">
-                            <option value="">All Categories</option>
-                            <#list categories as category>
-                                <option value="${category.id}"
-                                        <#if selectedCategoryId?? && selectedCategoryId == category.id?string>selected</#if>>
-                                    ${category.name}
-                                </option>
-                            </#list>
-                        </select>
-                    </div>
+    <#if !profile??>
+        <div class="filter-block w-75 mx-auto mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">🔍 Filter Publications</h5>
+                </div>
+                <div class="card-body">
+                    <form method="get" action="/publications" class="row g-3">
+                        <div class="col-md-4">
+                            <label for="category" class="form-label">Category</label>
+                            <select class="form-select" id="category" name="categoryId">
+                                <option value="">All Categories</option>
+                                <#list categories as category>
+                                    <option value="${category.id}"
+                                            <#if selectedCategoryId?? && selectedCategoryId == category.id?string>selected</#if>>
+                                        ${category.name}
+                                    </option>
+                                </#list>
+                            </select>
+                        </div>
 
-                    <div class="col-md-4">
-                        <label for="createdDate" class="form-label">Created Date</label>
-                        <select class="form-select" id="createdDate" name="createdDate">
-                            <option value="">Any Date</option>
-                            <option value="today" <#if selectedCreatedDate?? && selectedCreatedDate == "today">selected</#if>>Today</option>
-                            <option value="week" <#if selectedCreatedDate?? && selectedCreatedDate == "week">selected</#if>>This Week</option>
-                            <option value="month" <#if selectedCreatedDate?? && selectedCreatedDate == "month">selected</#if>>This Month</option>
-                            <option value="year" <#if selectedCreatedDate?? && selectedCreatedDate == "year">selected</#if>>This Year</option>
-                        </select>
-                    </div>
+                        <div class="col-md-4">
+                            <label for="createdDate" class="form-label">Created Date</label>
+                            <select class="form-select" id="createdDate" name="createdDate">
+                                <option value="">Any Date</option>
+                                <option value="today" <#if selectedCreatedDate?? && selectedCreatedDate == "today">selected</#if>>Today</option>
+                                <option value="week" <#if selectedCreatedDate?? && selectedCreatedDate == "week">selected</#if>>This Week</option>
+                                <option value="month" <#if selectedCreatedDate?? && selectedCreatedDate == "month">selected</#if>>This Month</option>
+                                <option value="year" <#if selectedCreatedDate?? && selectedCreatedDate == "year">selected</#if>>This Year</option>
+                            </select>
+                        </div>
 
-                    <div class="col-md-4">
-                        <label for="sortBy" class="form-label">Sort By</label>
-                        <select class="form-select" id="sortBy" name="sortBy">
-                            <option value="newest" <#if selectedSortBy?? && selectedSortBy == "newest">selected</#if>>Newest First</option>
-                            <option value="oldest" <#if selectedSortBy?? && selectedSortBy == "oldest">selected</#if>>Oldest First</option>
-                            <option value="updated" <#if selectedSortBy?? && selectedSortBy == "updated">selected</#if>>Recently Updated</option>
-                            <option value="mostCommented" <#if selectedSortBy?? && selectedSortBy == "mostCommented">selected</#if>>Most Comments</option>
-                        </select>
-                    </div>
+                        <div class="col-md-4">
+                            <label for="sortBy" class="form-label">Sort By</label>
+                            <select class="form-select" id="sortBy" name="sortBy">
+                                <option value="newest" <#if selectedSortBy?? && selectedSortBy == "newest">selected</#if>>Newest First</option>
+                                <option value="oldest" <#if selectedSortBy?? && selectedSortBy == "oldest">selected</#if>>Oldest First</option>
+                                <option value="updated" <#if selectedSortBy?? && selectedSortBy == "updated">selected</#if>>Recently Updated</option>
+                                <option value="mostCommented" <#if selectedSortBy?? && selectedSortBy == "mostCommented">selected</#if>>Most Comments</option>
+                            </select>
+                        </div>
 
-                    <div class="col-md-6">
-                        <label for="updatedSince" class="form-label">Updated Since</label>
-                        <input type="date" class="form-control" id="updatedSince" name="updatedSince"
-                               value="${selectedUpdatedSince!}">
-                    </div>
+                        <div class="col-md-6">
+                            <label for="updatedSince" class="form-label">Updated Since</label>
+                            <input type="date" class="form-control" id="updatedSince" name="updatedSince"
+                                   value="${selectedUpdatedSince!}">
+                        </div>
 
-                    <div class="col-md-6">
-                        <label for="search" class="form-label">Search in Title/Description</label>
-                        <input type="text" class="form-control" id="search" name="search"
-                               placeholder="Enter keywords..." value="${selectedSearch!}">
-                    </div>
+                        <div class="col-md-6">
+                            <label for="search" class="form-label">Search in Title/Description</label>
+                            <input type="text" class="form-control" id="search" name="search"
+                                   placeholder="Enter keywords..." value="${selectedSearch!}">
+                        </div>
 
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-primary">Apply Filters</button>
-                        <a href="/publications" class="btn btn-secondary">Clear Filters</a>
-                        <span class="text-muted ms-2">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Apply Filters</button>
+                            <a href="/publications" class="btn btn-secondary">Clear Filters</a>
+                            <span class="text-muted ms-2">
                             Found: ${items.totalElements} publications
                         </span>
-                    </div>
-                </form>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+    </#if>
+
 
     <#if publications??>
         <#list publications as publication>
@@ -89,7 +92,16 @@
                             Add comment (${publication.comments?size!0})
                         </button>
                         <#if profile??>
-                            <a class="btn btn-primary" href="/publications/edit/${publication.id}">Update</a>
+                            <div class="d-flex gap-2 mt-2">
+                                <a class="btn btn-primary" href="/publications/edit/${publication.id}">Update</a>
+                                <form action="/publications/delete/${publication.id}" method="post" class="d-inline">
+                                    <#if _csrf??>
+                                        <input type="hidden" name="${(_csrf.parameterName)!'csrf-param-name'}"
+                                               value="${(_csrf.token)!'csrf-token'}"/>
+                                    </#if>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
                         </#if>
                     </div>
 

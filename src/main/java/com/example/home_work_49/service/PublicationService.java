@@ -1,6 +1,7 @@
 package com.example.home_work_49.service;
 
 import com.example.home_work_49.dto.PublicationDto;
+import com.example.home_work_49.exceptions.IncorrectRoleException;
 import com.example.home_work_49.models.Publication;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
@@ -9,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import java.time.LocalDate;
 
 public interface PublicationService {
+    void deletePublication(Long id, String email) throws IncorrectRoleException;
+
     Page<PublicationDto> findWithFilters(Long categoryId, String createdDate, String sortBy,
                                          LocalDate updatedSince, String search, Pageable pageable);
 
