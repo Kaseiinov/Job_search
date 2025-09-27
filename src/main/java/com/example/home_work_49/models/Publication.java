@@ -27,6 +27,7 @@ public class Publication {
     private LocalDate publicationDate;
     @Column(name = "update_date")
     private LocalDate updateDate;
+    private Boolean enabled;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

@@ -29,4 +29,5 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "publication_id")
     private Publication publication;
+    private Boolean enabled;
 }
