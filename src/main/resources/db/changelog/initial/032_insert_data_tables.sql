@@ -1,10 +1,10 @@
 insert into users(name, email, password, phone_number, account_type, enabled)
 values
-    ('Islam', 'izlax@gmail.com', '$2a$10$gil65dz5pfK3nFwdNXHAleszEMwZYxkr8S1LmE8etspPOm6Yf/xZO', '700179056', 'APPLICANT', true),
-    ('Anvar', 'izlax1@gmail.com', '$2a$10$gil65dz5pfK3nFwdNXHAleszEMwZYxkr8S1LmE8etspPOm6Yf/xZO', '700179056', 'APPLICANT', true),
-    ('Sanjar', 'izlax2@gmail.com', '$2a$10$gil65dz5pfK3nFwdNXHAleszEMwZYxkr8S1LmE8etspPOm6Yf/xZO', '700179056', 'APPLICANT', true),
-    ('Ivan', 'izlax3@gmail.com', '$2a$10$gil65dz5pfK3nFwdNXHAleszEMwZYxkr8S1LmE8etspPOm6Yf/xZO', '700179056', 'EMPLOYER', true),
-    ('Vasa', 'izlax4@gmail.com', '$2a$10$gil65dz5pfK3nFwdNXHAleszEMwZYxkr8S1LmE8etspPOm6Yf/xZO', '700179056', 'EMPLOYER', true);
+    ('Islam', 'izlax@gmail.com', '$2a$10$aqd551bLB/F0efQNG3pjduFLJAKxJEIMD/L.Y1SzX26INAprif8/6', '700179056', 'APPLICANT', true),
+    ('Anvar', 'izlax1@gmail.com', '$2a$10$aqd551bLB/F0efQNG3pjduFLJAKxJEIMD/L.Y1SzX26INAprif8/6', '700179056', 'APPLICANT', true),
+    ('Sanjar', 'izlax2@gmail.com', '$2a$10$aqd551bLB/F0efQNG3pjduFLJAKxJEIMD/L.Y1SzX26INAprif8/6', '700179056', 'APPLICANT', true),
+    ('Ivan', 'izlax3@gmail.com', '$2a$10$aqd551bLB/F0efQNG3pjduFLJAKxJEIMD/L.Y1SzX26INAprif8/6', '700179056', 'EMPLOYER', true),
+    ('Vasa', 'izlax4@gmail.com', '$2a$10$aqd551bLB/F0efQNG3pjduFLJAKxJEIMD/L.Y1SzX26INAprif8/6', '700179056', 'EMPLOYER', true);
 
 insert into usr_roles(usr_id, role_id)
 values

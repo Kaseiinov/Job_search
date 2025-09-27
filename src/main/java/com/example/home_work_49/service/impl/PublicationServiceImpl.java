@@ -30,11 +30,16 @@ public class PublicationServiceImpl implements PublicationService {
     private final CategoryService categoryService;
     private final UserService userService;
 
+    private boolean isAdmin(User user) {
+        return user.getRoles().stream()
+                .anyMatch(role -> role.getRole().equals("ROLE_ADMIN") || role.getRole().equals("ADMIN"));
+    }
+
     @Override
     public void deletePublication(Long id, String email) throws IncorrectRoleException {
         Publication publication = publicationRepository.findById(id).orElseThrow(PublicationNotFoundException::new);
         User user = userService.getUserByEmailModel(email).orElseThrow(UserNotFoundException::new);
-        if(publication.getUser().equals(user)) {
+        if(publication.getUser().equals(user) || isAdmin(user)) {
             publication.setEnabled(false);
             publicationRepository.save(publication);
         }else {
