@@ -58,7 +58,7 @@ public class PublicationController {
         if (!bindingResult.hasErrors()) {
             publicationDto.setUserEmail(auth.getName());
             publicationService.save(publicationDto);
-            return "redirect:/users/profile";
+            return "redirect:/users/profile/publications";
         }
 
         model.addAttribute("publication", publicationDto);

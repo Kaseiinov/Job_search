@@ -34,7 +34,6 @@ public class UserController {
         String username = auth.getName();
         Page<ResumeDto> resumes = resumeService.getPageResumeByUser(pageable, username);
         Page<VacancyDto> vacancies = vacancyService.getPageVacanciesByUser(username, pageable);
-//        Page<PublicationDto> publications = publicationService.findByUserEmail(pageable, auth.getName());
         UserDto userDto = userService.getUserByEmail(username);
         if(userDto.getAccountType().equalsIgnoreCase("employer")){
             model.addAttribute("items", vacancies.getContent());
@@ -44,10 +43,16 @@ public class UserController {
             model.addAttribute("resumeItems", resumes);
 
         }
-//        model.addAttribute("publications", publications.getContent());
-//        model.addAttribute("publicItems", publications);
         model.addAttribute("user",userDto);
         return "auth/profile";
+    }
+
+    @GetMapping("profile/publications")
+    public String showPublications(@PageableDefault(size = 5)Pageable pageable, Authentication auth, Model model){
+        Page<PublicationDto> publications = publicationService.findByUserEmail(pageable,auth.getName());
+        model.addAttribute("publications",publications.getContent());
+        model.addAttribute("items", publications);
+        return "publication/publication";
     }
 
     @GetMapping("edit/{userEmail}")

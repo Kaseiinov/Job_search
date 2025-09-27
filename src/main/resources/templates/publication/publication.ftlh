@@ -13,7 +13,7 @@
         <#list publications as publication>
             <div class="card mx-auto mb-3 mt-3" style="width: 800px; height: 400px;">
                 <div style="height: 450px; overflow: hidden;">
-                    <img src="images/byName/${publication.avatarString}"
+                    <img src="/images/byName/${publication.avatarString}"
                          class="card-img-top"
                          alt="publication"
                          style="width: 100%; height: 100%; object-fit: cover;">
@@ -29,7 +29,7 @@
         </#list>
     </#if>
 
-    <#if publicItems.getTotalElements() gt 0>
+    <#if items.getTotalElements() gt 0>
         <nav id="navigation" aria-label="..." class="d-flex justify-content-center" >
             <ul class="pagination" >
                 <li class="page-item <#if items.first>disabled</#if>">

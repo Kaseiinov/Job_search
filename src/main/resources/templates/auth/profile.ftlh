@@ -44,6 +44,8 @@
                 <a href="/vacancies/create"
                    class="btn btn-outline-danger">+ <@spring.message "auth.profile.createVacancy" /></a>
             </#if>
+            <a href="/users/profile/publications"
+               class="btn btn-outline-danger">My publication</a>
             <#if user.accountType == "APPLICANT">
                 <a href="#" class="btn btn-outline-secondary position-relative ms-3">
                     <@spring.message "auth.profile.responses" />
