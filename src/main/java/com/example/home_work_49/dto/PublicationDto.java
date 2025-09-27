@@ -2,6 +2,7 @@ package com.example.home_work_49.dto;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,4 +26,7 @@ public class PublicationDto {
     private LocalDate publicationDate;
     private LocalDate updateDate;
     private Boolean enabled;
+    @NotNull
+    private Long categoryId;
+    private String userEmail;
 }

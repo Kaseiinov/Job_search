@@ -5,6 +5,7 @@ import com.example.home_work_49.dto.EducationInfoDto;
 import com.example.home_work_49.dto.ResumeDto;
 import com.example.home_work_49.dto.WorkExperienceInfoDto;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 
 import java.util.List;
@@ -26,6 +27,10 @@ public interface ResumeService {
     List<ResumeDto> getResumeByCategory(String resumeCategory);
 
     List<ResumeDto> getResumeByUser(String userName);
+
+//    Page<ResumeDto> getPageResumeByUser(Pageable pageable, String userEmail);
+
+    Page<ResumeDto> getPageResumeByUser(Pageable pageable, String userEmail);
 
     void addWorkExperienceInfo(WorkExperienceInfoDto workExpDto);
 

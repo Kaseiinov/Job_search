@@ -101,6 +101,13 @@ public class VacancyServiceImpl implements VacancyService {
     }
 
     @Override
+    public Page<VacancyDto> getPageVacanciesByUser(String userEmail, Pageable pageable) {
+        Page<Vacancy> vacancyList = vacancyRepository.findAllVacanciesByAuthor_Email(userEmail, pageable);
+
+        return vacanciesPageBuilder(vacancyList);
+    }
+
+    @Override
     public List<VacancyDto> getVacancyByCategory(String vacancyCategory) {
         List<Vacancy> vacancyList = vacancyRepository.findAllByCategory_Name(vacancyCategory);
         return vacancyBuilder(vacancyList);
@@ -195,6 +202,8 @@ public class VacancyServiceImpl implements VacancyService {
                 .toList();
     }
 
+
+
     public VacancyDto vacancyBuilder(Vacancy vacancy){
         return VacancyDto
                 .builder()
@@ -230,6 +239,26 @@ public class VacancyServiceImpl implements VacancyService {
                 .toList();
 
         return new PageImpl<>(vacancyDtoList, pageable, vacancies.getTotalElements());
+    }
+
+    public Page<VacancyDto> vacanciesPageBuilder(Page<Vacancy> vacancies) {
+        List<VacancyDto> vacancyDtoList = vacancies.stream()
+                .map(e -> VacancyDto.builder()
+                        .id(e.getId())
+                        .name(e.getName())
+                        .description(e.getDescription())
+                        .categoryId(e.getCategory().getId())
+                        .salary(e.getSalary())
+                        .expFrom(e.getExpFrom())
+                        .expTo(e.getExpTo())
+                        .isActive(e.getIsActive())
+                        .authorId(e.getAuthor().getId())
+                        .createdDate(e.getCreatedDate())
+                        .updateTime(e.getUpdateTime())
+                        .build())
+                .toList();
+
+        return new PageImpl<>(vacancyDtoList, vacancies.getPageable(), vacancies.getTotalElements());
     }
 
 }

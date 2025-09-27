@@ -19,4 +19,7 @@ public interface ResumeRepository extends JpaRepository<Resume,Long> {
     Page<Resume> findAllByIsActiveOrderByCreatedDateDesc(Boolean isActive, Pageable pageable);
 
     Page<Resume> findAllByIsActiveOrderByCreatedDateAsc(Boolean isActive, Pageable pageable);
+
+
+    Page<Resume> findAllByApplicant_Email(String applicantEmail, Pageable pageable);
 }

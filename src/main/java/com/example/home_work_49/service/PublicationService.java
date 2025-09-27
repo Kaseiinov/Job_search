@@ -5,5 +5,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface PublicationService {
+    void save(PublicationDto publicationDto);
+
+    Page<PublicationDto> findByUserEmail(Pageable pageable, String email);
+
     Page<PublicationDto> findAll(Pageable pageable);
 }

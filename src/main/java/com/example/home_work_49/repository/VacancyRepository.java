@@ -54,4 +54,7 @@ public interface VacancyRepository extends JpaRepository<Vacancy, Long>, JpaSpec
     List<Vacancy> findAllVacanciesBySalaryGreaterThanEqualAndIsActiveIsTrue(Double salaryIsGreaterThan);
 
     List<Vacancy> findAllByIsActiveAndCategory_IdAndSalaryIsGreaterThanEqual(Boolean isActive, Long categoryId, Double salaryIsGreaterThan);
+
+
+    Page<Vacancy> findAllVacanciesByAuthor_Email(String authorEmail, Pageable pageable);
 }
