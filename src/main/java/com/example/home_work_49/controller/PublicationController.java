@@ -12,15 +12,16 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -51,12 +52,54 @@ public class PublicationController {
     }
 
     @GetMapping
-    public String publications(@PageableDefault(size = 3)Pageable pageable, Model model) {
-        Page<PublicationDto> publications = publicationService.findAll(pageable);
+    public String publications(
+            @RequestParam(required = false) Long categoryId,
+            @RequestParam(required = false) String createdDate,
+            @RequestParam(required = false) String sortBy,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate updatedSince,
+            @RequestParam(required = false) String search,
+            @PageableDefault(size = 3) Pageable pageable,
+            Model model) {
+
+        Page<PublicationDto> publications = publicationService.findWithFilters(
+                categoryId, createdDate, sortBy, updatedSince, search, pageable);
+
         model.addAttribute("publications", publications.getContent());
         model.addAttribute("items", publications);
-        model.addAttribute("comment", new CommentDto());
+        model.addAttribute("categories", categoryService.getCategories());
+
+        model.addAttribute("selectedCategoryId", categoryId != null ? categoryId.toString() : "");
+        model.addAttribute("selectedCreatedDate", createdDate);
+        model.addAttribute("selectedSortBy", sortBy);
+        model.addAttribute("selectedUpdatedSince", updatedSince);
+        model.addAttribute("selectedSearch", search);
+
+        model.addAttribute("filterParams", generateFilterParams(categoryId, createdDate, sortBy, updatedSince, search));
+
         return "publication/publication";
+    }
+
+    private String generateFilterParams(Long categoryId, String createdDate, String sortBy,
+                                        LocalDate updatedSince, String search) {
+        StringBuilder params = new StringBuilder();
+
+        if (categoryId != null) {
+            params.append("&categoryId=").append(categoryId);
+        }
+        if (createdDate != null && !createdDate.isEmpty()) {
+            params.append("&createdDate=").append(createdDate);
+        }
+        if (sortBy != null && !sortBy.isEmpty()) {
+            params.append("&sortBy=").append(sortBy);
+        }
+        if (updatedSince != null) {
+            params.append("&updatedSince=").append(updatedSince);
+        }
+        if (search != null && !search.isEmpty()) {
+            params.append("&search=").append(URLEncoder.encode(search, StandardCharsets.UTF_8));
+        }
+
+        return params.toString();
     }
 
     @GetMapping("/create")

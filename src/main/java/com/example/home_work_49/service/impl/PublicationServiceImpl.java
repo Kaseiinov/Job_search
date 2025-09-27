@@ -12,9 +12,8 @@ import com.example.home_work_49.service.UserService;
 import com.example.home_work_49.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -27,6 +26,64 @@ public class PublicationServiceImpl implements PublicationService {
     private final FileUtil fileUtil;
     private final CategoryService categoryService;
     private final UserService userService;
+
+    @Override
+    public Page<PublicationDto> findWithFilters(Long categoryId, String createdDate, String sortBy,
+                                                LocalDate updatedSince, String search, Pageable pageable) {
+
+        // Создаем спецификацию для фильтрации
+        Specification<Publication> spec = Specification.where(null);
+
+        // Фильтр по категории
+        if (categoryId != null) {
+            spec = spec.and(PublicationSpecifications.hasCategory(categoryId));
+        }
+
+        // Фильтр по дате создания
+        if (createdDate != null) {
+            LocalDate dateFilter = switch (createdDate) {
+                case "today" -> LocalDate.now();
+                case "week" -> LocalDate.now().minusWeeks(1);
+                case "month" -> LocalDate.now().minusMonths(1);
+                case "year" -> LocalDate.now().minusYears(1);
+                default -> null;
+            };
+            if (dateFilter != null) {
+                spec = spec.and(PublicationSpecifications.createdAfter(dateFilter));
+            }
+        }
+
+        // Фильтр по дате обновления
+        if (updatedSince != null) {
+            spec = spec.and(PublicationSpecifications.updatedAfter(updatedSince));
+        }
+
+        // Поиск по тексту
+        if (search != null && !search.trim().isEmpty()) {
+            spec = spec.and(PublicationSpecifications.containsText(search));
+        }
+
+        // Сортировка
+        Pageable sortedPageable = getSortedPageable(sortBy, pageable);
+
+        Page<Publication> publications = publicationRepository.findAll(spec, sortedPageable);
+        return convertToDto(publications);
+    }
+
+    private Pageable getSortedPageable(String sortBy, Pageable pageable) {
+        if (sortBy == null) {
+            return pageable;
+        }
+
+        Sort sort = switch (sortBy) {
+            case "oldest" -> Sort.by("publicationDate").ascending();
+            case "updated" -> Sort.by("updateDate").descending();
+            case "mostCommented" -> Sort.by("comments.size").descending();
+            default -> Sort.by("publicationDate").descending(); // newest
+        };
+
+        return PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+    }
 
     @Override
     public void update(PublicationDto publicationDto) throws ChangeSetPersister.NotFoundException {
