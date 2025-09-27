@@ -3,6 +3,7 @@ package com.example.home_work_49.controller;
 import com.example.home_work_49.dto.CategoryDto;
 import com.example.home_work_49.dto.CommentDto;
 import com.example.home_work_49.dto.PublicationDto;
+import com.example.home_work_49.exceptions.IncorrectRoleException;
 import com.example.home_work_49.models.Publication;
 import com.example.home_work_49.service.CategoryService;
 import com.example.home_work_49.service.PublicationService;
@@ -30,6 +31,12 @@ import java.util.List;
 public class PublicationController {
     private final PublicationService publicationService;
     private final CategoryService categoryService;
+
+    @PostMapping("delete/{id}")
+    public String deletePublication(@PathVariable("id") Long id, Authentication authentication) throws IncorrectRoleException {
+        publicationService.deletePublication(id, authentication.getName());
+        return "redirect:/users/profile/publications";
+    }
 
     @GetMapping("edit/{id}")
     public String showEdit(@PathVariable Long id, Model model) {

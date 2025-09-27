@@ -70,6 +70,10 @@ public class SecurityConfig {
                         .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/search/vacancy/advanced").permitAll()
 
+                        // Publicaiton
+                                .requestMatchers(HttpMethod.GET, "/publications").permitAll()
+                                .requestMatchers(HttpMethod.POST, "publications/**").fullyAuthenticated()
+
 
                         // User endpoints
                         .requestMatchers("/users/**").fullyAuthenticated()
