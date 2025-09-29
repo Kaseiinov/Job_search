@@ -35,6 +35,7 @@ public class PublicationController {
     @PostMapping("delete/{id}")
     public String deletePublication(@PathVariable("id") Long id, Authentication authentication) throws IncorrectRoleException {
         publicationService.deletePublication(id, authentication.getName());
+
         return "redirect:/users/profile/publications";
     }
 
