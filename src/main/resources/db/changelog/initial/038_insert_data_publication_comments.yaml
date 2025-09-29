@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-test-publications
+      author: Kaseiinov_I
+      changes:
+        - sql:
+            sql: |
+              INSERT INTO publication (title, description, avatar, publication_date, update_date, user_id, category_id, enabled) VALUES
+              ('Introduction to Spring Boot', 'A comprehensive guide to Spring Boot framework', 'laptop-with-program-code-isometric-icon-software-development-programming-applications-dark-neon_39422-971.jpg', '2024-01-15', '2024-01-20', 1, 1, true),
+              ('Java 17 New Features', 'Exploring the latest features in Java 17', 'laptop-with-program-code-isometric-icon-software-development-programming-applications-dark-neon_39422-971.jpg', '2024-01-20', '2024-01-25', 2, 1, true),
+              ('Database Design Best Practices', 'Learn how to design efficient databases', 'laptop-with-program-code-isometric-icon-software-development-programming-applications-dark-neon_39422-971.jpg', '2024-02-01', '2024-02-05', 1, 2, true),
+              ('Microservices Architecture', 'Building scalable applications with microservices', 'laptop-with-program-code-isometric-icon-software-development-programming-applications-dark-neon_39422-971.jpg', '2024-02-10', '2024-02-15', 3, 1, true),
+              ('REST API Security', 'Best practices for securing your REST APIs', 'laptop-with-program-code-isometric-icon-software-development-programming-applications-dark-neon_39422-971.jpg', '2024-02-20', '2024-02-25', 2, 2, true),
+              ('Docker for Developers', 'Containerizing your applications with Docker', 'laptop-with-program-code-isometric-icon-software-development-programming-applications-dark-neon_39422-971.jpg', '2024-03-01', '2024-03-05', 3, 1, true),
+              ('React vs Angular', 'Comparing popular frontend frameworks', 'laptop-with-program-code-isometric-icon-software-development-programming-applications-dark-neon_39422-971.jpg', '2024-03-10', '2024-03-15', 1, 2, false);
+
+  - changeSet:
+      id: insert-test-comments
+      author: Kaseiinov_I
+      changes:
+        - sql:
+            sql: |
+              INSERT INTO comment (content, created_date, avatar, user_id, publication_id, enabled) VALUES
+              ('Great article! Very helpful for beginners.', '2024-01-16', 'user1.jpg', 2, 1, true),
+              ('Thanks for sharing these insights!', '2024-01-17', 'user3.jpg', 3, 1, true),
+              ('Java 17 features are amazing!', '2024-01-21', 'user1.jpg', 1, 2, true),
+              ('Could you provide more examples?', '2024-01-22', 'user2.jpg', 2, 2, true),
+              ('Database design is crucial for performance.', '2024-02-02', 'user3.jpg', 3, 3, true),
+              ('Microservices have changed how we build apps.', '2024-02-11', 'user1.jpg', 1, 4, true),
+              ('Security should be a priority for every API.', '2024-02-21', 'user2.jpg', 2, 5, true),
+              ('Docker has simplified deployment process.', '2024-03-02', 'user3.jpg', 3, 6, true),
+              ('React is more flexible than Angular.', '2024-03-11', 'user1.jpg', 1, 7, true),
+              ('Angular has better enterprise support.', '2024-03-12', 'user2.jpg', 2, 7, false),
+              ('Looking forward to more articles like this!', '2024-03-13', 'user3.jpg', 3, 7, true);

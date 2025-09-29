@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-publication-table
+      author: Kaseiinov_I
+      changes:
+        - createTable:
+            tableName: publication
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: varchar(355)
+              - column:
+                  name: avatar
+                  type: VARCHAR(255)
+              - column:
+                  name: publication_date
+                  type: date
+              - column:
+                  name: update_date
+                  type: date
+              - column:
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  name: category_id
+                  type: BIGINT
+              - column:
+                  name: enabled
+                  type: boolean
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: publication
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_publication_user
+
+        - addForeignKeyConstraint:
+            baseTableName: publication
+            baseColumnNames: category_id
+            referencedTableName: categories
+            referencedColumnNames: id
+            constraintName: fk_publication_category
