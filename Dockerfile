@@ -7,10 +7,9 @@ RUN apt-get update && apt-get install -y maven
 
 COPY . .
 
-RUN mvn clean package -DskipTests
-
-# Copy the specific JAR file (more reliable)
-COPY target/*.jar app.jar
+# Build AND copy in one RUN command
+RUN mvn clean package -DskipTests && \
+    find target/ -name "*.jar" -exec cp {} app.jar \;
 
 EXPOSE 8081
 
