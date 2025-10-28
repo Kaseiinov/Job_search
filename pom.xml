@@ -27,7 +27,7 @@
         <url/>
     </scm>
     <properties>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -139,42 +139,39 @@
 
     <build>
         <plugins>
-            <!-- 1. Компиляция + Lombok -->
+            <!-- 1. Maven Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version> <!-- Use a more compatible version -->
                 <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                    <parameters>true</parameters>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
+                            <version>1.18.30</version>
                         </path>
                     </annotationProcessorPaths>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
 
-            <!-- 2. Spring Boot Maven Plugin (основной + AOT) -->
+            <!-- 2. Spring Boot Maven Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.4.3</version>
                 <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                    <jvmArguments>--enable-preview</jvmArguments> <!-- Для AOT -->
+                    <mainClass>com.example.home_work_49.HomeWork49Application</mainClass>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>process-aot</id>
-                        <goals>
-                            <goal>process-aot</goal> <!-- Активация AOT-обработки -->
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
+
         </plugins>
     </build>
+
 </project>
